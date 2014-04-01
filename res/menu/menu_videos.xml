@@ -1,0 +1,28 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    
+    <item
+        android:id="@+id/menu_search"
+        android:actionViewClass="android.widget.SearchView"
+        android:icon="@android:drawable/ic_menu_search"
+        android:showAsAction="always"
+        android:title="@string/menu_search"/>
+    <item
+        android:id="@+id/menu_playlist"
+        android:icon="@android:drawable/ic_menu_add"
+        android:showAsAction="always"
+        android:title="@string/menu_playlist"/>
+    <item
+        android:id="@+id/menu_preferences"
+        android:showAsAction="never"
+        android:title="@string/menu_preferences"/>
+    <item
+        android:id="@+id/menu_aide"
+        android:showAsAction="never"
+        android:title="@string/menu_aide"/>
+    <item
+        android:id="@+id/menu_a_propos"
+        android:showAsAction="never"
+        android:title="@string/menu_a_propos"/>
+
+</menu>
