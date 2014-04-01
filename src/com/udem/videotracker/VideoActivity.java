@@ -6,11 +6,14 @@ import android.app.Activity;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.SearchView;
+import android.widget.SearchView.OnQueryTextListener;
 import android.widget.TextView;
 
 public class VideoActivity extends Activity {
 	
 	final String SEARCH = "search";
+	public TextView search = null;
 
 	
 	@Override
@@ -21,11 +24,13 @@ public class VideoActivity extends Activity {
 		setContentView(R.layout.activity_video);
 		
        Intent intent = getIntent();
-       TextView search = (TextView) findViewById(R.id.search_query);
+       search = (TextView) findViewById(R.id.search_query);
        if (intent != null) {
     	   search.setText(intent.getStringExtra(SEARCH));
     	   
        }
+       
+       
 	}
 
 	
@@ -64,7 +69,29 @@ public class VideoActivity extends Activity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.menu_videos, menu);
+		
+		MenuItem itemSearch = menu.findItem(R.id.menu_search);
+		SearchView mSearchView = (SearchView) itemSearch.getActionView();
+		mSearchView.setOnQueryTextListener(new OnQueryTextListener() {
+
+			@Override
+			public boolean onQueryTextSubmit(String query) {
+				maj(query);
+				return true;
+			}
+
+			@Override
+			public boolean onQueryTextChange(String newText) {
+				return false;
+			}
+		});
+		
 		return true;
+	}
+	
+	public void maj(String query){
+		this.search.setText(query);
+		
 	}
 
 }

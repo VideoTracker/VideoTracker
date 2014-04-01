@@ -6,6 +6,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.SearchView;
+import android.widget.SearchView.OnQueryTextListener;
 
 public class PlaylistActivity extends Activity {
 
@@ -17,12 +19,31 @@ public class PlaylistActivity extends Activity {
 		setContentView(R.layout.activity_recherche);
 	}
 
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.menu_playlists, menu);
+		
+		MenuItem itemSearch = menu.findItem(R.id.menu_search);
+		SearchView mSearchView = (SearchView) itemSearch.getActionView();
+		mSearchView.setOnQueryTextListener(new OnQueryTextListener() {
+
+			@Override
+			public boolean onQueryTextSubmit(String query) {
+
+				return true;
+			}
+
+			@Override
+			public boolean onQueryTextChange(String newText) {
+				return false;
+			}
+		});
+		
 		return true;
 	}
+
 
 	@Override
 	public boolean onOptionsItemSelected (MenuItem item)
