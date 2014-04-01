@@ -6,7 +6,19 @@
         android:actionViewClass="android.widget.SearchView"
         android:icon="@android:drawable/ic_menu_search"
         android:showAsAction="always"
-        android:title="@string/menu_search"/>
+        android:title="@string/menu_search">
+        <menu>
+            <item
+		        android:id="@+id/tri_date"
+		        android:title="@string/tri_date"/>
+            <item
+		        android:id="@+id/tri_alpha"
+		        android:title="@string/tri_alpha"/>
+            <item
+		        android:id="@+id/tri_nombre"
+		        android:title="@string/tri_nombre"/>
+		</menu>
+		</item>	               
 	<item
         android:id="@+id/menu_trier"
         android:icon="@drawable/ic_action_collections_sort_by_size"

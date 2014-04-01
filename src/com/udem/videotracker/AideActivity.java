@@ -11,7 +11,7 @@ public class AideActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		ActionBar actionBar = getActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
-		setContentView(R.layout.activity_recherche);
+		setContentView(R.layout.activity_aide);
 	}
 
 }

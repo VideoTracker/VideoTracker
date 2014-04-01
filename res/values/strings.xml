@@ -3,19 +3,27 @@
 
     <string name="app_name">VideoTracker</string>
     <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>
+
+    
     <string name="menu_playlist">Playlists</string>
     <string name="menu_preferences">Préférences</string>
     <string name="menu_aide">Besoin d\'aide?</string>
     <string name="menu_a_propos">À propos</string>
     <string name="menu_search">Recherche</string>
     <string name="menu_trier">Tri par</string>
+    
     <string name="description_image_recherche">Icon de recherche, loupe.</string>
+    
     <string name="a_propos_activity_text">Application réalisée dans le cadre d\'un projet universitaire au sein de l\'Université de Montréal.
         \n\nAuteurs du projet :\n\tAnthony Da Mota\n\tHugo Martinez\n\tRomain Piche</string>
     <string name="a_propos_version_text">Version de l\'application : </string>
     <string name="a_propos_version">1.0</string>
     
+    <string name="tri_date">Date de création</string>
+    <string name="tri_alpha">Ordre alphabétique</string>
+    <string name="tri_nombre">Nombre de vidéos</string>
+    
+    <string name="search_query">Ce que vous avez tapé</string>
     
 
 </resources>
