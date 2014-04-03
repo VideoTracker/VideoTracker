@@ -54,12 +54,16 @@ public class PlaylistActivity extends Activity {
 	    case R.id.tri_alpha:
 	    	
 	          return true;
+	    case android.R.id.home:
+	    	this.finish();
+	    	  return true;
 	    case R.id.tri_nombre:
 	    	
 	          return true;
 	    case R.id.tri_date:
 	    	
-	          return true;	    
+	          return true;	
+
 	    case R.id.menu_a_propos:
 	    	intent = new Intent(PlaylistActivity.this,
 					ProposActivity.class);
