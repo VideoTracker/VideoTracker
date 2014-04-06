@@ -3,11 +3,11 @@ package com.udem.videotracker;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
@@ -44,7 +44,7 @@ public class RechercheActivity extends Activity implements OnClickListener {
 			startActivity(intent);
 			return true;
 		case R.id.menu_aide:
-			intent = new Intent(RechercheActivity.this, AideActivity.class);
+			intent = new Intent(RechercheActivity.this, VideoActivity.class);
 			startActivity(intent);
 			return true;
 		case R.id.menu_preferences:
@@ -60,6 +60,14 @@ public class RechercheActivity extends Activity implements OnClickListener {
 	public void onClick(View v) {
 		if (v == button_search) {
 			String search = "";
+			CheckBox checkD = (CheckBox) findViewById(R.id.checkbox_dailymotion);
+			CheckBox checkY = (CheckBox) findViewById(R.id.checkbox_youtube);
+			if(checkD.isChecked()){
+				//Dailymotion checked
+			}
+			if(checkY.isChecked()){
+				//YouTube checked
+			}
 			search += text_search.getText().toString();
 			Intent intent = new Intent(RechercheActivity.this,
 					ResultatActivity.class);

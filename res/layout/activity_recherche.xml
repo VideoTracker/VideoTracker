@@ -14,7 +14,7 @@
     
    <LinearLayout
     android:layout_width="wrap_content"
-    android:layout_height="fill_parent"
+    android:layout_height="wrap_content"
     android:orientation="horizontal" 
     android:layout_marginTop="20dp"
     android:layout_gravity="center">
@@ -32,6 +32,23 @@
         android:src="@drawable/ic_action_search"
         android:background="@android:color/transparent"
         android:contentDescription="@string/description_image_recherche"/>
-    </LinearLayout>   
-
+   </LinearLayout> 
+    
+   <CheckBox
+        android:id="@+id/checkbox_youtube"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/checkbox_youtube" 
+        android:checked="true"
+        android:layout_marginLeft="35dp"
+        android:layout_marginTop="5dp"/>
+ 
+    <CheckBox
+        android:id="@+id/checkbox_dailymotion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/checkbox_dailymotion"
+        android:checked="true" 
+        android:layout_marginLeft="35dp"/>
+    
 </LinearLayout>

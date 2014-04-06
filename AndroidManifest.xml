@@ -5,7 +5,7 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="11"
+        android:minSdkVersion="14"
         android:targetSdkVersion="19" />
 
     <application
@@ -22,22 +22,26 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity 
+        <activity
             android:name="com.udem.videotracker.PlaylistActivity"
-            android:label="Playlists"/>
-        <activity 
-            android:name="com.udem.videotracker.VideoActivity"
-            android:label="Vidéos"/>
-        <activity 
+            android:label="Playlists" />
+        <activity
+            android:name="com.udem.videotracker.ResultatVideosActivity"
+            android:label="Vidéos" />
+        <activity
             android:name="com.udem.videotracker.PreferencesActivity"
-            android:label="Préférences"/>
-        <activity 
+            android:label="Préférences" />
+        <activity
             android:name="com.udem.videotracker.ProposActivity"
-            android:label="À propos de VideoTracker"/>
-        <activity 
+            android:label="À propos de VideoTracker" />
+        <activity
             android:name="com.udem.videotracker.AideActivity"
-            android:label="À propos de VideoTracker"/>
-
+            android:label="À propos de VideoTracker" />
+        <activity
+            android:name="com.udem.videotracker.VideoActivity"
+            android:label="@string/title_activity_video" >
+        </activity>
+        
     </application>
 
 </manifest>
