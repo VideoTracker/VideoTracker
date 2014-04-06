@@ -9,9 +9,12 @@
     <string name="menu_preferences">Préférences</string>
     <string name="menu_aide">Besoin d\'aide?</string>
     <string name="menu_a_propos">À propos</string>
-    <string name="menu_search">Recherche</string>
+    <string name="menu_search">Recherche</string>    
     <string name="menu_trier">Tri par</string>
-    
+    <string name="menu_share">Partager via</string>
+    <string name="menu_add">Ajouter à une playlist</string>
+
+        
     <string name="description_image_recherche">Icon de recherche, loupe.</string>
     
     <string name="a_propos_activity_text">Application réalisée dans le cadre d\'un projet universitaire au sein de l\'Université de Montréal.
