@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.Locale;
+import java.util.ArrayList;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -24,33 +24,31 @@ import android.util.Log;
 
 public class YoutubeAPI {
 
-	String temperature;
-	String conditions;
-	String ville;
-	CharSequence depuis;
-	Drawable icone;
-	String nombre_resultats;
+	int nombre_resultats;
+	ArrayList<VideoAdapter.VideoData> weatherData;
 
 	// Sera null s'il n'y a pas d'erreur
 	String erreur;
 
 	YoutubeAPI(String keywords) {
 		erreur = null;
+		weatherData = new ArrayList<VideoAdapter.VideoData>();
+		
+		nombre_resultats = 0;
 
 		String url = null;
-			try {
-				url = "https://www.googleapis.com/youtube/v3/search?part="
-						+ URLEncoder.encode("snippet", "UTF-8")
-						+ "&q="
-						+ URLEncoder.encode(keywords, "UTF-8") 
-						+ "&key=" 
-						+ URLEncoder.encode("AIzaSyBa6hEa_85xTgWs8G-uf-rqyw_4X-RnMHU", "UTF-8");
-			} catch (UnsupportedEncodingException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		
-		Log.i("DAILYMOTION", url);
+		try {
+			url = "https://www.googleapis.com/youtube/v3/search?part="
+					+ URLEncoder.encode("snippet", "UTF-8")
+					+ "&q="
+					+ URLEncoder.encode(keywords, "UTF-8")
+					+ "&key="
+					+ URLEncoder.encode(
+							"AIzaSyBa6hEa_85xTgWs8G-uf-rqyw_4X-RnMHU", "UTF-8");
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
 		try {
 			// Charge le fichier JSON à l'URL donné depuis le web
@@ -69,41 +67,25 @@ public class YoutubeAPI {
 
 			String title;
 			String description;
-			Log.i("DAILYMOTION",js.toString(1));
+			Drawable icone;
+			
 			JSONArray items = js.getJSONArray("items");
 			for (int i = 0; i < items.length(); i++) {
 				
+				nombre_resultats++;
+
 				JSONObject row_item = items.getJSONObject(i);
-				JSONArray video = row_item.getJSONArray("items");
+				JSONObject video = row_item.getJSONObject("snippet");
+				String thumb = video.getJSONObject("thumbnails").getJSONObject("default").getString("url");
 				
-				for (int j = 0; j < video.length(); j++) {
-					
-					JSONObject row_video = items.getJSONObject(i);
-					title = row_video.getString("title");
-					description = row_video.getString("description");
-					Log.i("YOUTUBE", "video num " + i + ": " + title + " "
-							+ description);
-				}
+				title = video.getString("title");
+				description = video.getString("description");
+				icone = loadHttpImage(thumb);
+				
+				weatherData
+				.add(new VideoAdapter.VideoData(title, description, icone));
 			}
 
-			// conditions = obs.getString("weather");
-			// ville = obs.getJSONObject("display_location").getString("full");
-
-			// Le temps d'observation est donné sous forme d'une "époque UNIX",
-			// le nombre de secondes depuis le 1er janvier 1970
-			// long epoch = Long.parseLong(obs.getString("observation_epoch"));
-			// getRelativeTimeSpanString transforme un temps en milisecondes en
-			// un temps relatif, par exemple "il y a une heure"
-			// depuis =
-			// android.text.format.DateUtils.getRelativeTimeSpanString(epoch*1000);
-
-			// String iconName = obs.getString("icon");
-			// if( iconName!=null ) {
-			// Les icônes ont tous une variante nt_<nom>.gif pour la nuit, mais
-			// nous les ignorons
-			// icone = loadHttpImage("http://icons.wxug.com/i/c/j/" + iconName +
-			// ".gif");
-			// }
 		} catch (ClientProtocolException e) {
 			erreur = "Erreur HTTP (protocole) :" + e.getMessage();
 		} catch (IOException e) {

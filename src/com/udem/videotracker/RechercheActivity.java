@@ -62,7 +62,7 @@ public class RechercheActivity extends Activity implements OnClickListener {
 			String search = "";
 			search += text_search.getText().toString();
 			Intent intent = new Intent(RechercheActivity.this,
-					ResultatActivity.class);
+					ResultActivity.class);
 			intent.putExtra("SEARCH", search);
 			startActivity(intent);
 		}

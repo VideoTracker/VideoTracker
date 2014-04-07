@@ -11,6 +11,12 @@
         android:layout_margin="5dp"
         android:text="@string/search_query"
         android:textSize="12sp" />
+        
+        <ListView
+        android:id="@+id/videoList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+    	</ListView>
     
 
 </LinearLayout>
