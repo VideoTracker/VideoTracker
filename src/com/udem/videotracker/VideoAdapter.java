@@ -17,11 +17,30 @@ public class VideoAdapter extends BaseAdapter {
 	public static class VideoData {
 		public final String title;
 		public final String description;
+		public final String auteur;
+		public final String url;
+		public boolean favori;
+		public int nbVues;
 		public final Drawable picture;
 
+		public VideoData(String _title, String _description, String _auteur, String _url, boolean _favori, int _nbVues, Drawable _picture) {
+			title = _title;
+			description = _description;
+			auteur = _auteur;
+			url = _url;
+			favori = _favori;
+			nbVues = _nbVues;
+			picture = _picture;
+		}
+		
+		//TODO constructeur pour que antho fasse ses tests
 		public VideoData(String _title, String _description, Drawable _picture) {
 			title = _title;
 			description = _description;
+			auteur = null;
+			url = null;
+			favori = false;
+			nbVues = 0;
 			picture = _picture;
 		}
 
@@ -31,8 +50,8 @@ public class VideoAdapter extends BaseAdapter {
 	private List<VideoData> _data;
 
 	/*
-	 * Cette méthode est utilisée pour déterminer la taille actuelle de la
-	 * liste. N'oubliez pas de vérifier que la liste est bien définie avant de
+	 * Cette mï¿½thode est utilisï¿½e pour dï¿½terminer la taille actuelle de la
+	 * liste. N'oubliez pas de vï¿½rifier que la liste est bien dï¿½finie avant de
 	 * retourner sa taille!
 	 */
 	@Override
@@ -44,9 +63,9 @@ public class VideoAdapter extends BaseAdapter {
 	}
 
 	/*
-	 * Cette méthode retourne l'élément stocké à l'indice donné. Il n'est pas
-	 * absolument nécessaire de vérifier si l'indice est bien dans la liste (les
-	 * appels sont généralement bien formulés), mais cela reste une bonne
+	 * Cette mï¿½thode retourne l'ï¿½lï¿½ment stockï¿½ ï¿½ l'indice donnï¿½. Il n'est pas
+	 * absolument nï¿½cessaire de vï¿½rifier si l'indice est bien dans la liste (les
+	 * appels sont gï¿½nï¿½ralement bien formulï¿½s), mais cela reste une bonne
 	 * pratique.
 	 */
 	@Override
@@ -58,13 +77,13 @@ public class VideoAdapter extends BaseAdapter {
 	}
 
 	/*
-	 * Cette méthode retourne un numéro d'identification (ID) pour l'élément à
-	 * l'indice donné. Cet ID devrait généralement être unique pour l'élément
-	 * donné, en plus d'être relié à celui-ci. Dans notre exemple, on se
+	 * Cette mï¿½thode retourne un numï¿½ro d'identification (ID) pour l'ï¿½lï¿½ment ï¿½
+	 * l'indice donnï¿½. Cet ID devrait gï¿½nï¿½ralement ï¿½tre unique pour l'ï¿½lï¿½ment
+	 * donnï¿½, en plus d'ï¿½tre reliï¿½ ï¿½ celui-ci. Dans notre exemple, on se
 	 * contente de retourner l'indice, mais on pourrait par exemple imaginer une
-	 * liste triable où l'on voudrait pouvoir retracer un élément particulier
-	 * une fois le tri effectué et où la position n'est plus un ID approprié. On
-	 * va souvent utiliser une forme de hachage des données pour générer cet ID.
+	 * liste triable oï¿½ l'on voudrait pouvoir retracer un ï¿½lï¿½ment particulier
+	 * une fois le tri effectuï¿½ et oï¿½ la position n'est plus un ID appropriï¿½. On
+	 * va souvent utiliser une forme de hachage des donnï¿½es pour gï¿½nï¿½rer cet ID.
 	 */
 	@Override
 	public long getItemId(int at) {
@@ -101,13 +120,13 @@ public class VideoAdapter extends BaseAdapter {
 	 * 
 	 * Constructeur de l'adapteur. On notera l'utilisation de List au lieu de
 	 * ArrayList; ceci est une bonne pratique, car List est une interface
-	 * générique alors que ArrayList est une implantation de cette interface.
-	 * L'adapteur n'a pas besoin d'une implantation particulière, tout ce qu'il
+	 * gï¿½nï¿½rique alors que ArrayList est une implantation de cette interface.
+	 * L'adapteur n'a pas besoin d'une implantation particuliï¿½re, tout ce qu'il
 	 * lui faut, c'est une liste. Ceci permet donc au programme utilisant
 	 * l'adapteur d'utiliser n'importe quelle implantation de List.
 	 * 
-	 * De plus, il faut toujours demander un Context, car ceci est utilisé entre
-	 * autres pour obtenir le LayoutInflater nécessaire à l'initialisation des
+	 * De plus, il faut toujours demander un Context, car ceci est utilisï¿½ entre
+	 * autres pour obtenir le LayoutInflater nï¿½cessaire ï¿½ l'initialisation des
 	 * Views dans getView.
 	 * 
 	 */

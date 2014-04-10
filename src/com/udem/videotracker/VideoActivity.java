@@ -1,5 +1,7 @@
 package com.udem.videotracker;
 
+import com.udem.videotracker.VideoAdapter.VideoData;
+
 import android.os.Bundle;
 import android.app.ActionBar;
 import android.app.Activity;
@@ -13,26 +15,26 @@ import android.widget.TextView;
 
 
 public class VideoActivity extends Activity {
-	private Video video;
+	private VideoData video;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		video = new Video("Un chat mange un oiseau", "le titre est déjà assez explicite non?\n\n\n\n","www.youtube.com","catLoveeeer",true,1000);
+		video = new VideoData("Un chat mange un oiseau", "le titre est déjà assez explicite non?\n\n\n\n","www.youtube.com","catLoveeeer",true,1000,null);
 		ActionBar actionBar = getActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
 		setContentView(R.layout.activity_video);
 		
 		TextView video_titre = (TextView)findViewById(R.id.video_titre);
-		video_titre.setText(video.getTitre());
+		video_titre.setText(video.title);
 		TextView video_url = (TextView)findViewById(R.id.video_url);
-		video_url.setText(video.getUrl());
+		video_url.setText(video.url);
 		TextView video_description = (TextView)findViewById(R.id.video_description_complet);
-		video_description.setText(video.getDescription());
+		video_description.setText(video.description);
 		TextView video_auteur = (TextView)findViewById(R.id.video_auteur);
-		video_auteur.setText(video.getAuteur());
+		video_auteur.setText(video.auteur);
 		TextView video_nbVues = (TextView)findViewById(R.id.video_nbVues);
-		video_nbVues.setText(""+video.getNbVues());
+		video_nbVues.setText(""+video.nbVues);
 	}
 
 
@@ -47,7 +49,7 @@ public class VideoActivity extends Activity {
 
 		Intent intent = new Intent(Intent.ACTION_SEND);
 		intent.setType("text/plain");
-		intent.putExtra(Intent.EXTRA_TEXT, video.getUrl());
+		intent.putExtra(Intent.EXTRA_TEXT, video.url);
 		mShareActionProvider.setShareIntent(intent);
 		
 		return true;
@@ -59,11 +61,11 @@ public class VideoActivity extends Activity {
 	    switch(view.getId()) {
 	        case R.id.checkbox_fav:
 	            if (checked){
-	            	video.setFavori(true);
+	            	video.favori=true;
 	            	//TODO:AJOUTER AUX FAVORIS
 	            }
 	            else{
-	            	video.setFavori(false);
+	            	video.favori=false;
 	            	//TODO:RETIRER DES FAVORIS
 	    		}break;
 	        
