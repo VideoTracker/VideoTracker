@@ -3,8 +3,12 @@ package com.udem.videotracker;
 import java.util.List;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,16 +18,22 @@ import android.widget.TextView;
 
 public class VideoAdapter extends BaseAdapter {
 
-	public static class VideoData {
+	/**
+	 * Classe qui represente le modele de données d'une video
+	 * implémente parcelable pour pouvoir etre transmise entre
+	 * deux activités.
+	 */
+	public static class VideoData implements Parcelable{
 		public final String title;
 		public final String description;
 		public final String auteur;
 		public final String url;
 		public boolean favori;
+		public boolean suppr;
 		public int nbVues;
 		public final Drawable picture;
 
-		public VideoData(String _title, String _description, String _auteur, String _url, boolean _favori, int _nbVues, Drawable _picture) {
+		public VideoData(String _title, String _description, String _auteur, String _url, boolean _favori, boolean _suppr, int _nbVues, Drawable _picture) {
 			title = _title;
 			description = _description;
 			auteur = _auteur;
@@ -31,6 +41,7 @@ public class VideoAdapter extends BaseAdapter {
 			favori = _favori;
 			nbVues = _nbVues;
 			picture = _picture;
+			suppr= _suppr;
 		}
 		
 		//TODO constructeur pour que antho fasse ses tests
@@ -40,20 +51,60 @@ public class VideoAdapter extends BaseAdapter {
 			auteur = null;
 			url = null;
 			favori = false;
+			suppr = false;
 			nbVues = 0;
 			picture = _picture;
 		}
+		@Override
+		public int describeContents() {
+			return 0;
+		}
 
+		@Override
+		public void writeToParcel(Parcel dest, int flags) {
+			dest.writeString(title);
+			dest.writeString(description);
+			dest.writeString(auteur);
+			dest.writeString(url);
+			dest.writeByte((byte) (favori ? 1 : 0));     //si favori == true, byte == 1
+			dest.writeInt(nbVues);
+			Bitmap bitmap = (Bitmap)((BitmapDrawable) picture).getBitmap();
+			dest.writeParcelable(bitmap, flags);
+		}
+		public static final Parcelable.Creator<VideoData> CREATOR = new Parcelable.Creator<VideoData>()
+				{
+			@Override
+			public VideoData createFromParcel(Parcel source)
+			{
+				return new VideoData(source);
+			}
+
+			@Override
+			public VideoData[] newArray(int size)
+			{
+				return new VideoData[size];
+			}
+				};
+
+		@SuppressWarnings("deprecation")
+		public VideoData(Parcel in) {
+			this.title = in.readString();
+			this.description = in.readString();
+			this.auteur = in.readString();
+			this.url = in.readString();
+			this.favori = in.readByte() != 0;
+			this.nbVues = in.readInt();
+			Bitmap bitmap = (Bitmap)in.readParcelable(getClass().getClassLoader());
+			this.picture = new BitmapDrawable(bitmap);
+
+		}
+
+		
 	}
 
 	private Context _context;
 	private List<VideoData> _data;
 
-	/*
-	 * Cette m�thode est utilis�e pour d�terminer la taille actuelle de la
-	 * liste. N'oubliez pas de v�rifier que la liste est bien d�finie avant de
-	 * retourner sa taille!
-	 */
 	@Override
 	public int getCount() {
 		if (_data != null)
@@ -62,12 +113,6 @@ public class VideoAdapter extends BaseAdapter {
 			return 0;
 	}
 
-	/*
-	 * Cette m�thode retourne l'�l�ment stock� � l'indice donn�. Il n'est pas
-	 * absolument n�cessaire de v�rifier si l'indice est bien dans la liste (les
-	 * appels sont g�n�ralement bien formul�s), mais cela reste une bonne
-	 * pratique.
-	 */
 	@Override
 	public Object getItem(int at) {
 		if (_data != null && at >= 0 && at < _data.size())
@@ -76,15 +121,6 @@ public class VideoAdapter extends BaseAdapter {
 			return null;
 	}
 
-	/*
-	 * Cette m�thode retourne un num�ro d'identification (ID) pour l'�l�ment �
-	 * l'indice donn�. Cet ID devrait g�n�ralement �tre unique pour l'�l�ment
-	 * donn�, en plus d'�tre reli� � celui-ci. Dans notre exemple, on se
-	 * contente de retourner l'indice, mais on pourrait par exemple imaginer une
-	 * liste triable o� l'on voudrait pouvoir retracer un �l�ment particulier
-	 * une fois le tri effectu� et o� la position n'est plus un ID appropri�. On
-	 * va souvent utiliser une forme de hachage des donn�es pour g�n�rer cet ID.
-	 */
 	@Override
 	public long getItemId(int at) {
 		return at;
@@ -103,6 +139,13 @@ public class VideoAdapter extends BaseAdapter {
 		TextView title_text = (TextView) view.findViewById(R.id.title);
 		TextView description_text = (TextView) view.findViewById(R.id.description);
 		ImageView icon = (ImageView)view.findViewById(R.id.videoIcon);
+		
+		
+		/*
+		 * ImageButton suppression = (ImageButton) view.findViewById(R.id.button_suppression);
+		 * if (!data.suppr)
+		 * 		suppression.setVisibility(0);
+		 */
 
 		title_text.setText(data.title);
 		description_text.setText(data.description);
@@ -115,21 +158,6 @@ public class VideoAdapter extends BaseAdapter {
 
 		return view;
 	}
-
-	/**
-	 * 
-	 * Constructeur de l'adapteur. On notera l'utilisation de List au lieu de
-	 * ArrayList; ceci est une bonne pratique, car List est une interface
-	 * g�n�rique alors que ArrayList est une implantation de cette interface.
-	 * L'adapteur n'a pas besoin d'une implantation particuli�re, tout ce qu'il
-	 * lui faut, c'est une liste. Ceci permet donc au programme utilisant
-	 * l'adapteur d'utiliser n'importe quelle implantation de List.
-	 * 
-	 * De plus, il faut toujours demander un Context, car ceci est utilis� entre
-	 * autres pour obtenir le LayoutInflater n�cessaire � l'initialisation des
-	 * Views dans getView.
-	 * 
-	 */
 
 	public VideoAdapter(Context context, List<VideoData> data) {
 		_context = context;

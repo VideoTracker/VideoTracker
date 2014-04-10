@@ -5,6 +5,12 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+/**
+ * Activité qui va permettre à l'utilisateur de gérer
+ * ses préférences concernant l'application
+ * @author rpiche
+ *
+ */
 public class PreferencesActivity extends Activity {
 
 	@Override

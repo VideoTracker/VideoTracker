@@ -5,6 +5,11 @@ import android.view.MenuItem;
 import android.app.ActionBar;
 import android.app.Activity;
 
+/**
+ * Activité qui présente les infos de l'application
+ * @author rpiche
+ *
+ */
 public class ProposActivity extends Activity {
 
 	@Override

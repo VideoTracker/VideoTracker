@@ -13,26 +13,37 @@ import android.widget.CheckBox;
 import android.widget.ShareActionProvider;
 import android.widget.TextView;
 
-
+/**
+ * Activité qui affiche une vidéo ainsi que ses infos.
+ * La vidéo sera lancée à partir de cette page.
+ * @author rpiche
+ *
+ */
 public class VideoActivity extends Activity {
 	private VideoData video;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		video = new VideoData("Un chat mange un oiseau", "le titre est déjà assez explicite non?\n\n\n\n","www.youtube.com","catLoveeeer",true,1000,null);
+		
 		ActionBar actionBar = getActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
 		setContentView(R.layout.activity_video);
 		
+		video = getIntent().getExtras().getParcelable("video");
+
 		TextView video_titre = (TextView)findViewById(R.id.video_titre);
 		video_titre.setText(video.title);
+
 		TextView video_url = (TextView)findViewById(R.id.video_url);
 		video_url.setText(video.url);
+		
 		TextView video_description = (TextView)findViewById(R.id.video_description_complet);
 		video_description.setText(video.description);
+		
 		TextView video_auteur = (TextView)findViewById(R.id.video_auteur);
 		video_auteur.setText(video.auteur);
+		
 		TextView video_nbVues = (TextView)findViewById(R.id.video_nbVues);
 		video_nbVues.setText(""+video.nbVues);
 	}
@@ -49,7 +60,7 @@ public class VideoActivity extends Activity {
 
 		Intent intent = new Intent(Intent.ACTION_SEND);
 		intent.setType("text/plain");
-		intent.putExtra(Intent.EXTRA_TEXT, video.url);
+		intent.putExtra(Intent.EXTRA_TEXT, "Regarde cette vidéo : "+video.url);
 		mShareActionProvider.setShareIntent(intent);
 		
 		return true;

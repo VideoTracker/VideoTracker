@@ -33,6 +33,9 @@
             android:name="com.udem.videotracker.PlaylistActivity"
             android:label="Playlists" />
         <activity
+            android:name="com.udem.videotracker.PlaylistVideoActivity"
+            android:label="Playlists" />
+        <activity
             android:name="com.udem.videotracker.ResultatVideosActivity"
             android:label="Vidéos" />
         <activity

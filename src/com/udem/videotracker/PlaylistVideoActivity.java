@@ -1,8 +1,6 @@
 package com.udem.videotracker;
 
 import java.util.ArrayList;
-
-
 import android.os.Bundle;
 import android.app.ActionBar;
 import android.app.Activity;
@@ -17,24 +15,27 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.SearchView.OnQueryTextListener;
 
 /**
- * Activité qui va afficher la liste des playlists
- * l'affichage se base sur le playlistAdapter
+ * Activité qui va afficher la liste des vidéos au sein d'une playlist
+ * l'affichage se base sur le videoAdapter aussi utilisé pour l'affichage
+ * de la liste de vidéos lors d'une recherche
  * @author rpiche
  *
  */
-public class PlaylistActivity extends Activity {
+public class PlaylistVideoActivity extends Activity {
 
 	private ListView mainList;
-	private PlaylistAdapter mainAdapter;
-	private ArrayList<PlaylistAdapter.PlaylistData> PlaylistData;
+	private VideoAdapter mainAdapter;
+	private ArrayList<VideoAdapter.VideoData> videoData;
 	
 	
-	private class PlaylistListOnItemClick implements OnItemClickListener {
+	private class VideoListOnItemClick implements OnItemClickListener {
 		@Override
 		public void onItemClick(AdapterView<?> adapter, View view,
 				int position, long id) {
-			//TODO
-			//lancer PlaylistVideoActivity avec la liste de video contenu dans la playlist
+			Intent intent = new Intent(PlaylistVideoActivity.this,
+					VideoActivity.class);
+			intent.putExtra("video", videoData.get(position));
+			startActivity(intent);
 		}
 	}
 	
@@ -43,23 +44,23 @@ public class PlaylistActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		ActionBar actionBar = getActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
-		setContentView(R.layout.activity_playlist);
+		setContentView(R.layout.activity_resultat_video);
 		
-		PlaylistData = new ArrayList<PlaylistAdapter.PlaylistData>();
+		videoData = new ArrayList<VideoAdapter.VideoData>();
 		//TODO
-		//remplir la liste de playlist selon la bdd
-		mainAdapter = new PlaylistAdapter(getApplicationContext(), PlaylistData);
+		//remplir la liste de video selon la playlist
+		mainAdapter = new VideoAdapter(getApplicationContext(), videoData);
 
-		mainList = (ListView) findViewById(R.id.playlistList);
+		mainList = (ListView) findViewById(R.id.videoList);
 		mainList.setAdapter(mainAdapter);
-		mainList.setOnItemClickListener(new PlaylistListOnItemClick());
+		mainList.setOnItemClickListener(new VideoListOnItemClick());
 	}
 
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.menu_playlists, menu);
+		getMenuInflater().inflate(R.menu.menu_videos, menu);
 		
 		MenuItem itemSearch = menu.findItem(R.id.menu_search);
 		SearchView mSearchView = (SearchView) itemSearch.getActionView();
@@ -67,7 +68,7 @@ public class PlaylistActivity extends Activity {
 
 			@Override
 			public boolean onQueryTextSubmit(String query) {
-				//TODO recherche d'une playlist spécifique
+				//TODO recherche de mots clés dans les vidéos d'une playlist par rapport au titre
 				return true;
 			}
 
@@ -101,17 +102,17 @@ public class PlaylistActivity extends Activity {
 	          return true;	
 
 	    case R.id.menu_a_propos:
-	    	intent = new Intent(PlaylistActivity.this,
+	    	intent = new Intent(PlaylistVideoActivity.this,
 					ProposActivity.class);
 			startActivity(intent);		      
 		      return true;
 	    case R.id.menu_aide:
-	    	intent = new Intent(PlaylistActivity.this,
+	    	intent = new Intent(PlaylistVideoActivity.this,
 					AideActivity.class);
 			startActivity(intent);		      
 		      return true;
 	    case R.id.menu_preferences:
-	    	intent = new Intent(PlaylistActivity.this,
+	    	intent = new Intent(PlaylistVideoActivity.this,
 					PreferencesActivity.class);
 			startActivity(intent);		      
 		      return true;

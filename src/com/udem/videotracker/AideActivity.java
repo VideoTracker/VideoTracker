@@ -7,7 +7,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
-
+/**
+ * Activité qui permet l'affichage de l'aide concernant l'application
+ * @author rpiche
+ *
+ */
 public class AideActivity extends Activity{
 
 

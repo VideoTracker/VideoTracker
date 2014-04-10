@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/item_video"
+    android:layout_width="match_parent"
+    android:layout_height="100dp" >
+
+    <TextView
+        android:id="@+id/playlist_titre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="5dp"
+        android:text="Titre"
+        android:textColor="#AAA"
+        android:textSize="15sp" />
+    
+    <ImageButton
+        android:id="@+id/button_suppression_playlist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="5dp"
+        android:src="@drawable/ic_content_remove"
+        android:background="@android:color/transparent"/>
+
+    <TextView
+        android:id="@+id/playlist_nbVideos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:text="Nb vidéos"
+        android:textColor="#AAA"
+        android:textSize="15sp" />
+    
+
+
+</RelativeLayout>
