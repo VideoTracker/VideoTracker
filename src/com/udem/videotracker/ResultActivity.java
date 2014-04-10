@@ -57,7 +57,7 @@ public class ResultActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		ActionBar actionBar = getActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
-		setContentView(R.layout.activity_video);
+		setContentView(R.layout.activity_resultat_video);
 
 		Bundle extras;
 		if (savedInstanceState == null) {
@@ -71,8 +71,6 @@ public class ResultActivity extends Activity {
 			keywords = (String) savedInstanceState.getSerializable("SEARCH");
 		}
 
-		search_txt = (TextView) findViewById(R.id.search_query);
-		search_txt.setText("Recherche : " + keywords);
 
 		weatherData = new ArrayList<VideoAdapter.VideoData>();
 		
@@ -134,8 +132,8 @@ public class ResultActivity extends Activity {
 	private class DownloadLoginTask extends
 			AsyncTask<String, String, YoutubeAPI> {
 		/*
-		 * Cette méthode s'exécute dans le thread de l'interface. C'est le bon
-		 * endroit pour notifier l'usager qu'une tâche plus longue commence (par
+		 * Cette mï¿½thode s'exï¿½cute dans le thread de l'interface. C'est le bon
+		 * endroit pour notifier l'usager qu'une tï¿½che plus longue commence (par
 		 * exemple, afficher une barre de progression).
 		 */
 		protected void onPreExecute() {
@@ -144,9 +142,9 @@ public class ResultActivity extends Activity {
 		}
 
 		/*
-		 * Cette méthode est exécutée dans son propre thread. C'est là où le
+		 * Cette mï¿½thode est exï¿½cutï¿½e dans son propre thread. C'est lï¿½ oï¿½ le
 		 * travail le plus lourd se passe. On pourra appeler publishProgress
-		 * durant l'exécution de cette méthode pour mettre à jour le thread
+		 * durant l'exï¿½cution de cette mï¿½thode pour mettre ï¿½ jour le thread
 		 * d'interface.
 		 */
 		protected YoutubeAPI doInBackground(String... params) {
@@ -155,20 +153,20 @@ public class ResultActivity extends Activity {
 		}
 
 		/*
-		 * Cette méthode est appelée dans le thread d'interface lorsque
-		 * publishProgress est appelée dans doInBackground. Les paramètres sont
-		 * passés directement de l'une à l'autre.
+		 * Cette mï¿½thode est appelï¿½e dans le thread d'interface lorsque
+		 * publishProgress est appelï¿½e dans doInBackground. Les paramï¿½tres sont
+		 * passï¿½s directement de l'une ï¿½ l'autre.
 		 */
 		protected void onProgressUpdate(String... s) {
-			// éxécute dans le thread interface, si le thread non-interface
-			// appelle publishProgress à l'intérieur de doInBackground
+			// ï¿½xï¿½cute dans le thread interface, si le thread non-interface
+			// appelle publishProgress ï¿½ l'intï¿½rieur de doInBackground
 		}
 
 		/*
-		 * Cette méthode s'exécute dans le thread d'interface. C'est l'endroit
-		 * où on réagit généralement à la complétion du processus en
-		 * arrière-plan, par exemple en mettant à jour l'interface avec les
-		 * données obtenues.
+		 * Cette mï¿½thode s'exï¿½cute dans le thread d'interface. C'est l'endroit
+		 * oï¿½ on rï¿½agit gï¿½nï¿½ralement ï¿½ la complï¿½tion du processus en
+		 * arriï¿½re-plan, par exemple en mettant ï¿½ jour l'interface avec les
+		 * donnï¿½es obtenues.
 		 */
 		protected void onPostExecute(YoutubeAPI web) {
 			// Cache la barre de progression
