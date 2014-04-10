@@ -12,6 +12,13 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+/**
+ * Activité principale de l'application, elle est lancée
+ * au démarrage. Elle permet de faire une recherche selon
+ * les checkbox cochées.
+ * @author rpiche
+ *
+ */
 public class RechercheActivity extends Activity implements OnClickListener {
 	private EditText text_search;
 	private ImageButton button_search;
