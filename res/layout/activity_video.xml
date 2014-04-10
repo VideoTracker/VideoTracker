@@ -84,15 +84,5 @@
         android:layout_margin="10dp"
         android:text="Url de la vidéo : www.youtube.ca"
         android:textSize="12sp" />
-<<<<<<< HEAD
-        
-        <ListView
-        android:id="@+id/videoList"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-    	</ListView>
-    
-=======
->>>>>>> 4ec6a7f7513719fea9b4b99b204b8078c56b593f
 
 </LinearLayout>

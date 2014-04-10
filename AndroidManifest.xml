@@ -24,14 +24,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-<<<<<<< HEAD
+
          <activity 
             android:name="com.udem.videotracker.ResultActivity"
             android:label="Recherche"/>
-        <activity 
-=======
+        
         <activity
->>>>>>> 4ec6a7f7513719fea9b4b99b204b8078c56b593f
             android:name="com.udem.videotracker.PlaylistActivity"
             android:label="Playlists" />
         <activity
