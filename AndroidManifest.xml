@@ -45,7 +45,7 @@
             android:label="À propos de VideoTracker" />
         <activity
             android:name="com.udem.videotracker.AideActivity"
-            android:label="À propos de VideoTracker" />
+            android:label="Aide de VideoTracker" />
         <activity
             android:name="com.udem.videotracker.VideoActivity"
             android:label="@string/title_activity_video" >
