@@ -33,9 +33,10 @@ public class PlaylistActivity extends Activity {
 		@Override
 		public void onItemClick(AdapterView<?> adapter, View view,
 				int position, long id) {
-			//TODO
-			//lancer PlaylistVideoActivity avec la liste de video contenu dans la playlist
-		}
+			Intent intent = new Intent(PlaylistActivity.this,
+					PlaylistVideoActivity.class);
+			intent.putExtra("videos", PlaylistData.get(position).id);
+			startActivity(intent);		}
 	}
 	
 	@Override
@@ -67,7 +68,12 @@ public class PlaylistActivity extends Activity {
 
 			@Override
 			public boolean onQueryTextSubmit(String query) {
-				//TODO recherche d'une playlist spécifique
+				ArrayList<PlaylistAdapter.PlaylistData> res = new ArrayList<PlaylistAdapter.PlaylistData>();
+				for (PlaylistAdapter.PlaylistData s : PlaylistData){
+					if(s.title.indexOf(query)!=-1)
+						res.add(s);
+				}
+				mainList.setAdapter(new PlaylistAdapter(getApplicationContext(), res));
 				return true;
 			}
 

@@ -46,9 +46,11 @@ public class PlaylistVideoActivity extends Activity {
 		actionBar.setDisplayHomeAsUpEnabled(true);
 		setContentView(R.layout.activity_resultat_video);
 		
+		int id_playlist = getIntent().getExtras().getParcelable("videos");
+
 		videoData = new ArrayList<VideoAdapter.VideoData>();
 		//TODO
-		//remplir la liste de video selon la playlist
+		//remplir la liste de video selon la playlist avec l'id recuperé
 		mainAdapter = new VideoAdapter(getApplicationContext(), videoData);
 
 		mainList = (ListView) findViewById(R.id.videoList);
@@ -89,7 +91,6 @@ public class PlaylistVideoActivity extends Activity {
 	  switch(item.getItemId())
 	  {
 	    case R.id.tri_alpha:
-	    	
 	          return true;
 	    case android.R.id.home:
 	    	this.finish();
