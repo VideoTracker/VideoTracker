@@ -71,6 +71,8 @@ public class ResultActivity extends Activity {
 			keywords = (String) savedInstanceState.getSerializable("SEARCH");
 		}
 
+		search_txt = (TextView) findViewById(R.id.search_query);
+		search_txt.setText("Recherche : " + keywords);
 
 		weatherData = new ArrayList<VideoAdapter.VideoData>();
 		
