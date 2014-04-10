@@ -35,63 +35,44 @@ public final class R {
         public static final int playlist=0x7f020006;
     }
     public static final class id {
-<<<<<<< HEAD
-        public static final int button_search=0x7f080001;
-        public static final int description=0x7f080005;
-        public static final int item_video=0x7f080004;
-        public static final int menu_a_propos=0x7f08000e;
-        public static final int menu_add=0x7f080011;
-        public static final int menu_aide=0x7f08000d;
-        public static final int menu_playlist=0x7f08000f;
-        public static final int menu_preferences=0x7f08000c;
-        public static final int menu_search=0x7f080008;
-        public static final int menu_share=0x7f080010;
-        public static final int search_query=0x7f080002;
-        public static final int text_search=0x7f080000;
-        public static final int title=0x7f080006;
-        public static final int tri_alpha=0x7f08000a;
-        public static final int tri_date=0x7f080009;
-        public static final int tri_nombre=0x7f08000b;
-        public static final int videoIcon=0x7f080007;
-        public static final int videoList=0x7f080003;
-=======
-        public static final int action_settings=0x7f080016;
+        public static final int action_settings=0x7f08001c;
         public static final int button_search=0x7f080003;
         public static final int checkbox_dailymotion=0x7f080005;
         public static final int checkbox_fav=0x7f080000;
         public static final int checkbox_youtube=0x7f080004;
-        public static final int menu_a_propos=0x7f080012;
-        public static final int menu_add=0x7f080015;
-        public static final int menu_aide=0x7f080011;
-        public static final int menu_playlist=0x7f080013;
-        public static final int menu_preferences=0x7f080010;
-        public static final int menu_search=0x7f08000c;
-        public static final int menu_share=0x7f080014;
+        public static final int description=0x7f080011;
+        public static final int item_video=0x7f08000e;
+        public static final int menu_a_propos=0x7f080018;
+        public static final int menu_add=0x7f08001b;
+        public static final int menu_aide=0x7f080017;
+        public static final int menu_playlist=0x7f080019;
+        public static final int menu_preferences=0x7f080016;
+        public static final int menu_search=0x7f080012;
+        public static final int menu_share=0x7f08001a;
+        public static final int progressBar=0x7f080007;
         public static final int search_query=0x7f080006;
         public static final int test=0x7f080001;
         public static final int text_search=0x7f080002;
-        public static final int tri_alpha=0x7f08000e;
-        public static final int tri_date=0x7f08000d;
-        public static final int tri_nombre=0x7f08000f;
-        public static final int video_auteur=0x7f080008;
-        public static final int video_description_complet=0x7f08000a;
-        public static final int video_nbVues=0x7f080009;
-        public static final int video_titre=0x7f080007;
-        public static final int video_url=0x7f08000b;
->>>>>>> 17c29a2816f9b94f4d0918873e169d8aee647949
+        public static final int title=0x7f080010;
+        public static final int tri_alpha=0x7f080014;
+        public static final int tri_date=0x7f080013;
+        public static final int tri_nombre=0x7f080015;
+        public static final int videoIcon=0x7f08000f;
+        public static final int videoList=0x7f080008;
+        public static final int video_auteur=0x7f08000a;
+        public static final int video_description_complet=0x7f08000c;
+        public static final int video_nbVues=0x7f08000b;
+        public static final int video_titre=0x7f080009;
+        public static final int video_url=0x7f08000d;
     }
     public static final class layout {
         public static final int activity_aide=0x7f030000;
         public static final int activity_pref=0x7f030001;
         public static final int activity_propos=0x7f030002;
         public static final int activity_recherche=0x7f030003;
-<<<<<<< HEAD
-        public static final int activity_video=0x7f030004;
-        public static final int layout_item=0x7f030005;
-=======
         public static final int activity_resultat_video=0x7f030004;
         public static final int activity_video=0x7f030005;
->>>>>>> 17c29a2816f9b94f4d0918873e169d8aee647949
+        public static final int layout_item=0x7f030006;
     }
     public static final class menu {
         public static final int menu_playlists=0x7f070000;

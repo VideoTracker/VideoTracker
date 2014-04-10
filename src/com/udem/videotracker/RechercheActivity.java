@@ -10,6 +10,7 @@ import android.view.View.OnClickListener;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 public class RechercheActivity extends Activity implements OnClickListener {
 	private EditText text_search;
@@ -62,16 +63,18 @@ public class RechercheActivity extends Activity implements OnClickListener {
 			String search = "";
 			CheckBox checkD = (CheckBox) findViewById(R.id.checkbox_dailymotion);
 			CheckBox checkY = (CheckBox) findViewById(R.id.checkbox_youtube);
-			if(checkD.isChecked()){
-				//Dailymotion checked
-			}
-			if(checkY.isChecked()){
-				//YouTube checked
+			if ((!checkD.isChecked()) && (!checkY.isChecked())) {
+				Toast.makeText(
+						getApplicationContext(),
+						"Veuillez sélectionner au moins un moteur de recherche",
+						Toast.LENGTH_SHORT).show();
 			}
 			search += text_search.getText().toString();
 			Intent intent = new Intent(RechercheActivity.this,
 					ResultActivity.class);
 			intent.putExtra("SEARCH", search);
+			intent.putExtra("SEARCH_DAILYMOTION", checkD.isChecked());
+			intent.putExtra("SEARCH_YOUTUBE", checkY.isChecked());
 			startActivity(intent);
 		}
 	}
