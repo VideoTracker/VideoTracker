@@ -5,14 +5,5 @@
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
-	<classpathentry kind="lib" path="libs/google-api-client-android-1.17.0-rc.jar"/>
-	<classpathentry kind="lib" path="libs/google-api-client-1.17.0-rc.jar"/>
-	<classpathentry kind="lib" path="libs/google-http-client-android-1.17.0-rc.jar"/>
-	<classpathentry kind="lib" path="libs/google-http-client-1.17.0-rc.jar"/>
-	<classpathentry kind="lib" path="libs/commons-logging-1.1.1.jar"/>
-	<classpathentry kind="lib" path="libs/google-http-client-jackson2-1.17.0-rc.jar"/>
-	<classpathentry kind="lib" path="libs/google-api-services-youtube-v3-rev100-1.17.0-rc.jar"/>
-	<classpathentry kind="lib" path="libs/google-api-services-youtube-v3-rev100-1.17.0-rc-javadoc.jar"/>
-	<classpathentry kind="lib" path="libs/google-api-services-youtube-v3-rev100-1.17.0-rc-sources.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

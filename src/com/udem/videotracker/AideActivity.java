@@ -4,8 +4,12 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.CheckBox;
+import android.widget.TextView;
 
-public class AideActivity extends Activity {
+public class AideActivity extends Activity{
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -13,6 +17,24 @@ public class AideActivity extends Activity {
 		ActionBar actionBar = getActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
 		setContentView(R.layout.activity_aide);
+
+	}
+	
+	public void onCheckboxClicked(View view) {
+		TextView toto = (TextView) findViewById(R.id.test);
+	    // Is the view now checked?
+	    boolean checked = ((CheckBox) view).isChecked();
+	    
+	    // Check which checkbox was clicked
+	    switch(view.getId()) {
+	        case R.id.checkbox_fav:
+	            if (checked)
+	            	toto.setText("True");
+	            else
+	                toto.setText("False");
+	            break;
+	        
+	    }
 	}
 
 	
@@ -27,4 +49,7 @@ public class AideActivity extends Activity {
 	  }
 	  return super.onOptionsItemSelected(item);
 	}
+	
+
+
 }

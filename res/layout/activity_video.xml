@@ -3,14 +3,88 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >  
+    <TextView
+            android:id="@+id/video_titre"
+            android:layout_width="245dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="Titre de la video"
+            android:textSize="16sp" />   
 
-        <TextView
-        android:id="@+id/search_query"
+      
+        <CheckBox
+            android:id="@+id/checkbox_fav"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@android:drawable/btn_star"
+            android:onClick="onCheckboxClicked" 
+            android:layout_marginLeft="5dp"
+            />
+
+        <ImageButton
+            android:id="@+id/button_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/description_image_recherche"
+            android:src="@drawable/ic_av_play" />
+
+    	</LinearLayout>
+ 
+    
+		<LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" 
+        android:layout_margin="5dp"> 
+        
+	<TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:text="@string/search_query"
+        android:text="de "
+        android:textSize="12sp" />  
+	<TextView
+        android:id="@+id/video_auteur"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Auteur"
+        android:textSize="12sp" />    
+	
+    <TextView
+        android:id="@+id/video_nbVues"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:text="1000"
         android:textSize="12sp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" vues"
+        android:textSize="12sp" />
+    </LinearLayout>
+	
+	<TextView
+        android:id="@+id/video_description_complet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="Description de la video :\n\n\n\n\n\n"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/video_url"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="Url de la vidéo : www.youtube.ca"
+        android:textSize="12sp" />
+<<<<<<< HEAD
         
         <ListView
         android:id="@+id/videoList"
@@ -18,5 +92,7 @@
         android:layout_height="wrap_content" >
     	</ListView>
     
+=======
+>>>>>>> 4ec6a7f7513719fea9b4b99b204b8078c56b593f
 
 </LinearLayout>
