@@ -27,8 +27,8 @@ public class PlaylistActivity extends Activity {
 	private ListView mainList;
 	private PlaylistAdapter mainAdapter;
 	private ArrayList<PlaylistAdapter.PlaylistData> PlaylistData;
-	
-	
+
+
 	private class PlaylistListOnItemClick implements OnItemClickListener {
 		@Override
 		public void onItemClick(AdapterView<?> adapter, View view,
@@ -38,14 +38,14 @@ public class PlaylistActivity extends Activity {
 			intent.putExtra("videos", PlaylistData.get(position).id);
 			startActivity(intent);		}
 	}
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		ActionBar actionBar = getActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
 		setContentView(R.layout.activity_playlist);
-		
+
 		PlaylistData = new ArrayList<PlaylistAdapter.PlaylistData>();
 		//TODO
 		//remplir la liste de playlist selon la bdd
@@ -61,20 +61,21 @@ public class PlaylistActivity extends Activity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.menu_playlists, menu);
-		
+
 		MenuItem itemSearch = menu.findItem(R.id.menu_search);
 		SearchView mSearchView = (SearchView) itemSearch.getActionView();
 		mSearchView.setOnQueryTextListener(new OnQueryTextListener() {
 
 			@Override
 			public boolean onQueryTextSubmit(String query) {
-				ArrayList<PlaylistAdapter.PlaylistData> res = new ArrayList<PlaylistAdapter.PlaylistData>();
-				for (PlaylistAdapter.PlaylistData s : PlaylistData){
-					if(s.title.indexOf(query)!=-1)
-						res.add(s);
+				ArrayList<PlaylistAdapter.PlaylistData> tmp = new ArrayList<PlaylistAdapter.PlaylistData>(PlaylistData);
+				for (PlaylistAdapter.PlaylistData s : tmp){
+					if(s.title.indexOf(query)==-1)
+						PlaylistData.remove(s);
 				}
-				mainList.setAdapter(new PlaylistAdapter(getApplicationContext(), res));
+				mainAdapter.notifyDataSetChanged();
 				return true;
+				//TODO
 			}
 
 			@Override
@@ -82,7 +83,7 @@ public class PlaylistActivity extends Activity {
 				return false;
 			}
 		});
-		
+
 		return true;
 	}
 
@@ -90,40 +91,43 @@ public class PlaylistActivity extends Activity {
 	@Override
 	public boolean onOptionsItemSelected (MenuItem item)
 	{
-	  Intent intent = null;
-	  switch(item.getItemId())
-	  {
-	    case R.id.tri_alpha:
-	    	
-	          return true;
-	    case android.R.id.home:
-	    	this.finish();
-	    	  return true;
-	    case R.id.tri_nombre:
-	    	
-	          return true;
-	    case R.id.tri_date:
-	    	
-	          return true;	
+		Intent intent = null;
+		switch(item.getItemId())
+		{
+		case R.id.tri_alpha:
+			//PlaylistData = getAlpha();
+			mainAdapter.notifyDataSetChanged();
+			return true;
+		case android.R.id.home:
+			this.finish();
+			return true;
+		case R.id.tri_nombre:
+			//PlaylistData = getNombre();
+			mainAdapter.notifyDataSetChanged();
+			return true;
+		case R.id.tri_date:
+			//PlaylistData = getDate();
+			mainAdapter.notifyDataSetChanged();
+			return true;	
 
-	    case R.id.menu_a_propos:
-	    	intent = new Intent(PlaylistActivity.this,
+		case R.id.menu_a_propos:
+			intent = new Intent(PlaylistActivity.this,
 					ProposActivity.class);
 			startActivity(intent);		      
-		      return true;
-	    case R.id.menu_aide:
-	    	intent = new Intent(PlaylistActivity.this,
+			return true;
+		case R.id.menu_aide:
+			intent = new Intent(PlaylistActivity.this,
 					AideActivity.class);
 			startActivity(intent);		      
-		      return true;
-	    case R.id.menu_preferences:
-	    	intent = new Intent(PlaylistActivity.this,
+			return true;
+		case R.id.menu_preferences:
+			intent = new Intent(PlaylistActivity.this,
 					PreferencesActivity.class);
 			startActivity(intent);		      
-		      return true;
-	      
-	  }
-	  return super.onOptionsItemSelected(item);
+			return true;
+
+		}
+		return super.onOptionsItemSelected(item);
 	}
-	
+
 }
