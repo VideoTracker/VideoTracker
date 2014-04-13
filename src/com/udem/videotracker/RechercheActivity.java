@@ -1,7 +1,10 @@
 package com.udem.videotracker;
 
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -30,6 +33,17 @@ public class RechercheActivity extends Activity implements OnClickListener {
 		text_search = (EditText) findViewById(R.id.text_search);
 		button_search = (ImageButton) findViewById(R.id.button_search);
 		button_search.setOnClickListener(this);
+	}
+	
+	@Override
+	protected void onStart() {
+		super.onStart();
+		
+		if(!isOnline(this)){
+			Intent intent = new Intent(RechercheActivity.this,
+					InternetCheckActivity.class);
+			startActivity(intent);
+		}
 	}
 
 	@Override
@@ -84,6 +98,16 @@ public class RechercheActivity extends Activity implements OnClickListener {
 			intent.putExtra("SEARCH_YOUTUBE", checkY.isChecked());
 			startActivity(intent);
 		}
+	}
+	
+	public static boolean isOnline(Activity a) {
+	    ConnectivityManager cm =
+	        (ConnectivityManager) a.getSystemService(Context.CONNECTIVITY_SERVICE);
+	    NetworkInfo netInfo = cm.getActiveNetworkInfo();
+	    if (netInfo != null && netInfo.isConnectedOrConnecting()) {
+	        return true;
+	    }
+	    return false;
 	}
 
 }

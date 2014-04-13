@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
@@ -82,6 +81,12 @@ public class ResultActivity extends Activity {
 		mainList = (ListView) findViewById(R.id.videoList);
 		mainList.setAdapter(mainAdapter);
 		mainList.setOnItemClickListener(new VideoListOnItemClick());
+		
+		if(!RechercheActivity.isOnline(this)){
+			Intent intent = new Intent(ResultActivity.this,
+					InternetCheckActivity.class);
+			startActivity(intent);
+		}
 		
 		new SearchVideos(this).execute();
 	}
