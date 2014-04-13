@@ -152,6 +152,12 @@ public class VideoAdapter extends BaseAdapter {
 		TextView description_text = (TextView) view
 				.findViewById(R.id.description);
 		ImageView icon = (ImageView) view.findViewById(R.id.videoIcon);
+		ImageView source = (ImageView) view.findViewById(R.id.website);
+		if (data.sourceVideo == Source.DAILYMOTION) {
+			source.setImageResource(R.drawable.dailymotion);
+		} else {
+			source.setImageResource(R.drawable.youtube);
+		}
 
 		/*
 		 * ImageButton suppression = (ImageButton)

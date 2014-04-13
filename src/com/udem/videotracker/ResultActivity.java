@@ -1,5 +1,6 @@
 package com.udem.videotracker;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 
 import android.app.ActionBar;
@@ -54,6 +55,13 @@ public class ResultActivity extends Activity {
 				keywords = null;
 			} else {
 				keywords = extras.getString("SEARCH");
+				
+				// retirer les espaces superflus au debut et a la fin
+				keywords = keywords.trim();
+				
+				// remplacer les espaces dans le mot par des +
+				keywords = keywords.replaceAll("\\s+", "+");
+				
 				searchDailymotion = extras.getBoolean("SEARCH_DAILYMOTION");
 				searchYoutube = extras.getBoolean("SEARCH_YOUTUBE");
 			}
@@ -75,7 +83,7 @@ public class ResultActivity extends Activity {
 		mainList.setAdapter(mainAdapter);
 		mainList.setOnItemClickListener(new VideoListOnItemClick());
 		
-		new DownloadLoginTask(this).execute();
+		new SearchVideos(this).execute();
 	}
 
 	@Override
@@ -127,19 +135,26 @@ public class ResultActivity extends Activity {
 		return true;
 	}
 
-	private class DownloadLoginTask extends
+	private class SearchVideos extends
 			AsyncTask<String, Integer, YoutubeAPI> {
 		
 		public ResultActivity activity;
 
-	    public DownloadLoginTask(ResultActivity a)
+	    public SearchVideos(ResultActivity a)
 	    {
 	        this.activity = a;
 	    }
 
 		protected YoutubeAPI doInBackground(String... params) {
-			YoutubeAPI web = new YoutubeAPI(activity, keywords, progressBar,
-					searchDailymotion, searchYoutube, videoData, mainAdapter);
+			YoutubeAPI web = null;
+			try {
+				web = new YoutubeAPI(activity, keywords, progressBar,
+						searchDailymotion, searchYoutube, videoData, mainAdapter);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
 			return web;
 		}
 
@@ -169,6 +184,8 @@ public class ResultActivity extends Activity {
 			}
 
 			search_txt.setText("Nombre de resultats : " + videoData.size());
+			
+			mainAdapter.notifyDataSetChanged();
 		}
 	}
 
