@@ -1,5 +1,6 @@
 package com.udem.videotracker;
 
+import java.util.Date;
 import java.util.List;
 
 import android.content.Context;
@@ -18,12 +19,15 @@ import android.widget.TextView;
 
 public class VideoAdapter extends BaseAdapter {
 
+	public enum Source {
+		YOUTUBE, DAILYMOTION
+	}
+
 	/**
-	 * Classe qui represente le modele de données d'une video
-	 * implémente parcelable pour pouvoir etre transmise entre
-	 * deux activités.
+	 * Classe qui represente le modele de données d'une video implémente
+	 * parcelable pour pouvoir etre transmise entre deux activités.
 	 */
-	public static class VideoData implements Parcelable{
+	public static class VideoData implements Parcelable {
 		public final String title;
 		public final String description;
 		public final String auteur;
@@ -32,8 +36,13 @@ public class VideoAdapter extends BaseAdapter {
 		public boolean suppr;
 		public int nbVues;
 		public final Drawable picture;
+		public Date datePublication = new Date();
 
-		public VideoData(String _title, String _description, String _auteur, String _url, boolean _favori, boolean _suppr, int _nbVues, Drawable _picture) {
+		public Source sourceVideo;
+
+		public VideoData(String _title, String _description, String _auteur,
+				String _url, boolean _favori, boolean _suppr, int _nbVues,
+				Drawable _picture) {
 			title = _title;
 			description = _description;
 			auteur = _auteur;
@@ -41,20 +50,24 @@ public class VideoAdapter extends BaseAdapter {
 			favori = _favori;
 			nbVues = _nbVues;
 			picture = _picture;
-			suppr= _suppr;
+			suppr = _suppr;
 		}
-		
-		//TODO constructeur pour que antho fasse ses tests
-		public VideoData(String _title, String _description, Drawable _picture) {
+
+		// TODO constructeur pour que antho fasse ses tests
+		public VideoData(String _title, String _description, Drawable _picture,
+				Source _sourceVideo, int _nbVues, Date _datePublication) {
 			title = _title;
 			description = _description;
 			auteur = null;
 			url = null;
 			favori = false;
 			suppr = false;
-			nbVues = 0;
+			nbVues = _nbVues;
+			sourceVideo = _sourceVideo;
+			datePublication = _datePublication;
 			picture = _picture;
 		}
+
 		@Override
 		public int describeContents() {
 			return 0;
@@ -66,25 +79,24 @@ public class VideoAdapter extends BaseAdapter {
 			dest.writeString(description);
 			dest.writeString(auteur);
 			dest.writeString(url);
-			dest.writeByte((byte) (favori ? 1 : 0));     //si favori == true, byte == 1
+			dest.writeByte((byte) (favori ? 1 : 0)); // si favori == true, byte
+														// == 1
 			dest.writeInt(nbVues);
-			Bitmap bitmap = (Bitmap)((BitmapDrawable) picture).getBitmap();
+			Bitmap bitmap = (Bitmap) ((BitmapDrawable) picture).getBitmap();
 			dest.writeParcelable(bitmap, flags);
 		}
-		public static final Parcelable.Creator<VideoData> CREATOR = new Parcelable.Creator<VideoData>()
-				{
+
+		public static final Parcelable.Creator<VideoData> CREATOR = new Parcelable.Creator<VideoData>() {
 			@Override
-			public VideoData createFromParcel(Parcel source)
-			{
+			public VideoData createFromParcel(Parcel source) {
 				return new VideoData(source);
 			}
 
 			@Override
-			public VideoData[] newArray(int size)
-			{
+			public VideoData[] newArray(int size) {
 				return new VideoData[size];
 			}
-				};
+		};
 
 		@SuppressWarnings("deprecation")
 		public VideoData(Parcel in) {
@@ -94,12 +106,12 @@ public class VideoAdapter extends BaseAdapter {
 			this.url = in.readString();
 			this.favori = in.readByte() != 0;
 			this.nbVues = in.readInt();
-			Bitmap bitmap = (Bitmap)in.readParcelable(getClass().getClassLoader());
+			Bitmap bitmap = (Bitmap) in.readParcelable(getClass()
+					.getClassLoader());
 			this.picture = new BitmapDrawable(bitmap);
 
 		}
 
-		
 	}
 
 	private Context _context;
@@ -137,14 +149,14 @@ public class VideoAdapter extends BaseAdapter {
 		}
 
 		TextView title_text = (TextView) view.findViewById(R.id.title);
-		TextView description_text = (TextView) view.findViewById(R.id.description);
-		ImageView icon = (ImageView)view.findViewById(R.id.videoIcon);
-		
-		
+		TextView description_text = (TextView) view
+				.findViewById(R.id.description);
+		ImageView icon = (ImageView) view.findViewById(R.id.videoIcon);
+
 		/*
-		 * ImageButton suppression = (ImageButton) view.findViewById(R.id.button_suppression);
-		 * if (!data.suppr)
-		 * 		suppression.setVisibility(0);
+		 * ImageButton suppression = (ImageButton)
+		 * view.findViewById(R.id.button_suppression); if (!data.suppr)
+		 * suppression.setVisibility(0);
 		 */
 
 		title_text.setText(data.title);
