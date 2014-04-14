@@ -44,7 +44,6 @@ public class InternetCheckActivity extends Activity implements OnClickListener {
 		protected Object doInBackground(String... params) {
 			while (!RechercheActivity.isOnline(activity)) {
 				try {
-					Log.i("ANTHO", "lalala");
 					Thread.sleep(1000);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
