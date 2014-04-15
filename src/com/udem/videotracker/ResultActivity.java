@@ -2,6 +2,8 @@ package com.udem.videotracker;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -95,35 +97,60 @@ public class ResultActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		Intent intent = null;
 		switch (item.getItemId()) {
-		case R.id.tri_alpha:
+		case R.id.tri_alpha:{
+			Comparator<VideoAdapter.VideoData> myComparator = new Comparator<VideoAdapter.VideoData>() {
+			    public int compare(VideoAdapter.VideoData obj1,VideoAdapter.VideoData obj2) {
+			        return obj1.title.compareTo(obj2.title);
+			    }
+			 };
+			Collections.sort(videoData, myComparator);
 			mainAdapter.notifyDataSetChanged();
 			return true;
-		case android.R.id.home:
+		}
+		case android.R.id.home:{
 			this.finish();
 			return true;
-		case R.id.tri_source:
+		}
+		case R.id.tri_source:{
+			Comparator<VideoAdapter.VideoData> myComparator = new Comparator<VideoAdapter.VideoData>() {
+			    public int compare(VideoAdapter.VideoData obj1,VideoAdapter.VideoData obj2) {
+			        return obj1.sourceVideo.compareTo(obj2.sourceVideo);
+			    }
+			 };
+			Collections.sort(videoData, myComparator);
 			mainAdapter.notifyDataSetChanged();
 			return true;
-		case R.id.tri_date:
+		}
+		case R.id.tri_date:{
+			Comparator<VideoAdapter.VideoData> myComparator = new Comparator<VideoAdapter.VideoData>() {
+			    public int compare(VideoAdapter.VideoData obj1,VideoAdapter.VideoData obj2) {
+			        return obj1.datePublication.compareTo(obj2.datePublication);
+			    }
+			 };
+			Collections.sort(videoData, myComparator);
 			mainAdapter.notifyDataSetChanged();
 			return true;
-		case R.id.menu_playlist:
+		}
+		case R.id.menu_playlist:{
 			intent = new Intent(ResultActivity.this, PlaylistActivity.class);
 			startActivity(intent);
 			return true;
-		case R.id.menu_a_propos:
+		}
+		case R.id.menu_a_propos:{
 			intent = new Intent(ResultActivity.this, ProposActivity.class);
 			startActivity(intent);
 			return true;
-		case R.id.menu_aide:
+		}
+		case R.id.menu_aide:{
 			intent = new Intent(ResultActivity.this, AideActivity.class);
 			startActivity(intent);
 			return true;
-		case R.id.menu_preferences:
+		}
+		case R.id.menu_preferences:{
 			intent = new Intent(ResultActivity.this, PreferencesActivity.class);
 			startActivity(intent);
 			return true;
-
+		}
 		}
 		return super.onOptionsItemSelected(item);
 	}
