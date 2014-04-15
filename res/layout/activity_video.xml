@@ -26,12 +26,11 @@
             />
 
         <ImageButton
-            android:id="@+id/button_search"
+            android:id="@+id/button_play"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:background="@android:color/transparent"
-            android:contentDescription="@string/description_image_recherche"
             android:src="@drawable/ic_av_play" />
 
     	</LinearLayout>
