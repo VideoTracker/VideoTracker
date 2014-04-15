@@ -19,10 +19,12 @@
     <string name="tri_date">Date de création</string>
     <string name="tri_alpha">Ordre alphabétique</string>
     <string name="tri_nombre">Nombre de vidéos</string>
+  	<string name="tri_source">Source des vidéos</string>
     <string name="search_query">Ce que vous avez tapé</string>
     <string name="checkbox_youtube">Youtube</string>
     <string name="checkbox_dailymotion">Dailymotion</string>
     <string name="title_activity_video">VideoActivity</string>
     <string name="hello_world">Hello world!</string>
+    <string name="connection_error">Veuillez activer votre connexion Internet</string>
 
 </resources>
