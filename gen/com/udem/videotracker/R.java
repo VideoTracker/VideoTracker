@@ -26,53 +26,68 @@ public final class R {
         public static final int activity_vertical_margin=0x7f040001;
     }
     public static final class drawable {
-        public static final int ic_action_collections_sort_by_size=0x7f020000;
-        public static final int ic_action_images_slideshow=0x7f020001;
-        public static final int ic_action_search=0x7f020002;
-        public static final int ic_av_play=0x7f020003;
-        public static final int ic_launcher=0x7f020004;
-        public static final int mqdefault=0x7f020005;
-        public static final int playlist=0x7f020006;
+        public static final int dailymotion=0x7f020000;
+        public static final int favorite=0x7f020001;
+        public static final int ic_action_collections_sort_by_size=0x7f020002;
+        public static final int ic_action_images_slideshow=0x7f020003;
+        public static final int ic_action_search=0x7f020004;
+        public static final int ic_av_play=0x7f020005;
+        public static final int ic_content_remove=0x7f020006;
+        public static final int ic_launcher=0x7f020007;
+        public static final int loading_wifi=0x7f020008;
+        public static final int mqdefault=0x7f020009;
+        public static final int playlist=0x7f02000a;
+        public static final int youtube=0x7f02000b;
     }
     public static final class id {
-        public static final int action_settings=0x7f08001c;
-        public static final int button_search=0x7f080003;
-        public static final int checkbox_dailymotion=0x7f080005;
+        public static final int action_settings=0x7f080023;
+        public static final int button_search=0x7f080005;
+        public static final int button_suppression_playlist=0x7f080016;
+        public static final int checkbox_dailymotion=0x7f080007;
         public static final int checkbox_fav=0x7f080000;
-        public static final int checkbox_youtube=0x7f080004;
-        public static final int description=0x7f080011;
-        public static final int item_video=0x7f08000e;
-        public static final int menu_a_propos=0x7f080018;
-        public static final int menu_add=0x7f08001b;
-        public static final int menu_aide=0x7f080017;
-        public static final int menu_playlist=0x7f080019;
-        public static final int menu_preferences=0x7f080016;
-        public static final int menu_search=0x7f080012;
-        public static final int menu_share=0x7f08001a;
-        public static final int progressBar=0x7f080007;
-        public static final int search_query=0x7f080006;
+        public static final int checkbox_youtube=0x7f080006;
+        public static final int description=0x7f080013;
+        public static final int item_video=0x7f080010;
+        public static final int loading_wifi=0x7f080002;
+        public static final int menu_a_propos=0x7f08001e;
+        public static final int menu_add=0x7f080021;
+        public static final int menu_aide=0x7f08001d;
+        public static final int menu_playlist=0x7f08001f;
+        public static final int menu_preferences=0x7f08001c;
+        public static final int menu_search=0x7f080018;
+        public static final int menu_share=0x7f080020;
+        public static final int playlistList=0x7f080003;
+        public static final int playlist_nbVideos=0x7f080017;
+        public static final int playlist_titre=0x7f080015;
+        public static final int progressBar=0x7f080009;
+        public static final int search_query=0x7f080008;
         public static final int test=0x7f080001;
-        public static final int text_search=0x7f080002;
-        public static final int title=0x7f080010;
-        public static final int tri_alpha=0x7f080014;
-        public static final int tri_date=0x7f080013;
-        public static final int tri_nombre=0x7f080015;
-        public static final int videoIcon=0x7f08000f;
-        public static final int videoList=0x7f080008;
-        public static final int video_auteur=0x7f08000a;
-        public static final int video_description_complet=0x7f08000c;
-        public static final int video_nbVues=0x7f08000b;
-        public static final int video_titre=0x7f080009;
-        public static final int video_url=0x7f08000d;
+        public static final int text_search=0x7f080004;
+        public static final int title=0x7f080012;
+        public static final int tri_alpha=0x7f08001a;
+        public static final int tri_date=0x7f080019;
+        public static final int tri_nombre=0x7f08001b;
+        public static final int tri_source=0x7f080022;
+        public static final int videoIcon=0x7f080011;
+        public static final int videoList=0x7f08000a;
+        public static final int video_auteur=0x7f08000c;
+        public static final int video_description_complet=0x7f08000e;
+        public static final int video_nbVues=0x7f08000d;
+        public static final int video_titre=0x7f08000b;
+        public static final int video_url=0x7f08000f;
+        public static final int website=0x7f080014;
     }
     public static final class layout {
         public static final int activity_aide=0x7f030000;
-        public static final int activity_pref=0x7f030001;
-        public static final int activity_propos=0x7f030002;
-        public static final int activity_recherche=0x7f030003;
-        public static final int activity_resultat_video=0x7f030004;
-        public static final int activity_video=0x7f030005;
-        public static final int layout_item=0x7f030006;
+        public static final int activity_internet=0x7f030001;
+        public static final int activity_playlist=0x7f030002;
+        public static final int activity_pref=0x7f030003;
+        public static final int activity_propos=0x7f030004;
+        public static final int activity_recherche=0x7f030005;
+        public static final int activity_resultat_video=0x7f030006;
+        public static final int activity_video=0x7f030007;
+        public static final int layout_item=0x7f030008;
+        public static final int layout_item_playlist=0x7f030009;
     }
     public static final class menu {
         public static final int menu_playlists=0x7f070000;
@@ -87,10 +102,11 @@ public final class R {
         public static final int a_propos_version_text=0x7f05000c;
         public static final int action_settings=0x7f050001;
         public static final int app_name=0x7f050000;
-        public static final int checkbox_dailymotion=0x7f050013;
-        public static final int checkbox_youtube=0x7f050012;
+        public static final int checkbox_dailymotion=0x7f050014;
+        public static final int checkbox_youtube=0x7f050013;
+        public static final int connection_error=0x7f050017;
         public static final int description_image_recherche=0x7f05000a;
-        public static final int hello_world=0x7f050015;
+        public static final int hello_world=0x7f050016;
         public static final int menu_a_propos=0x7f050005;
         public static final int menu_add=0x7f050009;
         public static final int menu_aide=0x7f050004;
@@ -99,11 +115,12 @@ public final class R {
         public static final int menu_search=0x7f050006;
         public static final int menu_share=0x7f050008;
         public static final int menu_trier=0x7f050007;
-        public static final int search_query=0x7f050011;
-        public static final int title_activity_video=0x7f050014;
+        public static final int search_query=0x7f050012;
+        public static final int title_activity_video=0x7f050015;
         public static final int tri_alpha=0x7f05000f;
         public static final int tri_date=0x7f05000e;
         public static final int tri_nombre=0x7f050010;
+        public static final int tri_source=0x7f050011;
     }
     public static final class style {
         /** 

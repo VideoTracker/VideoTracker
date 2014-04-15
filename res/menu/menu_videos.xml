@@ -13,6 +13,21 @@
         android:showAsAction="always"
         android:title="@string/menu_playlist"/>
     <item
+        android:icon="@drawable/ic_action_collections_sort_by_size"
+        android:title="@string/menu_trier">
+        <menu>
+            <item
+		        android:id="@+id/tri_source"
+		        android:title="@string/tri_source"/>
+            <item
+		        android:id="@+id/tri_date"
+		        android:title="@string/tri_date"/>
+            <item
+		        android:id="@+id/tri_alpha"
+		        android:title="@string/tri_alpha"/>
+		</menu>
+	</item>	  
+    <item
         android:id="@+id/menu_preferences"
         android:showAsAction="never"
         android:title="@string/menu_preferences"/>

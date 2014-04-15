@@ -95,6 +95,18 @@ public class ResultActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		Intent intent = null;
 		switch (item.getItemId()) {
+		case R.id.tri_alpha:
+			mainAdapter.notifyDataSetChanged();
+			return true;
+		case android.R.id.home:
+			this.finish();
+			return true;
+		case R.id.tri_source:
+			mainAdapter.notifyDataSetChanged();
+			return true;
+		case R.id.tri_date:
+			mainAdapter.notifyDataSetChanged();
+			return true;
 		case R.id.menu_playlist:
 			intent = new Intent(ResultActivity.this, PlaylistActivity.class);
 			startActivity(intent);
