@@ -6,11 +6,15 @@ import java.util.ArrayList;
 import android.os.Bundle;
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -27,9 +31,10 @@ public class PlaylistActivity extends Activity {
 	private ListView mainList;
 	private PlaylistAdapter mainAdapter;
 	private ArrayList<PlaylistAdapter.PlaylistData> PlaylistData;
+	private final Context context = this;
 
 
-	private class PlaylistListOnItemClick implements OnItemClickListener {
+	private class PlaylistListOnItemClick implements OnItemClickListener,OnItemLongClickListener {
 		@Override
 		public void onItemClick(AdapterView<?> adapter, View view,
 				int position, long id) {
@@ -37,6 +42,29 @@ public class PlaylistActivity extends Activity {
 					PlaylistVideoActivity.class);
 			intent.putExtra("videos", PlaylistData.get(position).id);
 			startActivity(intent);		}
+		@Override
+		public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+
+			alertDialogBuilder.setTitle("Supprimer une playlist");
+
+			alertDialogBuilder
+			.setMessage("Êtes vous sûr de vouloir supprimer cette playlist?")
+			.setCancelable(false)
+			.setPositiveButton("Oui",new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog,int id) {
+					//TODO suppression video de la playlist
+				}
+			})
+			.setNegativeButton("Non",new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog,int id) {
+					dialog.cancel();
+				}
+			});
+			AlertDialog alertDialog = alertDialogBuilder.create();
+			alertDialog.show();
+			return false;
+		}
 	}
 
 	@Override
@@ -108,8 +136,10 @@ public class PlaylistActivity extends Activity {
 		case R.id.tri_date:
 			//PlaylistData = getDate();
 			mainAdapter.notifyDataSetChanged();
-			return true;	
+			return true;
+		case R.id.button_suppression_playlist:
 
+			return true;
 		case R.id.menu_a_propos:
 			intent = new Intent(PlaylistActivity.this,
 					ProposActivity.class);
@@ -129,5 +159,4 @@ public class PlaylistActivity extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-
 }
