@@ -34,11 +34,11 @@ public class RechercheActivity extends Activity implements OnClickListener {
 		button_search = (ImageButton) findViewById(R.id.button_search);
 		button_search.setOnClickListener(this);
 	}
-	
+
 	@Override
 	protected void onStart() {
 		super.onStart();
-		
+
 		if(!isOnline(this)){
 			Intent intent = new Intent(RechercheActivity.this,
 					InternetCheckActivity.class);
@@ -87,7 +87,7 @@ public class RechercheActivity extends Activity implements OnClickListener {
 			if ((!checkD.isChecked()) && (!checkY.isChecked())) {
 				Toast.makeText(
 						getApplicationContext(),
-						"Veuillez sélectionner au moins un moteur de recherche",
+						"Veuillez sï¿½lectionner au moins un moteur de recherche",
 						Toast.LENGTH_SHORT).show();
 			}
 			search += text_search.getText().toString();
@@ -99,15 +99,15 @@ public class RechercheActivity extends Activity implements OnClickListener {
 			startActivity(intent);
 		}
 	}
-	
+
 	public static boolean isOnline(Activity a) {
-	    ConnectivityManager cm =
-	        (ConnectivityManager) a.getSystemService(Context.CONNECTIVITY_SERVICE);
-	    NetworkInfo netInfo = cm.getActiveNetworkInfo();
-	    if (netInfo != null && netInfo.isConnectedOrConnecting()) {
-	        return true;
-	    }
-	    return false;
+		ConnectivityManager cm =
+				(ConnectivityManager) a.getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo netInfo = cm.getActiveNetworkInfo();
+		if (netInfo != null && netInfo.isConnectedOrConnecting()) {
+			return true;
+		}
+		return false;
 	}
 
 }

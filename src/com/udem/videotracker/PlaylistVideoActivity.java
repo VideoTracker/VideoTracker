@@ -5,10 +5,12 @@ import android.os.Bundle;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -46,11 +48,13 @@ public class PlaylistVideoActivity extends Activity {
 		actionBar.setDisplayHomeAsUpEnabled(true);
 		setContentView(R.layout.activity_resultat_video);
 		
-		int id_playlist = getIntent().getExtras().getParcelable("videos");
+		//int id_playlist = getIntent().getExtras().getParcelable("videos");
 
 		videoData = new ArrayList<VideoAdapter.VideoData>();
 		//TODO
 		//remplir la liste de video selon la playlist avec l'id recuperé
+		//test
+		//videoData.add(new VideoAdapter.VideoData("titre", "description \n\n\n\n\n\n", "auteur", "url", true,false,25000,getResources().getDrawable(R.drawable.ic_content_remove)));
 		mainAdapter = new VideoAdapter(getApplicationContext(), videoData);
 
 		mainList = (ListView) findViewById(R.id.videoList);

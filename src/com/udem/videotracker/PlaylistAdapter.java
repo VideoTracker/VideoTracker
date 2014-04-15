@@ -27,7 +27,7 @@ public class PlaylistAdapter extends BaseAdapter {
 		public final String title;
 		public int nbVideos;
 		public Date dateCreation;
-		
+
 		public int id;
 
 		public PlaylistData(String _title, int _nbVideos, Date _dateCreation, int _id){

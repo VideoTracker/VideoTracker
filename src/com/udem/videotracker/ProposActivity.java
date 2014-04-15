@@ -19,16 +19,16 @@ public class ProposActivity extends Activity {
 		actionBar.setDisplayHomeAsUpEnabled(true);
 		setContentView(R.layout.activity_propos);
 	}
-	
+
 	@Override
 	public boolean onOptionsItemSelected (MenuItem item)
 	{
-	  switch(item.getItemId())
-	  {
-	    case android.R.id.home:
-	    	this.finish();
-	    	  return true;
-	  }
-	  return super.onOptionsItemSelected(item);
+		switch(item.getItemId())
+		{
+		case android.R.id.home:
+			this.finish();
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
 	}
 }

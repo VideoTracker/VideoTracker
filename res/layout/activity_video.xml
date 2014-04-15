@@ -69,6 +69,10 @@
         android:textSize="12sp" />
     </LinearLayout>
 	
+	<ImageView 
+	    android:id="@+id/test"
+	            android:layout_width="match_parent"
+        android:layout_height="wrap_content"></ImageView>	
 	<TextView
         android:id="@+id/video_description_complet"
         android:layout_width="match_parent"
