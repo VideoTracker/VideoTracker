@@ -9,7 +9,7 @@
         android:title="@string/menu_search"/>
     <item
         android:id="@+id/menu_playlist"
-        android:icon="@android:drawable/ic_menu_add"
+        android:icon="@drawable/ic_action_images_slideshow"
         android:showAsAction="always"
         android:title="@string/menu_playlist"/>
     <item
