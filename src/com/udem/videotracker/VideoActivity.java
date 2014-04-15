@@ -14,19 +14,21 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ShareActionProvider;
 import android.widget.TextView;
 
+
 /**
- * ActivitÃ© qui affiche une vidÃ©o ainsi que ses infos.
- * La vidÃ©o sera lancÃ©e Ã  partir de cette page.
+ * Activité qui affiche une vidéo ainsi que ses infos.
+ * La vidéo sera lancée à  partir de cette page.
  * @author rpiche
  *
  */
 public class VideoActivity extends Activity{
 	private VideoData video;
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		Log.i("DEBUG", "Lancement de VideoActivity");
@@ -58,6 +60,19 @@ public class VideoActivity extends Activity{
 
 		ImageView image = (ImageView) findViewById(R.id.test);
 		image.setImageDrawable(video.picture);
+		
+		ImageButton button_play = (ImageButton) findViewById(R.id.button_play);
+		button_play.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v) {
+				if (v.getId() == R.id.button_play){
+					//TODO lancement video
+					
+				}
+				
+			}
+			});
 	}
 
 
@@ -72,7 +87,7 @@ public class VideoActivity extends Activity{
 
 		Intent intent = new Intent(Intent.ACTION_SEND);
 		intent.setType("text/plain");
-		intent.putExtra(Intent.EXTRA_TEXT, "Regarde cette vidÃ©o : "+video.url);
+		intent.putExtra(Intent.EXTRA_TEXT, "Regarde cette vidéo : "+video.url);
 		mShareActionProvider.setShareIntent(intent);
 
 		return true;
