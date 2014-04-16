@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="video_displayValues">
+        <item name="20">20</item>
+        <item name="30">30</item>
+        <item name="40">40</item>
+        <item name="50">50</item>
+        <item name="75">75</item>
+    </string-array>
+    <string-array name="video_display">
+        <item name="20">20 vidéos</item>
+        <item name="30">30 vidéos</item>
+        <item name="40">40 vidéos</item>
+        <item name="50">50 vidéos</item>
+        <item name="75">75 vidéos</item>
+    </string-array>
+
+</resources>
