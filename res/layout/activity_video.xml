@@ -1,91 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
-      <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" >  
+    android:layout_height="match_parent" >
+
     <TextView
-            android:id="@+id/video_titre"
-            android:layout_width="245dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:text="Titre de la video"
-            android:textSize="16sp" />   
-
-      
-        <CheckBox
-            android:id="@+id/checkbox_fav"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:button="@android:drawable/btn_star"
-            android:onClick="onCheckboxClicked" 
-            android:layout_marginLeft="5dp"
-            />
-
-        <ImageButton
-            android:id="@+id/button_play"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:background="@android:color/transparent"
-            android:src="@drawable/ic_av_play" />
-
-    	</LinearLayout>
- 
-    
-		<LinearLayout
-        android:layout_width="match_parent"
+        android:id="@+id/video_titre"
+        android:layout_width="230dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" 
-        android:layout_margin="5dp"> 
-        
-	<TextView
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_margin="5dp"
+        android:text="Titre de la vidddddddddddddddddddddddddddddddddddddddeo"
+        android:textSize="16sp" />
+
+    <ImageButton
+        android:id="@+id/button_play"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="de "
-        android:textSize="12sp" />  
-	<TextView
-        android:id="@+id/video_auteur"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:background="@android:color/transparent"
+        android:src="@drawable/ic_av_play" />
+
+    <CheckBox
+        android:id="@+id/checkbox_fav"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Auteur"
-        android:textSize="12sp" />    
-	
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@id/button_play"
+        android:button="@android:drawable/btn_star"
+        android:onClick="onCheckboxClicked" />
+
+    <ImageView
+        android:id="@+id/video_image"
+        android:layout_width="150dp"
+        android:layout_height="75dp"
+        android:layout_below="@id/video_titre"
+        android:layout_margin="10dp" >
+    </ImageView>
+
     <TextView
         android:id="@+id/video_nbVues"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/video_image"
+        android:layout_marginBottom="10dp"
         android:layout_marginLeft="10dp"
-        android:text="1000"
+        android:text="1000 vues"
         android:textSize="12sp" />
+
+    <ScrollView
+        android:id="@+id/scroll"
+        android:layout_width="wrap_content"
+        android:layout_height="270dp"
+        android:layout_below="@id/video_nbVues" >
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="Description de la video :"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/video_description_complet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/desc"
+                android:layout_margin="10dp"
+                android:text="elfkjeflzj\n\n\n\dzldjkzn\ndzkmljdzkdj\n"
+                android:textSize="12sp" />
+        </RelativeLayout>
+    </ScrollView>
+
     <TextView
+        android:id="@+id/_url"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=" vues"
-        android:textSize="12sp" />
-    </LinearLayout>
-	
-	<ImageView 
-	    android:id="@+id/test"
-	            android:layout_width="match_parent"
-        android:layout_height="wrap_content"></ImageView>	
-	<TextView
-        android:id="@+id/video_description_complet"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_below="@id/scroll"
         android:layout_margin="10dp"
-        android:text="Description de la video :\n\n\n\n\n\n"
+        android:text="Url de la vidéo : "
         android:textSize="12sp" />
 
     <TextView
         android:id="@+id/video_url"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:text="Url de la vidéo : www.youtube.ca"
+        android:layout_alignTop="@id/_url"
+        android:layout_toRightOf="@id/_url"
+        android:text="www.youtube.ca"
         android:textSize="12sp" />
 
-</LinearLayout>
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/video_nbVues"
+        android:background="@android:color/darker_gray" />
+
+</RelativeLayout>
