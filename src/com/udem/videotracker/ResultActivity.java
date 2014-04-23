@@ -37,7 +37,7 @@ public class ResultActivity extends Activity {
 				int position, long id) {
 			Intent intent = new Intent(ResultActivity.this,
 					VideoActivity.class);
-			intent.putExtra("video", videoData.get(position));
+			intent.putExtra("video", videoData.get(position).url_video);
 			startActivity(intent);
 		}
 	}

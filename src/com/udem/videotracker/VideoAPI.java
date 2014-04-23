@@ -84,7 +84,7 @@ public class VideoAPI extends BasicAPI {
 			if (searchYoutube) {
 				try {
 					url = "https://www.googleapis.com/youtube/v3/videos?id="
-							+ "7lCDEYXw3mM"
+							+ ID
 							+ "&key="
 							+ URLEncoder.encode(
 									"AIzaSyBa6hEa_85xTgWs8G-uf-rqyw_4X-RnMHU",
@@ -102,9 +102,6 @@ public class VideoAPI extends BasicAPI {
 				js = new JSONObject(EntityUtils.toString(page, HTTP.UTF_8));
 
 				JSONArray items = js.getJSONArray("items");
-				Log.i("toto", js.toString());
-				
-
 				JSONObject row_item = items.getJSONObject(0);
 				JSONObject snippet = row_item.getJSONObject("snippet");
 				JSONObject stat = row_item.getJSONObject("statistics");
@@ -117,8 +114,6 @@ public class VideoAPI extends BasicAPI {
 				icone = loadHttpImage(thumb);
 				url_video_youtube += row_item.getString("id");
 				datePublication = dateTmp.parse(snippet.getString("publishedAt"));
-				if(icone==null)
-					Log.i("TAGA","nuuehfjefheifjhehf");
 				video = new VideoAdapter.VideoData(title, description, "", url_video_youtube, thumb, false, false, 0, 0, icone, datePublication, Source.YOUTUBE);
 
 				synchronized( threadNotification ) {
