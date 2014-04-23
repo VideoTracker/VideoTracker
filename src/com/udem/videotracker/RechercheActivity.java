@@ -26,6 +26,7 @@ import android.widget.Toast;
 public class RechercheActivity extends Activity implements OnClickListener {
 	private EditText text_search;
 	private ImageButton button_search;
+	private static final int VOICE_RECOGNITION_REQUEST = 0x10101;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +46,25 @@ public class RechercheActivity extends Activity implements OnClickListener {
 		// 3. Get the AlertDialog from create()
 		AlertDialog dialog = builder.create();
 	}
+	
+	public void speakToMe(View view) {
+	    Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+	    intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+	        RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+	    intent.putExtra(RecognizerIntent.EXTRA_PROMPT,
+	        "Veuillez donner de mots-clés concernant la vidéo à haute voix.");
+	    startActivityForResult(intent, VOICE_RECOGNITION_REQUEST);
+	  }
+	  @Override
+	  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+	    if (requestCode == VOICE_RECOGNITION_REQUEST && resultCode == RESULT_OK) {
+	      ArrayList matches = data
+	          .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+	      TextView textView = (TextView) findViewById(R.id.speech_io_text);
+	      String firstMatch = matches.get(0);
+	      textView.setText(firstMatch);
+	    }
+	  }
 
 	@Override
 	protected void onStart() {
@@ -98,7 +118,7 @@ public class RechercheActivity extends Activity implements OnClickListener {
 			if ((!checkD.isChecked()) && (!checkY.isChecked())) {
 				Toast.makeText(
 						getApplicationContext(),
-						"Veuillez sï¿½lectionner au moins un moteur de recherche",
+						"Veuillez sélectionner au moins un moteur de recherche",
 						Toast.LENGTH_SHORT).show();
 			}
 			search += text_search.getText().toString();

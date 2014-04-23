@@ -51,7 +51,11 @@ public class VideoActivity extends Activity{
 		actionBar.setDisplayHomeAsUpEnabled(true);
 		setContentView(R.layout.activity_video);
 
-		//videoId = getIntent().getExtras().getParcelable("video");
+		Bundle extras = getIntent().getExtras();
+		if(extras == null){
+			return;
+		}
+		videoId = extras.getString("video");
 		new LoadVideo(this).execute();
 
 		video_titre = (TextView)findViewById(R.id.video_titre);
@@ -209,7 +213,7 @@ public class VideoActivity extends Activity{
 		protected VideoAPI doInBackground(String... params) {
 			VideoAPI web = null;
 			try {
-				web = new VideoAPI(activity, "https://www.youtube.com/watch?v=jidziKYG9jk",
+				web = new VideoAPI(activity, videoId,
 						true, true);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
