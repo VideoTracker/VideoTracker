@@ -1,5 +1,7 @@
 package com.udem.videotracker;
 
+import java.util.ArrayList;
+
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -7,6 +9,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.speech.RecognizerIntent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,6 +17,7 @@ import android.view.View.OnClickListener;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 /**
@@ -26,6 +30,7 @@ import android.widget.Toast;
 public class RechercheActivity extends Activity implements OnClickListener {
 	private EditText text_search;
 	private ImageButton button_search;
+	private ImageButton button_voice;
 	private static final int VOICE_RECOGNITION_REQUEST = 0x10101;
 
 	@Override
@@ -35,6 +40,8 @@ public class RechercheActivity extends Activity implements OnClickListener {
 		text_search = (EditText) findViewById(R.id.text_search);
 		button_search = (ImageButton) findViewById(R.id.button_search);
 		button_search.setOnClickListener(this);
+		button_voice = (ImageButton) findViewById(R.id.button_voice);
+		button_voice.setOnClickListener(this);
 		
 		// 1. Instantiate an AlertDialog.Builder with its constructor
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -47,7 +54,7 @@ public class RechercheActivity extends Activity implements OnClickListener {
 		AlertDialog dialog = builder.create();
 	}
 	
-	public void speakToMe(View view) {
+	public void speakToMe() {
 	    Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
 	    intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
 	        RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
@@ -55,14 +62,13 @@ public class RechercheActivity extends Activity implements OnClickListener {
 	        "Veuillez donner de mots-clés concernant la vidéo à haute voix.");
 	    startActivityForResult(intent, VOICE_RECOGNITION_REQUEST);
 	  }
+	
 	  @Override
 	  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 	    if (requestCode == VOICE_RECOGNITION_REQUEST && resultCode == RESULT_OK) {
-	      ArrayList matches = data
-	          .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-	      TextView textView = (TextView) findViewById(R.id.speech_io_text);
+	      ArrayList<String> matches = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
 	      String firstMatch = matches.get(0);
-	      textView.setText(firstMatch);
+	      text_search.setText(firstMatch);
 	    }
 	  }
 
@@ -128,6 +134,9 @@ public class RechercheActivity extends Activity implements OnClickListener {
 			intent.putExtra("SEARCH_DAILYMOTION", checkD.isChecked());
 			intent.putExtra("SEARCH_YOUTUBE", checkY.isChecked());
 			startActivity(intent);
+		}
+		if (v == button_voice) {
+			speakToMe();
 		}
 	}
 

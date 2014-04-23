@@ -32,6 +32,15 @@
         android:src="@drawable/ic_action_search"
         android:background="@android:color/transparent"
         android:contentDescription="@string/description_image_recherche"/>
+     
+     <ImageButton
+        android:id="@+id/button_voice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_action_micro"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/description_image_recherche"/>
+     
    </LinearLayout> 
     
    <CheckBox
