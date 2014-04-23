@@ -2,12 +2,10 @@ package com.udem.videotracker;
 
 import java.text.ParseException;
 
-import com.udem.videotracker.VideoAdapter.VideoData;
+import com.udem.videotracker.VideoAdapter.Source;
 
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.MediaStore.Video;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.DialogInterface;
@@ -34,10 +32,12 @@ import android.widget.Toast;
  */
 public class VideoActivity extends Activity{
 	private String videoId;
+	private Source source;
 	public TextView video_titre;
 	public TextView video_url;
 	public TextView video_description;
 	public TextView video_nbVues;
+	public TextView video_like_count;
 	public CheckBox favori;
 	public ImageView image;
 	public ImageButton button_play;
@@ -56,6 +56,7 @@ public class VideoActivity extends Activity{
 			return;
 		}
 		videoId = extras.getString("video");
+		source = (Source)getIntent().getSerializableExtra("source");
 		new LoadVideo(this).execute();
 
 		video_titre = (TextView)findViewById(R.id.video_titre);
@@ -65,6 +66,8 @@ public class VideoActivity extends Activity{
 		video_description = (TextView)findViewById(R.id.video_description_complet);
 
 		video_nbVues = (TextView)findViewById(R.id.video_nbVues);
+		
+		video_like_count = (TextView)findViewById(R.id.video_like_count);
 		
 		image = (ImageView)findViewById(R.id.video_image);
 
@@ -214,7 +217,7 @@ public class VideoActivity extends Activity{
 			VideoAPI web = null;
 			try {
 				web = new VideoAPI(activity, videoId,
-						true, true);
+						source);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			} catch (ParseException e) {

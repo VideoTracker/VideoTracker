@@ -10,7 +10,6 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_margin="5dp"
-        android:text="Titre de la vidddddddddddddddddddddddddddddddddddddddeo"
         android:textSize="16sp" />
 
     <ImageButton
@@ -46,7 +45,16 @@
         android:layout_below="@id/video_image"
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="10dp"
-        android:text="1000 vues"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/video_like_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/video_nbVues"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/video_nbVues"
         android:textSize="12sp" />
 
     <ScrollView
@@ -73,7 +81,6 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/desc"
                 android:layout_margin="10dp"
-                android:text="elfkjeflzj\n\n\n\dzldjkzn\ndzkmljdzkdj\n"
                 android:textSize="12sp" />
         </RelativeLayout>
     </ScrollView>
@@ -93,7 +100,6 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@id/_url"
         android:layout_toRightOf="@id/_url"
-        android:text="www.youtube.ca"
         android:textSize="12sp" />
 
     <View

@@ -3,9 +3,7 @@ package com.udem.videotracker;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.client.ClientProtocolException;
@@ -28,7 +26,6 @@ public class YoutubeAPI extends BasicAPI {
 	private String title;
 	private String description;
 	private String thumb;
-	private String id="";
 	private String id_video="";
 	private Drawable icone;
 
@@ -43,11 +40,7 @@ public class YoutubeAPI extends BasicAPI {
 	private int progress;
 	private int different_apis;
 	private int length;
-	private int nbVues;
-	private Date datePublication = new Date();
 
-	final String pattern = "yyyy-MM-dd'T'hh:mm:ss";
-	final SimpleDateFormat dateTmp = new SimpleDateFormat(pattern);
 
 	private HttpEntity page;
 
@@ -85,6 +78,7 @@ public class YoutubeAPI extends BasicAPI {
 							+ "&order=relevance"
 							+ "&q="
 							+ keywords
+							+ "&type=video"
 							+ "&key="
 							+ URLEncoder.encode(
 									"AIzaSyBa6hEa_85xTgWs8G-uf-rqyw_4X-RnMHU",
@@ -126,9 +120,7 @@ public class YoutubeAPI extends BasicAPI {
 					icone = loadHttpImage(thumb);
 					id_video += row_item.getJSONObject("id").getString("videoId");
 
-					datePublication = dateTmp.parse(video.getString("publishedAt"));
-
-					videoData.add(new VideoAdapter.VideoData(title, description, "", id_video, thumb, false, false, 0, 0, icone, datePublication, Source.YOUTUBE));
+					videoData.add(new VideoAdapter.VideoData(title, description, "", id_video, thumb, false, false, 0, 0, icone, null, Source.YOUTUBE));
 
 					synchronized( threadNotification ) {
 						activity.runOnUiThread(threadNotification) ;
@@ -145,7 +137,7 @@ public class YoutubeAPI extends BasicAPI {
 
 			if (searchDailymotion) {
 
-				url = "https://api.dailymotion.com/videos?fields=id,title,description,thumbnail_url,created_time,views_total&search="
+				url = "https://api.dailymotion.com/videos?fields=id,title,description,thumbnail_url,created_time,views_total,ratings_total&search="
 						+ keywords;
 
 				// Charge le fichier JSON à l'URL donné depuis le web
@@ -166,7 +158,7 @@ public class YoutubeAPI extends BasicAPI {
 					progressBar.setProgress(progress);
 					nombre_resultats++;
 					JSONObject row = array.getJSONObject(i);
-					id = row.getString("id");
+					id_video = row.getString("id");
 					title = shorterString(row.getString("title"), LENGTH_TITLE);
 
 					description = shorterString(row.getString("description"),
@@ -174,10 +166,7 @@ public class YoutubeAPI extends BasicAPI {
 					thumb = row.getString("thumbnail_url");
 					icone = loadHttpImage(thumb);
 
-					datePublication = new Date(row.getInt("created_time"));
-					nbVues = row.getInt("views_total");
-
-					videoData.add(new VideoAdapter.VideoData(title, description, "", id_video, thumb, false, false, nbVues, 0, icone, datePublication, Source.DAILYMOTION));
+					videoData.add(new VideoAdapter.VideoData(title, description, "", id_video, thumb, false, false, 0, 0, icone, null, Source.DAILYMOTION));
 
 
 					synchronized( threadNotification ) {

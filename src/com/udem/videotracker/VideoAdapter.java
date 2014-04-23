@@ -1,19 +1,14 @@
 package com.udem.videotracker;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
+
 
 import android.content.Context;
-import android.graphics.Bitmap;
+
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -104,7 +99,6 @@ public class VideoAdapter extends BaseAdapter {
 			}
 		};
 
-		@SuppressWarnings("deprecation")
 		public VideoData(Parcel in) throws IllegalStateException, IOException {
 			this.title = in.readString();
 			this.description = in.readString();
