@@ -20,7 +20,6 @@ import com.udem.videotracker.VideoAdapter.Source;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.ParseException;
-import android.net.Uri;
 import android.util.Log;
 import android.view.View;
 
@@ -71,8 +70,11 @@ public class VideoAPI extends BasicAPI {
 					@Override
 					public void onClick(View v) {
 						if (v.getId() == R.id.button_play){
-							Intent viewIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(video.url_video));
-							activity.startActivity(viewIntent);
+							Log.i("ANTHO","teeest");
+							Intent i = new Intent(activity, DailymotionPlayerActivity.class);
+							String path = video.url_video;
+							i.putExtra("url", path);
+							activity.startActivity(i);
 						}
 					}
 				});

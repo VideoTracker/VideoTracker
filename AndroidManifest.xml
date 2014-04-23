@@ -32,6 +32,19 @@
     		android:screenOrientation="portrait"
             android:name="com.udem.videotracker.ResultActivity"
             android:label="Recherche"/>
+         
+         <activity 
+            android:configChanges="orientation"
+    		android:screenOrientation="landscape"
+            android:name="com.udem.videotracker.PlayerActivity"
+            android:label="Lecteur"/>
+         
+         <activity 
+            android:configChanges="orientation"
+    		android:screenOrientation="landscape"
+    		android:hardwareAccelerated="true"
+            android:name="com.udem.videotracker.DailymotionPlayerActivity"
+            android:label="Lecteur Dailymotion"/>
         
         <activity
             android:configChanges="orientation"
