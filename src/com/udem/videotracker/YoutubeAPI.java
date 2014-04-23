@@ -20,6 +20,7 @@ import com.udem.videotracker.VideoAdapter.Source;
 import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.net.ParseException;
+import android.util.Log;
 import android.widget.ProgressBar;
 
 public class YoutubeAPI extends BasicAPI {
@@ -28,7 +29,9 @@ public class YoutubeAPI extends BasicAPI {
 	private String title;
 	private String description;
 	private String thumb;
-	private String id = "";
+	private String id="";
+	private String url_video_youtube="https://m.youtube.com/watch?v=";
+	private String url_video_daily="https://m.youtube.com/watch?v=";
 	private Drawable icone;
 
 	private JSONArray array;
@@ -43,10 +46,11 @@ public class YoutubeAPI extends BasicAPI {
 	private int different_apis;
 	private int length;
 	private int nbVues;
+	private int like_count;
 	private Date datePublication = new Date();
-	
+
 	final String pattern = "yyyy-MM-dd'T'hh:mm:ss";
-    final SimpleDateFormat dateTmp = new SimpleDateFormat(pattern);
+	final SimpleDateFormat dateTmp = new SimpleDateFormat(pattern);
 
 	private HttpEntity page;
 
@@ -66,7 +70,7 @@ public class YoutubeAPI extends BasicAPI {
 			different_apis++;
 
 		progressBar = _progressBar;
-		
+
 		Runnable threadNotification = new Runnable() {
 			@Override
 			public void run() {
@@ -123,18 +127,18 @@ public class YoutubeAPI extends BasicAPI {
 					description = shorterString(video.getString("description"),
 							LENGTH_DESCRIPTION);
 					icone = loadHttpImage(thumb);
-					
+					url_video_youtube += row_item.getJSONObject("id").getString("videoId");
+
 					datePublication = dateTmp.parse(video.getString("publishedAt"));
-					
-					videoData.add(new VideoAdapter.VideoData(title,
-							description, icone, Source.YOUTUBE, 0, datePublication));
+
+					videoData.add(new VideoAdapter.VideoData(title, description, "", url_video_youtube, thumb, false, false, 0, 0, icone, datePublication, Source.YOUTUBE));
 
 					synchronized( threadNotification ) {
-						   activity.runOnUiThread(threadNotification) ;
-						   while(!notificationDone)
-							   Thread.sleep(100) ; // unlocks myRunable while waiting
-						   notificationDone = false;
-						}
+						activity.runOnUiThread(threadNotification) ;
+						while(!notificationDone)
+							Thread.sleep(100) ; // unlocks myRunable while waiting
+						notificationDone = false;
+					}
 
 					progress += progressStep;
 				}
@@ -172,20 +176,20 @@ public class YoutubeAPI extends BasicAPI {
 							LENGTH_DESCRIPTION);
 					thumb = row.getString("thumbnail_url");
 					icone = loadHttpImage(thumb);
-					
+
 					datePublication = new Date(row.getInt("created_time"));
 					nbVues = row.getInt("views_total");
 
-					videoData.add(new VideoAdapter.VideoData(title,
-							description, icone, Source.DAILYMOTION, nbVues, datePublication));
+					videoData.add(new VideoAdapter.VideoData(title, description, "", url_video_daily, thumb, false, false, nbVues, 0, icone, datePublication, Source.DAILYMOTION));
+
 
 					synchronized( threadNotification ) {
-						   activity.runOnUiThread(threadNotification) ;
+						activity.runOnUiThread(threadNotification) ;
 
-						   while(!notificationDone)
-							   Thread.sleep(100); // unlocks myRunable while waiting
-						   notificationDone = false;
-						}
+						while(!notificationDone)
+							Thread.sleep(100); // unlocks myRunable while waiting
+						notificationDone = false;
+					}
 
 					progress += progressStep;
 

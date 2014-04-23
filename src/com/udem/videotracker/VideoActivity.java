@@ -1,8 +1,13 @@
 package com.udem.videotracker;
 
+import java.text.ParseException;
+
 import com.udem.videotracker.VideoAdapter.VideoData;
 
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore.Video;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.DialogInterface;
@@ -18,6 +23,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ShareActionProvider;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 /**
@@ -27,8 +33,15 @@ import android.widget.TextView;
  *
  */
 public class VideoActivity extends Activity{
-	private VideoData video;
-	
+	private String videoId;
+	public TextView video_titre;
+	public TextView video_url;
+	public TextView video_description;
+	public TextView video_nbVues;
+	public CheckBox favori;
+	public ImageView image;
+	public ImageButton button_play;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		Log.i("DEBUG", "Lancement de VideoActivity");
@@ -38,44 +51,25 @@ public class VideoActivity extends Activity{
 		actionBar.setDisplayHomeAsUpEnabled(true);
 		setContentView(R.layout.activity_video);
 
-		video = getIntent().getExtras().getParcelable("video");
+		//videoId = getIntent().getExtras().getParcelable("video");
+		new LoadVideo(this).execute();
 
-		TextView video_titre = (TextView)findViewById(R.id.video_titre);
-		video_titre.setText(video.title);
+		video_titre = (TextView)findViewById(R.id.video_titre);
 
-		TextView video_url = (TextView)findViewById(R.id.video_url);
-		video_url.setText(video.url);
+		video_url = (TextView)findViewById(R.id.video_url);
 
-		TextView video_description = (TextView)findViewById(R.id.video_description_complet);
-		video_description.setText(video.description);
+		video_description = (TextView)findViewById(R.id.video_description_complet);
 
-		TextView video_auteur = (TextView)findViewById(R.id.video_auteur);
-		video_auteur.setText(video.auteur);
-
-		TextView video_nbVues = (TextView)findViewById(R.id.video_nbVues);
-		video_nbVues.setText(""+video.nbVues);
-
-		CheckBox favori = (CheckBox) findViewById(R.id.checkbox_fav);
-		favori.setChecked(video.favori);
-
-		ImageView image = (ImageView) findViewById(R.id.test);
-		image.setImageDrawable(video.picture);
+		video_nbVues = (TextView)findViewById(R.id.video_nbVues);
 		
-		ImageButton button_play = (ImageButton) findViewById(R.id.button_play);
-		button_play.setOnClickListener(new View.OnClickListener()
-		{
-			@Override
-			public void onClick(View v) {
-				if (v.getId() == R.id.button_play){
-					//TODO lancement video
-					
-				}
-				
-			}
-			});
+		image = (ImageView)findViewById(R.id.video_image);
+
+		favori = (CheckBox) findViewById(R.id.checkbox_fav);
+		
+		button_play = (ImageButton) findViewById(R.id.button_play);
+		
 	}
-
-
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -87,7 +81,7 @@ public class VideoActivity extends Activity{
 
 		Intent intent = new Intent(Intent.ACTION_SEND);
 		intent.setType("text/plain");
-		intent.putExtra(Intent.EXTRA_TEXT, "Regarde cette vidéo : "+video.url);
+		//intent.putExtra(Intent.EXTRA_TEXT, "Regarde cette vidéo : "+video.url_video);
 		mShareActionProvider.setShareIntent(intent);
 
 		return true;
@@ -99,11 +93,11 @@ public class VideoActivity extends Activity{
 		switch(view.getId()) {
 		case R.id.checkbox_fav:
 			if (checked){
-				video.favori=true;
+			//	video.favori=true;
 				//TODO:AJOUTER AUX FAVORIS
 			}
 			else{
-				video.favori=false;
+			//	video.favori=false;
 				//TODO:RETIRER DES FAVORIS
 			}break;
 
@@ -183,4 +177,48 @@ public class VideoActivity extends Activity{
 		return super.onOptionsItemSelected(item);
 	}
 
+
+
+
+	private class LoadVideo extends AsyncTask<String, Integer, VideoAPI>{
+
+		public VideoActivity activity;
+
+	    public LoadVideo(VideoActivity a)
+	    {
+	        this.activity = a;
+	    }
+
+
+
+		protected void onPostExecute(VideoAPI web) {
+
+			if (web == null) {
+				Toast.makeText(VideoActivity.this, "erreur fatale",
+						Toast.LENGTH_SHORT).show();
+				return;
+			}
+
+			if (web.erreur != null) {
+				Toast.makeText(VideoActivity.this, web.erreur,
+						Toast.LENGTH_SHORT).show();
+				return;
+			}
+		}
+		@Override
+		protected VideoAPI doInBackground(String... params) {
+			VideoAPI web = null;
+			try {
+				web = new VideoAPI(activity, "https://www.youtube.com/watch?v=jidziKYG9jk",
+						true, true);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			return web;
+
+		}
+		
+	}
 }

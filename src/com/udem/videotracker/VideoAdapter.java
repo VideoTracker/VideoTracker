@@ -1,7 +1,14 @@
 package com.udem.videotracker;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -31,41 +38,32 @@ public class VideoAdapter extends BaseAdapter {
 		public final String title;
 		public final String description;
 		public final String auteur;
-		public final String url;
+		public final String url_video;
+		public final String url_image;
 		public boolean favori;
 		public boolean suppr;
 		public int nbVues;
-		public final Drawable picture;
+		public int like_count;
+		public Drawable picture;
 		public Date datePublication = new Date();
-
 		public Source sourceVideo;
 
-		public VideoData(String _title, String _description, String _auteur,
-				String _url, boolean _favori, boolean _suppr, int _nbVues,
-				Drawable _picture) {
-			title = _title;
-			description = _description;
-			auteur = _auteur;
-			url = _url;
-			favori = _favori;
-			nbVues = _nbVues;
-			picture = _picture;
-			suppr = _suppr;
-		}
 
-		// TODO constructeur pour que antho fasse ses tests
-		public VideoData(String _title, String _description, Drawable _picture,
-				Source _sourceVideo, int _nbVues, Date _datePublication) {
-			title = _title;
-			description = _description;
-			auteur = null;
-			url = null;
-			favori = false;
-			suppr = false;
-			nbVues = _nbVues;
-			sourceVideo = _sourceVideo;
-			datePublication = _datePublication;
-			picture = _picture;
+
+		public VideoData(String title, String description, String auteur,
+				String url_video, String url_image, boolean favori,
+				boolean suppr, int nbVues, int like_count, Drawable picture,
+				Date datePublication, Source sourceVideo) {
+			this.title = title;
+			this.description = description;
+			this.auteur = auteur;
+			this.url_video = url_video;
+			this.url_image = url_image;
+			this.nbVues = nbVues;
+			this.like_count = like_count;
+			this.picture = picture;
+			this.datePublication = datePublication;
+			this.sourceVideo = sourceVideo;
 		}
 
 		@Override
@@ -78,18 +76,26 @@ public class VideoAdapter extends BaseAdapter {
 			dest.writeString(title);
 			dest.writeString(description);
 			dest.writeString(auteur);
-			dest.writeString(url);
-			dest.writeByte((byte) (favori ? 1 : 0)); // si favori == true, byte
-														// == 1
+			dest.writeString(url_video);
+			dest.writeString(url_image);
+			dest.writeInt(like_count);
 			dest.writeInt(nbVues);
-			Bitmap bitmap = (Bitmap) ((BitmapDrawable) picture).getBitmap();
-			dest.writeParcelable(bitmap, flags);
+			dest.writeLong(datePublication.getTime());
 		}
 
 		public static final Parcelable.Creator<VideoData> CREATOR = new Parcelable.Creator<VideoData>() {
 			@Override
 			public VideoData createFromParcel(Parcel source) {
-				return new VideoData(source);
+				try {
+					return new VideoData(source);
+				} catch (IllegalStateException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				return null;
 			}
 
 			@Override
@@ -99,17 +105,15 @@ public class VideoAdapter extends BaseAdapter {
 		};
 
 		@SuppressWarnings("deprecation")
-		public VideoData(Parcel in) {
+		public VideoData(Parcel in) throws IllegalStateException, IOException {
 			this.title = in.readString();
 			this.description = in.readString();
 			this.auteur = in.readString();
-			this.url = in.readString();
-			this.favori = in.readByte() != 0;
+			this.url_video = in.readString();
+			this.url_image = in.readString();
+			this.like_count = in.readInt();
 			this.nbVues = in.readInt();
-			Bitmap bitmap = (Bitmap) in.readParcelable(getClass()
-					.getClassLoader());
-			this.picture = new BitmapDrawable(bitmap);
-
+			this.datePublication = new Date(in.readLong());
 		}
 
 	}

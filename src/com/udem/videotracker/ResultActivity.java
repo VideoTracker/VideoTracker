@@ -35,8 +35,10 @@ public class ResultActivity extends Activity {
 		@Override
 		public void onItemClick(AdapterView<?> adapter, View view,
 				int position, long id) {
-			Toast.makeText(getApplicationContext(), "Position " + position,
-					Toast.LENGTH_SHORT).show();
+			Intent intent = new Intent(ResultActivity.this,
+					VideoActivity.class);
+			intent.putExtra("video", videoData.get(position));
+			startActivity(intent);
 		}
 	}
 

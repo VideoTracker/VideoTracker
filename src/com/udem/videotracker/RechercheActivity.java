@@ -4,6 +4,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.view.Menu;
@@ -33,6 +34,16 @@ public class RechercheActivity extends Activity implements OnClickListener {
 		text_search = (EditText) findViewById(R.id.text_search);
 		button_search = (ImageButton) findViewById(R.id.button_search);
 		button_search.setOnClickListener(this);
+		
+		// 1. Instantiate an AlertDialog.Builder with its constructor
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+		// 2. Chain together various setter methods to set the dialog characteristics
+		builder.setMessage("coucou")
+		       .setTitle("titre");
+
+		// 3. Get the AlertDialog from create()
+		AlertDialog dialog = builder.create();
 	}
 
 	@Override
