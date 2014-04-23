@@ -20,7 +20,6 @@ import com.udem.videotracker.VideoAdapter.Source;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.ParseException;
-import android.net.Uri;
 import android.util.Log;
 import android.view.View;
 
@@ -132,18 +131,18 @@ public class VideoAPI extends BasicAPI {
 			case DAILYMOTION:
 
 
-				url = "https://api.dailymotion.com/video/"+ID+"?fields=title,description,thumbnail_url,created_time,views_total,ratings_total,stream_source_url";
+				url = "https://api.dailymotion.com/video/"+ID+"?fields=title,description,thumbnail_url,created_time,views_total,ratings_total,url";
 
 				page = getHttp(url);
 
 				js = new JSONObject(EntityUtils.toString(page, HTTP.UTF_8));
-				
+
 				title = shorterString(js.getString("title"), LENGTH_TITLE);
 
 				description = js.getString("description");
 				thumb = js.getString("thumbnail_url");
 				icone = loadHttpImage(thumb);
-				url_video = js.getString("stream_source_url");
+				url_video = js.getString("url");
 				like_count = js.getInt("ratings_total");
 
 				datePublication = new Date(js.getInt("created_time"));
