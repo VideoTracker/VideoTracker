@@ -1,17 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
-    
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:text="Vos préférences seront ici"
-        android:textSize="12sp" />
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    
-    
+    <PreferenceCategory android:title="@string/pref_video_display_settings" >
 
-</LinearLayout>
+        <ListPreference
+            android:defaultValue="30"
+            android:entries="@array/video_display"
+            android:entryValues="@array/video_displayValues"
+            android:key="event_display"
+            android:summary="@string/pref_video_display_youtube_summary"
+            android:title="@string/pref_video_youtube_display" />
+
+        <ListPreference
+            android:defaultValue="30"
+            android:entries="@array/video_display"
+            android:entryValues="@array/video_displayValues"
+            android:key="event_display"
+            android:summary="@string/pref_video_display_daily_summary"
+            android:title="@string/pref_video_daily_display" />
+    </PreferenceCategory>
+
+</PreferenceScreen>
