@@ -34,6 +34,7 @@ import android.widget.Toast;
  */
 public class VideoActivity extends Activity{
 	private String videoId;
+	public String url;
 	private Source source;
 	public TextView video_titre;
 	public TextView video_url;
@@ -61,7 +62,7 @@ public class VideoActivity extends Activity{
 		videoId = extras.getString("video");
 		source = (Source)getIntent().getSerializableExtra("source");
 		new LoadVideo(this).execute();
-		
+
 		db = new DBHelperVT(this);
 
 		video_titre = (TextView)findViewById(R.id.video_titre);
@@ -71,17 +72,17 @@ public class VideoActivity extends Activity{
 		video_description = (TextView)findViewById(R.id.video_description_complet);
 
 		video_nbVues = (TextView)findViewById(R.id.video_nbVues);
-		
+
 		video_like_count = (TextView)findViewById(R.id.video_like_count);
-		
+
 		image = (ImageView)findViewById(R.id.video_image);
 
 		favori = (CheckBox) findViewById(R.id.checkbox_fav);
-		
+
 		button_play = (ImageButton) findViewById(R.id.button_play);
-		
+
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -93,7 +94,15 @@ public class VideoActivity extends Activity{
 
 		Intent intent = new Intent(Intent.ACTION_SEND);
 		intent.setType("text/plain");
-		//intent.putExtra(Intent.EXTRA_TEXT, "Regarde cette vidéo : "+video.url_video);
+		switch (source){
+		case YOUTUBE :
+			intent.putExtra(Intent.EXTRA_TEXT, "Regarde cette vidéo : https://m.youtube.com/watch?v="+videoId);
+			break;
+		case DAILYMOTION :
+			intent.putExtra(Intent.EXTRA_TEXT, "Regarde cette vidéo : http://www.dailymotion.com/video/"+videoId);
+			break;	
+		}
+
 		mShareActionProvider.setShareIntent(intent);
 
 		return true;
@@ -105,11 +114,11 @@ public class VideoActivity extends Activity{
 		switch(view.getId()) {
 		case R.id.checkbox_fav:
 			if (checked){
-			//	video.favori=true;
+				//	video.favori=true;
 				//TODO:AJOUTER AUX FAVORIS
 			}
 			else{
-			//	video.favori=false;
+				//	video.favori=false;
 				//TODO:RETIRER DES FAVORIS
 			}break;
 
@@ -148,24 +157,24 @@ public class VideoActivity extends Activity{
 					new DialogInterface.OnClickListener() {
 
 				@Override
-			public void onClick(DialogInterface dialog, int id) {
-//					//TODO add la video a la playlist
-//					if(id == last)
-//					  final EditText input = new EditText(VideoActivity.this);
-//					 new AlertDialog.Builder(VideoActivity.this)
-//					 	.setTitle("Nom de la nouvelle playlist")
-//					    .setView(input)
-//					    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-//					        public void onClick(DialogInterface dialog, int whichButton) {
-//					        	Editable value = input.getText();
-//					            //TODO créer la playlist et ajouter la video 
-//					            db.addPlaylist(value.toString());
-//					        }
-//					 }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-//        public void onClick(DialogInterface dialog, int whichButton) {
-//            // Do nothing.
-//        }
-//    }).show();
+				public void onClick(DialogInterface dialog, int id) {
+					//					//TODO add la video a la playlist
+					//					if(id == last)
+					//					  final EditText input = new EditText(VideoActivity.this);
+					//					 new AlertDialog.Builder(VideoActivity.this)
+					//					 	.setTitle("Nom de la nouvelle playlist")
+					//					    .setView(input)
+					//					    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+					//					        public void onClick(DialogInterface dialog, int whichButton) {
+					//					        	Editable value = input.getText();
+					//					            //TODO créer la playlist et ajouter la video 
+					//					            db.addPlaylist(value.toString());
+					//					        }
+					//					 }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+					//        public void onClick(DialogInterface dialog, int whichButton) {
+					//            // Do nothing.
+					//        }
+					//    }).show();
 				}
 			});
 			builderSingle.show();
@@ -196,10 +205,10 @@ public class VideoActivity extends Activity{
 
 		public VideoActivity activity;
 
-	    public LoadVideo(VideoActivity a)
-	    {
-	        this.activity = a;
-	    }
+		public LoadVideo(VideoActivity a)
+		{
+			this.activity = a;
+		}
 
 
 
@@ -231,6 +240,6 @@ public class VideoActivity extends Activity{
 			return web;
 
 		}
-		
+
 	}
 }

@@ -7,7 +7,7 @@
             android:defaultValue="30"
             android:entries="@array/video_display"
             android:entryValues="@array/video_displayValues"
-            android:key="event_display"
+            android:key="yt_display"
             android:summary="@string/pref_video_display_youtube_summary"
             android:title="@string/pref_video_youtube_display" />
 
@@ -15,7 +15,7 @@
             android:defaultValue="30"
             android:entries="@array/video_display"
             android:entryValues="@array/video_displayValues"
-            android:key="event_display"
+            android:key="daily_display"
             android:summary="@string/pref_video_display_daily_summary"
             android:title="@string/pref_video_daily_display" />
     </PreferenceCategory>

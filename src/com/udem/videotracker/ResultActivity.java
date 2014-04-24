@@ -2,6 +2,8 @@ package com.udem.videotracker;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -35,8 +37,7 @@ public class ResultActivity extends Activity {
 		@Override
 		public void onItemClick(AdapterView<?> adapter, View view,
 				int position, long id) {
-			Intent intent = new Intent(ResultActivity.this,
-					VideoActivity.class);
+			Intent intent = new Intent(ResultActivity.this, VideoActivity.class);
 			intent.putExtra("video", videoData.get(position).url_video);
 			intent.putExtra("source", videoData.get(position).sourceVideo);
 			startActivity(intent);
@@ -57,13 +58,13 @@ public class ResultActivity extends Activity {
 				keywords = null;
 			} else {
 				keywords = extras.getString("SEARCH");
-				
+
 				// retirer les espaces superflus au debut et a la fin
 				keywords = keywords.trim();
-				
+
 				// remplacer les espaces dans le mot par des +
 				keywords = keywords.replaceAll("\\s+", "+");
-				
+
 				searchDailymotion = extras.getBoolean("SEARCH_DAILYMOTION");
 				searchYoutube = extras.getBoolean("SEARCH_YOUTUBE");
 			}
@@ -84,13 +85,13 @@ public class ResultActivity extends Activity {
 		mainList = (ListView) findViewById(R.id.videoList);
 		mainList.setAdapter(mainAdapter);
 		mainList.setOnItemClickListener(new VideoListOnItemClick());
-		
-		if(!RechercheActivity.isOnline(this)){
+
+		if (!RechercheActivity.isOnline(this)) {
 			Intent intent = new Intent(ResultActivity.this,
 					InternetCheckActivity.class);
 			startActivity(intent);
 		}
-		
+
 		new SearchVideos(this).execute();
 	}
 
@@ -98,18 +99,42 @@ public class ResultActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		Intent intent = null;
 		switch (item.getItemId()) {
-		case R.id.tri_alpha:
+		case R.id.tri_alpha: {
+			Comparator<VideoAdapter.VideoData> myComparator = new Comparator<VideoAdapter.VideoData>() {
+				public int compare(VideoAdapter.VideoData obj1,
+						VideoAdapter.VideoData obj2) {
+					return obj1.title.compareTo(obj2.title);
+				}
+			};
+			Collections.sort(videoData, myComparator);
 			mainAdapter.notifyDataSetChanged();
 			return true;
+		}
 		case android.R.id.home:
 			this.finish();
 			return true;
-		case R.id.tri_source:
+		case R.id.tri_source: {
+			Comparator<VideoAdapter.VideoData> myComparator = new Comparator<VideoAdapter.VideoData>() {
+				public int compare(VideoAdapter.VideoData obj1,
+						VideoAdapter.VideoData obj2) {
+					return obj1.sourceVideo.compareTo(obj2.sourceVideo);
+				}
+			};
+			Collections.sort(videoData, myComparator);
 			mainAdapter.notifyDataSetChanged();
 			return true;
-		case R.id.tri_date:
+		}
+		case R.id.tri_date: {
+			Comparator<VideoAdapter.VideoData> myComparator = new Comparator<VideoAdapter.VideoData>() {
+				public int compare(VideoAdapter.VideoData obj1,
+						VideoAdapter.VideoData obj2) {
+					return obj1.datePublication.compareTo(obj2.datePublication);
+				}
+			};
+			Collections.sort(videoData, myComparator);
 			mainAdapter.notifyDataSetChanged();
 			return true;
+		}
 		case R.id.menu_playlist:
 			intent = new Intent(ResultActivity.this, PlaylistActivity.class);
 			startActivity(intent);
@@ -155,21 +180,20 @@ public class ResultActivity extends Activity {
 		return true;
 	}
 
-	private class SearchVideos extends
-			AsyncTask<String, Integer, YoutubeAPI> {
-		
+	private class SearchVideos extends AsyncTask<String, Integer, YoutubeAPI> {
+
 		public ResultActivity activity;
 
-	    public SearchVideos(ResultActivity a)
-	    {
-	        this.activity = a;
-	    }
+		public SearchVideos(ResultActivity a) {
+			this.activity = a;
+		}
 
 		protected YoutubeAPI doInBackground(String... params) {
 			YoutubeAPI web = null;
 			try {
 				web = new YoutubeAPI(activity, keywords, progressBar,
-						searchDailymotion, searchYoutube, videoData, mainAdapter);
+						searchDailymotion, searchYoutube, videoData,
+						mainAdapter);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			} catch (ParseException e) {
@@ -204,7 +228,7 @@ public class ResultActivity extends Activity {
 			}
 
 			search_txt.setText("Nombre de resultats : " + videoData.size());
-			
+
 			mainAdapter.notifyDataSetChanged();
 		}
 	}

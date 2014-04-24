@@ -18,8 +18,10 @@ import org.json.JSONObject;
 import com.udem.videotracker.VideoAdapter.Source;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.net.ParseException;
+import android.preference.PreferenceManager;
 import android.widget.ProgressBar;
 
 public class YoutubeAPI extends BasicAPI {
@@ -28,7 +30,6 @@ public class YoutubeAPI extends BasicAPI {
 	private String title;
 	private String description;
 	private String thumb;
-	private String id="";
 	private String id_video="";
 	private Drawable icone;
 
@@ -36,6 +37,9 @@ public class YoutubeAPI extends BasicAPI {
 	private JSONObject js;
 	public static int LENGTH_TITLE = 40;
 	public static int LENGTH_DESCRIPTION = 120;
+	
+	private int res_youtube;
+	private int res_daily;
 
 	private ProgressBar progressBar;
 
@@ -59,6 +63,8 @@ public class YoutubeAPI extends BasicAPI {
 			final VideoAdapter adapter) throws InterruptedException, java.text.ParseException {
 
 		super(keywords);
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
+		res_youtube=Integer.parseInt(prefs.getString("yt_display", ""));
 
 		different_apis = 0;
 		if (searchDailymotion)
@@ -81,7 +87,8 @@ public class YoutubeAPI extends BasicAPI {
 				try {
 					url = "https://www.googleapis.com/youtube/v3/search?part="
 							+ URLEncoder.encode("snippet", "UTF-8")
-							+ "&maxResults=30"
+							+ "&maxResults="
+							+ res_youtube
 							+ "&order=relevance"
 							+ "&q="
 							+ keywords
@@ -124,7 +131,7 @@ public class YoutubeAPI extends BasicAPI {
 					description = shorterString(video.getString("description"),
 							LENGTH_DESCRIPTION);
 					icone = loadHttpImage(thumb);
-					id_video += row_item.getJSONObject("id").getString("videoId");
+					id_video = row_item.getJSONObject("id").getString("videoId");
 
 					datePublication = dateTmp.parse(video.getString("publishedAt"));
 
@@ -166,7 +173,7 @@ public class YoutubeAPI extends BasicAPI {
 					progressBar.setProgress(progress);
 					nombre_resultats++;
 					JSONObject row = array.getJSONObject(i);
-					id = row.getString("id");
+					id_video = row.getString("id");
 					title = shorterString(row.getString("title"), LENGTH_TITLE);
 
 					description = shorterString(row.getString("description"),

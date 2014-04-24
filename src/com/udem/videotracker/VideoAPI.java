@@ -60,6 +60,7 @@ public class VideoAPI extends BasicAPI {
 						+ video.nbVues);
 				activity.video_like_count.setText("	Nombre de likes :"
 						+ video.like_count);
+				//activity.url = video.url_video;
 				activity.favori.setChecked(video.favori);
 				activity.image.setImageDrawable(video.picture);
 				activity.button_play

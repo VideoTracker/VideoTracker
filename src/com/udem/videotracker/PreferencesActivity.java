@@ -1,8 +1,8 @@
 package com.udem.videotracker;
 
 import android.app.ActionBar;
-import android.app.Activity;
 import android.os.Bundle;
+import android.preference.PreferenceActivity;
 import android.view.MenuItem;
 
 /**
@@ -11,14 +11,13 @@ import android.view.MenuItem;
  * @author rpiche
  *
  */
-public class PreferencesActivity extends Activity {
+public class PreferencesActivity extends PreferenceActivity {
 
-	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		ActionBar actionBar = getActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
-		setContentView(R.layout.activity_pref);
+		addPreferencesFromResource(R.layout.activity_pref);
 	}
 
 	@Override
