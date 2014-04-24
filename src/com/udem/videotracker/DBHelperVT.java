@@ -1,6 +1,6 @@
-<<<<<<< HEAD
 package com.udem.videotracker;
 
+import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -56,7 +56,7 @@ public class DBHelperVT extends SQLiteOpenHelper {
 	 * ajouter ou enlever des colonnes, changer la définition
 	 * ou les propriétés d'une colonne, etc.
 	 */
-	static final int VERSION=1;
+	static final int VERSION=3;
 
 	static final String TABLE_VIDEO = "Video";
 	/*
@@ -78,16 +78,18 @@ public class DBHelperVT extends SQLiteOpenHelper {
 	static final String P_NOM = "nom";
 	static final String P_DATECREA = "date_creation";
 	
-	
 	static final String TABLE_ASSOCIATION = "Association";
 	/*
 	 * Énumération des noms de colonne de la table association
 	 */
 	static final String A_IDVIDEO = "id_video";
 	static final String A_IDPLAYLIST = "id_playlist";
-
 	
-
+	static final String TABLE_HISTORIQUE = "Historique";
+	/*
+	 * Énumération des noms de colonne de la table historique
+	 */
+	static final String H_KEYWORDS = "keywords";
 	/*
 	 * On utilisera ce contexte pour afficher des toasts.
 	 */
@@ -98,7 +100,7 @@ public class DBHelperVT extends SQLiteOpenHelper {
 		// dans /data/data/<package>/.
 		// La base de donnée est donc dans
 		// /data/data/iro.ift2905.bddmeteo/databases (Voir DDMS)
-		super(context, "meteo.db", null, VERSION);
+		super(context, "videotracker.db", null, VERSION);
 		this.context=context;
 	}
 
@@ -112,6 +114,7 @@ public class DBHelperVT extends SQLiteOpenHelper {
 	public void onCreate(SQLiteDatabase db) {
 		Toast.makeText(context, "Création BDD", Toast.LENGTH_LONG).show();
 		Log.d("DBHelper", "Création BDD");
+		Log.i("ANTHO", "testBDD");
 		
 		// Appel standard pour créer une table dans la base de données.
 		String sql = "create table " + TABLE_VIDEO + " ("
@@ -130,7 +133,10 @@ public class DBHelperVT extends SQLiteOpenHelper {
 		sql += "create table " + TABLE_ASSOCIATION + " ("
 				+ A_IDVIDEO +" integer, "
 				+ A_IDPLAYLIST + " integer);";
-
+		
+		sql += "create table " + TABLE_HISTORIQUE + " ("
+				+ H_KEYWORDS + " text);";
+		
 		// ExecSQL prend en entrée une commande SQL et l'exécute
 		// directement sur la base de données.
 		db.execSQL(sql);
@@ -157,6 +163,15 @@ public class DBHelperVT extends SQLiteOpenHelper {
 	public void onUpgrade(SQLiteDatabase db, int ancienneVersion, int nouvelleVersion) {
 		Toast.makeText(context, "Mise à jour BDD", Toast.LENGTH_LONG).show();
 		Log.d("DBHelper", "Mise à jour BDD");
+		
+		// Efface l'ancienne base de données
+		db.execSQL("drop table if exists "+TABLE_VIDEO);
+		db.execSQL("drop table if exists "+TABLE_ASSOCIATION);
+		db.execSQL("drop table if exists "+TABLE_HISTORIQUE);
+		db.execSQL("drop table if exists "+TABLE_PLAYLIST);
+		
+		// Appelle onCreate, qui recrée la base de données
+		onCreate(db);
 	}
 
 	/*
@@ -164,34 +179,59 @@ public class DBHelperVT extends SQLiteOpenHelper {
 	 * présente et permet d'ajouter un élément à celle-ci.
 	 * 
 	 */
-	public void addToFav(VideoAdapter.VideoData data, int idplaylist) {
-		// Malgré le nom "get", la méthode getWritableDatabase fait plus
-		// que simplement retourner une référence; elle ouvre une
-		// connexion à la base de données. Il est donc impératif d'appeler
-		// db.close() à la fin du processus.
+	public boolean isFav(VideoAdapter.VideoData data) {
 		SQLiteDatabase db = this.getWritableDatabase();
 		
-		Cursor cur = db.rawQuery("SELECT * FROM Video V WHERE V.lien='"+ data.url+"'", new String [] {});
+		Cursor cur = db.rawQuery("SELECT * FROM Video V, Playlist P WHERE V.lien='"+ data.url_video+"' AND P.nom='Favoris'", new String [] {});
 		int id =0;
 		if(!cur.moveToFirst()){
+			db.close();	
 			addToVideo(data, db);
+			return false;
 		}else{
+			db.close();	
 			id = cur.getInt(1);
+			return true;
 		}
+	}
+	
+	public void addPlaylist(String name) {
+		SQLiteDatabase db = this.getWritableDatabase();
+		
+		ContentValues values = new ContentValues();
+	    values.put(P_NOM, name);
+	 
+	    // insert row
+	    db.insert(TABLE_PLAYLIST, null, values);
+	 
+		// N'oubliez pas ceci!
+		db.close();		
+	}
+	
+	public void deletePlaylist(String name) {
+		SQLiteDatabase db = this.getWritableDatabase();
 		
 		String sql =
-	            "INSERT or replace INTO Association (id_video, id_playlist) VALUES('"+id +"','"+idplaylist+"')" ;       
+	            "DELETE FROM Playlist WHERE nom='"+name +"')" ;       
 	                db.execSQL(sql);
 		
-
-
+		// N'oubliez pas ceci!
+		db.close();		
+	}
+	
+	public void addToHistoric(String keywords) {
+		SQLiteDatabase db = this.getWritableDatabase();
+		
+		String sql =
+	            "INSERT or replace INTO Historique (keywords) VALUES('"+keywords+"')" ;       
+	                db.execSQL(sql);
 		
 		// N'oubliez pas ceci!
 		db.close();		
 	}
 	
 	public void addToVideo(VideoAdapter.VideoData data, SQLiteDatabase db){
-		String sql = "INSERT or replace INTO Video ( titre, description, lien,date_publication, thumbmail) VALUES('"+data.title+"','"+data.description+"','"+ data.url+"','2012-04-08','lol/src')" ;       
+		String sql = "INSERT or replace INTO Video ( titre, description, lien,date_publication, thumbmail) VALUES('"+data.title+"','"+data.description+"','"+ data.url_video+"','2012-04-08','lol/src')" ;       
 		db.execSQL(sql);
 	}
 
@@ -216,6 +256,4 @@ public class DBHelperVT extends SQLiteOpenHelper {
 		db.close();
 		return size;
 	}
-
-
 }

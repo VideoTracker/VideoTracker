@@ -11,12 +11,14 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.app.AlertDialog;
+import android.text.Editable;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ShareActionProvider;
@@ -41,6 +43,7 @@ public class VideoActivity extends Activity{
 	public CheckBox favori;
 	public ImageView image;
 	public ImageButton button_play;
+	public DBHelperVT db;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +61,8 @@ public class VideoActivity extends Activity{
 		videoId = extras.getString("video");
 		source = (Source)getIntent().getSerializableExtra("source");
 		new LoadVideo(this).execute();
+		
+		db = new DBHelperVT(this);
 
 		video_titre = (TextView)findViewById(R.id.video_titre);
 
@@ -143,24 +148,24 @@ public class VideoActivity extends Activity{
 					new DialogInterface.OnClickListener() {
 
 				@Override
-				public void onClick(DialogInterface dialog, int id) {
-					//TODO add la video a la playlist
-					/*if(id = last)
-					 * final EditText input = new EditText(VideoActivity.this);
-					 new AlertDialog.Builder(VideoActivity.this)
-    .setTitle("Nom de la nouvelle playlist")
-    .setView(input)
-    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-        public void onClick(DialogInterface dialog, int whichButton) {
-            Editable value = input.getText();
-            //TODO créer la playlist et ajouter la video 
-        }
-    }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-        public void onClick(DialogInterface dialog, int whichButton) {
-            // Do nothing.
-        }
-    }).show();
-					 */
+			public void onClick(DialogInterface dialog, int id) {
+//					//TODO add la video a la playlist
+//					if(id == last)
+//					  final EditText input = new EditText(VideoActivity.this);
+//					 new AlertDialog.Builder(VideoActivity.this)
+//					 	.setTitle("Nom de la nouvelle playlist")
+//					    .setView(input)
+//					    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+//					        public void onClick(DialogInterface dialog, int whichButton) {
+//					        	Editable value = input.getText();
+//					            //TODO créer la playlist et ajouter la video 
+//					            db.addPlaylist(value.toString());
+//					        }
+//					 }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+//        public void onClick(DialogInterface dialog, int whichButton) {
+//            // Do nothing.
+//        }
+//    }).show();
 				}
 			});
 			builderSingle.show();
