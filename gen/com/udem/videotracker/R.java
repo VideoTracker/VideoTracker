@@ -14,6 +14,17 @@ public final class R {
     }
     public static final class attr {
     }
+    public static final class color {
+        public static final int black=0x7f050007;
+        public static final int geolocation_permissions_prompt_background=0x7f050008;
+        public static final int password_edit=0x7f050003;
+        public static final int password_text=0x7f050002;
+        public static final int ssl_text_label=0x7f050004;
+        public static final int ssl_text_value=0x7f050005;
+        public static final int username_edit=0x7f050001;
+        public static final int username_text=0x7f050000;
+        public static final int white=0x7f050006;
+    }
     public static final class dimen {
         /**  Default screen margins, per the Android Design guidelines. 
 
@@ -26,8 +37,8 @@ public final class R {
          screen margins) for sw720dp devices (e.g. 10" tablets) in landscape here.
     
          */
-        public static final int activity_horizontal_margin=0x7f050000;
-        public static final int activity_vertical_margin=0x7f050001;
+        public static final int activity_horizontal_margin=0x7f060000;
+        public static final int activity_vertical_margin=0x7f060001;
     }
     public static final class drawable {
         public static final int dailymotion=0x7f020000;
@@ -45,49 +56,54 @@ public final class R {
         public static final int youtube=0x7f02000c;
     }
     public static final class id {
-        public static final int _url=0x7f090014;
-        public static final int action_settings=0x7f09002a;
-        public static final int button_play=0x7f09000d;
-        public static final int button_search=0x7f090005;
-        public static final int button_suppression_playlist=0x7f09001c;
-        public static final int button_voice=0x7f090006;
-        public static final int checkbox_dailymotion=0x7f090008;
-        public static final int checkbox_fav=0x7f09000e;
-        public static final int checkbox_youtube=0x7f090007;
-        public static final int dailymotion_player=0x7f090002;
-        public static final int desc=0x7f090012;
-        public static final int description=0x7f090019;
-        public static final int item_video=0x7f090016;
-        public static final int loading_wifi=0x7f090000;
-        public static final int menu_a_propos=0x7f090025;
-        public static final int menu_add=0x7f090028;
-        public static final int menu_aide=0x7f090024;
-        public static final int menu_playlist=0x7f090026;
-        public static final int menu_preferences=0x7f090023;
-        public static final int menu_search=0x7f09001f;
-        public static final int menu_share=0x7f090027;
-        public static final int playlistList=0x7f090003;
-        public static final int playlist_nbVideos=0x7f09001d;
-        public static final int playlist_titre=0x7f09001b;
-        public static final int progressBar=0x7f09000a;
-        public static final int scroll=0x7f090011;
-        public static final int search_query=0x7f090009;
-        public static final int text_search=0x7f090004;
-        public static final int title=0x7f090018;
-        public static final int tri_alpha=0x7f090021;
-        public static final int tri_date=0x7f090020;
-        public static final int tri_nombre=0x7f090022;
-        public static final int tri_source=0x7f090029;
-        public static final int videoIcon=0x7f090017;
-        public static final int videoList=0x7f09000b;
-        public static final int video_description_complet=0x7f090013;
-        public static final int video_image=0x7f09000f;
-        public static final int video_nbVues=0x7f090010;
-        public static final int video_titre=0x7f09000c;
-        public static final int video_url=0x7f090015;
-        public static final int videoview=0x7f09001e;
-        public static final int website=0x7f09001a;
-        public static final int youtubeplayerview=0x7f090001;
+        public static final int _url=0x7f0a0015;
+        public static final int action_settings=0x7f0a002f;
+        public static final int button_play=0x7f0a000d;
+        public static final int button_search=0x7f0a0005;
+        public static final int button_suppression_playlist=0x7f0a0020;
+        public static final int button_voice=0x7f0a0006;
+        public static final int checkbox_dailymotion=0x7f0a0008;
+        public static final int checkbox_fav=0x7f0a000e;
+        public static final int checkbox_youtube=0x7f0a0007;
+        public static final int dailymotion_player=0x7f0a0002;
+        public static final int desc=0x7f0a0013;
+        public static final int description=0x7f0a001d;
+        public static final int error_console=0x7f0a0018;
+        public static final int fullscreen_custom_content=0x7f0a0017;
+        public static final int item_video=0x7f0a001a;
+        public static final int loading_wifi=0x7f0a0000;
+        public static final int main_content=0x7f0a0019;
+        public static final int menu_a_propos=0x7f0a002a;
+        public static final int menu_add=0x7f0a002d;
+        public static final int menu_aide=0x7f0a0029;
+        public static final int menu_playlist=0x7f0a002b;
+        public static final int menu_preferences=0x7f0a0028;
+        public static final int menu_search=0x7f0a0024;
+        public static final int menu_share=0x7f0a002c;
+        public static final int playlistList=0x7f0a0003;
+        public static final int playlist_nbVideos=0x7f0a0021;
+        public static final int playlist_titre=0x7f0a001f;
+        public static final int progressBar=0x7f0a000a;
+        public static final int progress_indicator=0x7f0a0022;
+        public static final int scroll=0x7f0a0012;
+        public static final int search_query=0x7f0a0009;
+        public static final int text_search=0x7f0a0004;
+        public static final int title=0x7f0a001c;
+        public static final int tri_alpha=0x7f0a0026;
+        public static final int tri_date=0x7f0a0025;
+        public static final int tri_nombre=0x7f0a0027;
+        public static final int tri_source=0x7f0a002e;
+        public static final int videoIcon=0x7f0a001b;
+        public static final int videoList=0x7f0a000b;
+        public static final int video_description_complet=0x7f0a0014;
+        public static final int video_image=0x7f0a000f;
+        public static final int video_like_count=0x7f0a0011;
+        public static final int video_nbVues=0x7f0a0010;
+        public static final int video_titre=0x7f0a000c;
+        public static final int video_url=0x7f0a0016;
+        public static final int videoview=0x7f0a0023;
+        public static final int website=0x7f0a001e;
+        public static final int youtubeplayerview=0x7f0a0001;
     }
     public static final class layout {
         public static final int activity_aide=0x7f030000;
@@ -100,47 +116,49 @@ public final class R {
         public static final int activity_recherche=0x7f030007;
         public static final int activity_resultat_video=0x7f030008;
         public static final int activity_video=0x7f030009;
-        public static final int layout_item=0x7f03000a;
-        public static final int layout_item_playlist=0x7f03000b;
-        public static final int videoview=0x7f03000c;
+        public static final int custom_screen=0x7f03000a;
+        public static final int layout_item=0x7f03000b;
+        public static final int layout_item_playlist=0x7f03000c;
+        public static final int video_loading_progress=0x7f03000d;
+        public static final int videoview=0x7f03000e;
     }
     public static final class menu {
-        public static final int menu_playlists=0x7f080000;
-        public static final int menu_recherche=0x7f080001;
-        public static final int menu_video=0x7f080002;
-        public static final int menu_videos=0x7f080003;
-        public static final int video=0x7f080004;
+        public static final int menu_playlists=0x7f090000;
+        public static final int menu_recherche=0x7f090001;
+        public static final int menu_video=0x7f090002;
+        public static final int menu_videos=0x7f090003;
+        public static final int video=0x7f090004;
     }
     public static final class string {
-        public static final int a_propos_activity_text=0x7f06000b;
-        public static final int a_propos_version=0x7f06000d;
-        public static final int a_propos_version_text=0x7f06000c;
-        public static final int action_settings=0x7f060001;
-        public static final int app_name=0x7f060000;
-        public static final int checkbox_dailymotion=0x7f060014;
-        public static final int checkbox_youtube=0x7f060013;
-        public static final int connection_error=0x7f060017;
-        public static final int description_image_recherche=0x7f06000a;
-        public static final int hello_world=0x7f060016;
-        public static final int menu_a_propos=0x7f060005;
-        public static final int menu_add=0x7f060009;
-        public static final int menu_aide=0x7f060004;
-        public static final int menu_playlist=0x7f060002;
-        public static final int menu_preferences=0x7f060003;
-        public static final int menu_search=0x7f060006;
-        public static final int menu_share=0x7f060008;
-        public static final int menu_trier=0x7f060007;
-        public static final int pref_video_daily_display=0x7f06001b;
-        public static final int pref_video_display_daily_summary=0x7f06001c;
-        public static final int pref_video_display_settings=0x7f060018;
-        public static final int pref_video_display_youtube_summary=0x7f06001a;
-        public static final int pref_video_youtube_display=0x7f060019;
-        public static final int search_query=0x7f060012;
-        public static final int title_activity_video=0x7f060015;
-        public static final int tri_alpha=0x7f06000f;
-        public static final int tri_date=0x7f06000e;
-        public static final int tri_nombre=0x7f060010;
-        public static final int tri_source=0x7f060011;
+        public static final int a_propos_activity_text=0x7f07000b;
+        public static final int a_propos_version=0x7f07000d;
+        public static final int a_propos_version_text=0x7f07000c;
+        public static final int action_settings=0x7f070001;
+        public static final int app_name=0x7f070000;
+        public static final int checkbox_dailymotion=0x7f070014;
+        public static final int checkbox_youtube=0x7f070013;
+        public static final int connection_error=0x7f070017;
+        public static final int description_image_recherche=0x7f07000a;
+        public static final int hello_world=0x7f070016;
+        public static final int menu_a_propos=0x7f070005;
+        public static final int menu_add=0x7f070009;
+        public static final int menu_aide=0x7f070004;
+        public static final int menu_playlist=0x7f070002;
+        public static final int menu_preferences=0x7f070003;
+        public static final int menu_search=0x7f070006;
+        public static final int menu_share=0x7f070008;
+        public static final int menu_trier=0x7f070007;
+        public static final int pref_video_daily_display=0x7f07001b;
+        public static final int pref_video_display_daily_summary=0x7f07001c;
+        public static final int pref_video_display_settings=0x7f070018;
+        public static final int pref_video_display_youtube_summary=0x7f07001a;
+        public static final int pref_video_youtube_display=0x7f070019;
+        public static final int search_query=0x7f070012;
+        public static final int title_activity_video=0x7f070015;
+        public static final int tri_alpha=0x7f07000f;
+        public static final int tri_date=0x7f07000e;
+        public static final int tri_nombre=0x7f070010;
+        public static final int tri_source=0x7f070011;
     }
     public static final class style {
         /** 
@@ -164,10 +182,10 @@ public final class R {
     
  API 14 theme customizations can go here. 
          */
-        public static final int AppBaseTheme=0x7f070000;
+        public static final int AppBaseTheme=0x7f080000;
         /**  Application theme. 
  All customizations that are NOT specific to a particular API-level can go here. 
          */
-        public static final int AppTheme=0x7f070001;
+        public static final int AppTheme=0x7f080001;
     }
 }

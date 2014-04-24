@@ -7,18 +7,22 @@ import com.google.android.youtube.player.YouTubePlayerView;
 import com.google.android.youtube.player.YouTubePlayer.Provider;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
-public class PlayerActivity extends YouTubeBaseActivity implements
+public class YoutubePlayerActivity extends YouTubeBaseActivity implements
 YouTubePlayer.OnInitializedListener{
  
  public static final String API_KEY = "AIzaSyBa6hEa_85xTgWs8G-uf-rqyw_4X-RnMHU";
  public static final String VIDEO_ID = "o7VVHhK9zf0";
+ public String url = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player);
+        
+        url = getIntent().getStringExtra("url");
         
         YouTubePlayerView youTubePlayerView = (YouTubePlayerView)findViewById(R.id.youtubeplayerview);
         youTubePlayerView.initialize(API_KEY, this);
@@ -36,7 +40,7 @@ YouTubePlayer.OnInitializedListener{
  public void onInitializationSuccess(Provider provider, YouTubePlayer player,
    boolean wasRestored) {
   if (!wasRestored) {
-        player.cueVideo(VIDEO_ID);
+        player.cueVideo(url);
       }
  }
 

@@ -36,13 +36,13 @@
          <activity 
             android:configChanges="orientation"
     		android:screenOrientation="landscape"
-            android:name="com.udem.videotracker.PlayerActivity"
+            android:name="com.udem.videotracker.YoutubePlayerActivity"
             android:label="Lecteur"/>
          
          <activity 
-            android:configChanges="orientation"
     		android:screenOrientation="landscape"
-    		android:hardwareAccelerated="true"
+    		android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:configChanges="orientation|keyboardHidden|keyboard"
             android:name="com.udem.videotracker.DailymotionPlayerActivity"
             android:label="Lecteur Dailymotion"/>
         

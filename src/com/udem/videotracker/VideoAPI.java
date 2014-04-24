@@ -6,7 +6,6 @@ import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-
 import org.apache.http.HttpEntity;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.protocol.HTTP;
@@ -23,7 +22,6 @@ import android.net.ParseException;
 import android.net.Uri;
 import android.util.Log;
 import android.view.View;
-
 
 public class VideoAPI extends BasicAPI {
 
@@ -47,11 +45,10 @@ public class VideoAPI extends BasicAPI {
 	final String pattern = "yyyy-MM-dd'T'hh:mm:ss";
 	final SimpleDateFormat dateTmp = new SimpleDateFormat(pattern);
 
-
 	private HttpEntity page;
 
-
-	VideoAPI(final VideoActivity activity, String ID, Source src) throws InterruptedException, java.text.ParseException {
+	VideoAPI(final VideoActivity activity, String ID, Source src)
+			throws InterruptedException, java.text.ParseException {
 
 		super("");
 		Runnable threadNotification = new Runnable() {
@@ -60,29 +57,43 @@ public class VideoAPI extends BasicAPI {
 				activity.video_titre.setText(video.title);
 				activity.video_url.setText(video.url_video);
 				activity.video_description.setText(video.description);
-				activity.video_nbVues.setText("Nombre de vues : "+video.nbVues);
-				activity.video_like_count.setText("	Nombre de likes :"+video.like_count);
+				activity.video_nbVues.setText("Nombre de vues : "
+						+ video.nbVues);
+				activity.video_like_count.setText("	Nombre de likes :"
+						+ video.like_count);
 				activity.favori.setChecked(video.favori);
 				activity.image.setImageDrawable(video.picture);
-				activity.button_play.setOnClickListener(new View.OnClickListener()
-				{
-					@Override
-					public void onClick(View v) {
-						if (v.getId() == R.id.button_play){
-							Log.i("ANTHO","teeest");
-							Intent i = new Intent(activity, DailymotionPlayerActivity.class);
-							String path = video.url_video;
-							i.putExtra("url", path);
-							activity.startActivity(i);
-						}
-					}
-				});
+				activity.button_play
+						.setOnClickListener(new View.OnClickListener() {
+							@Override
+							public void onClick(View v) {
+								if (v.getId() == R.id.button_play) {
+									String path = activity.video_url.getText().toString();
+									if (video.sourceVideo == Source.DAILYMOTION) {
+										Intent i = new Intent(activity,
+												DailymotionPlayerActivity.class);
+										i.putExtra("url", path);
+										activity.startActivity(i);
+									} else {
+										Intent i = new Intent(activity,
+												YoutubePlayerActivity.class);
+										String video_id = path.split("v=")[1];
+										int andPosition = video_id.indexOf("&");
+										if(andPosition != -1) {
+										  video_id = video_id.substring(0, andPosition);
+										}
+										i.putExtra("url", video_id);
+										activity.startActivity(i);
+									}
+								}
+							}
+						});
 				notificationDone = true;
 			}
 		};
 
 		try {
-			switch(src){
+			switch (src) {
 			case YOUTUBE:
 				try {
 					url = "https://www.googleapis.com/youtube/v3/videos?id="
@@ -91,7 +102,7 @@ public class VideoAPI extends BasicAPI {
 							+ URLEncoder.encode(
 									"AIzaSyBa6hEa_85xTgWs8G-uf-rqyw_4X-RnMHU",
 									"UTF-8")
-									+"&fields=items(id,snippet,statistics)&part=snippet,statistics";
+							+ "&fields=items(id,snippet,statistics)&part=snippet,statistics";
 				} catch (UnsupportedEncodingException e1) {
 					e1.printStackTrace();
 				}
@@ -106,38 +117,41 @@ public class VideoAPI extends BasicAPI {
 				JSONArray items = js.getJSONArray("items");
 				Log.i("toto", js.toString());
 
-
 				JSONObject row_item = items.getJSONObject(0);
 				JSONObject snippet = row_item.getJSONObject("snippet");
 				JSONObject stat = row_item.getJSONObject("statistics");
 				thumb = snippet.getJSONObject("thumbnails")
 						.getJSONObject("default").getString("url");
-				title = shorterString(snippet.getString("title"),
-						LENGTH_TITLE);
+				title = shorterString(snippet.getString("title"), LENGTH_TITLE);
 				description = snippet.getString("description");
 				icone = loadHttpImage(thumb);
-				url_video = "https://m.youtube.com/watch?v="+row_item.getString("id");
-				datePublication = dateTmp.parse(snippet.getString("publishedAt"));
+				url_video = "https://m.youtube.com/watch?v="
+						+ row_item.getString("id");
+				datePublication = dateTmp.parse(snippet
+						.getString("publishedAt"));
 				nbVues = (int) stat.getLong("viewCount");
 				like_count = (int) stat.getLong("likeCount");
-				video = new VideoAdapter.VideoData(title, description, "", url_video, thumb, false, false, nbVues, like_count, icone, datePublication, Source.YOUTUBE);
+				video = new VideoAdapter.VideoData(title, description, "",
+						url_video, thumb, false, false, nbVues, like_count,
+						icone, datePublication, Source.YOUTUBE);
 
-				synchronized( threadNotification ) {
-					activity.runOnUiThread(threadNotification) ;
-					while(!notificationDone)
-						Thread.sleep(100) ;
+				synchronized (threadNotification) {
+					activity.runOnUiThread(threadNotification);
+					while (!notificationDone)
+						Thread.sleep(100);
 					notificationDone = false;
 				}
 				break;
 			case DAILYMOTION:
 
-
-				url = "https://api.dailymotion.com/video/"+ID+"?fields=title,description,thumbnail_url,created_time,views_total,ratings_total,stream_source_url";
+				url = "https://api.dailymotion.com/video/"
+						+ ID
+						+ "?fields=title,description,thumbnail_url,created_time,views_total,ratings_total,stream_source_url";
 
 				page = getHttp(url);
 
 				js = new JSONObject(EntityUtils.toString(page, HTTP.UTF_8));
-				
+
 				title = shorterString(js.getString("title"), LENGTH_TITLE);
 
 				description = js.getString("description");
@@ -149,12 +163,14 @@ public class VideoAPI extends BasicAPI {
 				datePublication = new Date(js.getInt("created_time"));
 				nbVues = js.getInt("views_total");
 
-				video = new VideoAdapter.VideoData(title, description, "", url_video, thumb, false, false, nbVues, like_count, icone, datePublication, Source.DAILYMOTION);
+				video = new VideoAdapter.VideoData(title, description, "",
+						url_video, thumb, false, false, nbVues, like_count,
+						icone, datePublication, Source.DAILYMOTION);
 
-				synchronized( threadNotification ) {
-					activity.runOnUiThread(threadNotification) ;
+				synchronized (threadNotification) {
+					activity.runOnUiThread(threadNotification);
 
-					while(!notificationDone)
+					while (!notificationDone)
 						Thread.sleep(100); // unlocks myRunable while waiting
 					notificationDone = false;
 				}
