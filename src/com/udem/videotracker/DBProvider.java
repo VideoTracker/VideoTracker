@@ -75,7 +75,7 @@ public class DBProvider extends ContentProvider {
 	 */
 	@Override
 	public boolean onCreate() {
-		dbh = new DBHelperVT(getContext());
+		dbh = new DBHelperVT(getContext(), "VTDatabase", null, 1);
 		Log.d("contentprovider","created.");
 		return true;
 	}
@@ -140,7 +140,7 @@ public class DBProvider extends ContentProvider {
 			throw new IllegalArgumentException("Unknown URI: " + uri);
 		}
 		getContext().getContentResolver().notifyChange(uri, null);
-		return Uri.parse(BASE_PATH + "/" + values.get(DBHelperVT.P_ID) );
+		return Uri.parse(BASE_PATH + "/" + values.get(DBHelperVT.COL_ID) );
 	}
 
 	/*
@@ -205,28 +205,6 @@ public class DBProvider extends ContentProvider {
 	 * une exception si ce n'est pas le cas.
 	 */
 	private void checkColumns(String[] projection) {
-		String[] available = {
-				DBHelperVT.V_DATEPUB,
-				DBHelperVT.V_DESC,
-				DBHelperVT.V_ID,
-				DBHelperVT.V_LINK,
-				DBHelperVT.V_THUMBMAIL,
-				DBHelperVT.V_TITLE,
-				DBHelperVT.P_ID,
-				DBHelperVT.P_NOM,
-				DBHelperVT.P_DATECREA,
-				DBHelperVT.H_KEYWORDS,
-				DBHelperVT.A_IDPLAYLIST,
-				DBHelperVT.A_IDVIDEO
-				};
-				
-		if (projection != null) {
-			HashSet<String> requestedColumns = new HashSet<String>(Arrays.asList(projection));
-			HashSet<String> availableColumns = new HashSet<String>(Arrays.asList(available));
-			// Check if all columns which are requested are available
-			if (!availableColumns.containsAll(requestedColumns)) {
-				throw new IllegalArgumentException("Unknown columns in projection");
-			}
-		}
+	
 	}
 }
