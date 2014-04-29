@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -46,119 +47,71 @@ import android.widget.Toast;
  */
 public class DBHelperVT extends SQLiteOpenHelper {
 
-	/*
-	 * La version est un entier obligatoire qui indique
-	 * la version de la *structure* de la base de données.
-	 * À chaque fois que celle-ci est changée, on doit
-	 * incrémenter la version.
-	 * 
-	 * Un changement structurel peut être, par exemple,
-	 * ajouter ou enlever des colonnes, changer la définition
-	 * ou les propriétés d'une colonne, etc.
-	 */
-	static final int VERSION=3;
-
-	static final String TABLE_VIDEO = "Video";
+	 static final String TABLE_VIDEO = "table_video";
 	/*
 	 * Énumération des noms de colonne de la table video
 	 */
-	static final String V_ID = "id_video";
-	static final String V_TITLE = "titre";
-	static final String V_DESC = "description";
-	static final String V_LINK = "lien";
-	static final String V_DATEPUB = "date_publication";
-	static final String V_THUMBMAIL = "thumbmail";
+	private static final String V_ID = "id_video";
+	private static final String V_TITLE = "titre";
+	private static final String V_DESC = "description";
+	private static final String V_LINK = "lien";
+	private static final String V_DATEPUB = "date_publication";
+	private static final String V_THUMBMAIL = "thumbmail";
+	
+	private static final String CREATE_VIDEO = "CREATE TABLE " + TABLE_VIDEO + " ("
+			+ V_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + V_TITLE + " TEXT NOT NULL, "
+			+ V_DESC + " TEXT NOT NULL, " + V_LINK + " TEXT NOT NULL, " + V_DATEPUB + " TEXT NOT NULL, "
+			+ V_THUMBMAIL + " TEXT NOT NULL);";
 	
 	
-	static final String TABLE_PLAYLIST = "Playlist";
-	/*
-	 * Énumération des noms de colonne de la table playlist
-	 */
-	static final String P_ID = "id_playlist";
-	static final String P_NOM = "nom";
-	static final String P_DATECREA = "date_creation";
+	static final String TABLE_PLAYLIST = "table_playlist";
+	 static final String COL_ID = "id_playlist";
+	 static final String COL_PNAME = "name";
+	 static final String COL_DATE = "date";
+ 
+	private static final String CREATE_PLAYLIST = "CREATE TABLE " + TABLE_PLAYLIST + " ("
+	+ COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COL_PNAME + " TEXT NOT NULL, "
+	+ COL_DATE + " TEXT NOT NULL);";
 	
-	static final String TABLE_ASSOCIATION = "Association";
+	 static final String TABLE_ASSOCIATION = "Association";
 	/*
 	 * Énumération des noms de colonne de la table association
 	 */
-	static final String A_IDVIDEO = "id_video";
-	static final String A_IDPLAYLIST = "id_playlist";
+	private static final String A_IDVIDEO = "id_video";
+	private static final String A_IDPLAYLIST = "id_playlist";
 	
-	static final String TABLE_HISTORIQUE = "Historique";
+	private static final String CREATE_ASSOCIATION = "CREATE TABLE " + TABLE_ASSOCIATION + " ("+ A_IDVIDEO + " INTEGER NOT NULL, "
+			+ A_IDPLAYLIST + " INTEGER NOT NULL);";
+	
+	private static final String TABLE_HISTORIQUE = "Historique";
 	/*
 	 * Énumération des noms de colonne de la table historique
 	 */
-	static final String H_KEYWORDS = "keywords";
+	private static final String H_ID = "id_historique";
+	private static final String H_KEYWORDS = "keywords";
+	
+	static final String CREATE_HISTORIQUE = "CREATE TABLE " + TABLE_HISTORIQUE + " ("+H_ID+ " INTEGER PRIMARY KEY AUTOINCREMENT,"+ H_KEYWORDS + " TEXT NOT NULL);";
 	/*
 	 * On utilisera ce contexte pour afficher des toasts.
 	 */
 	Context context;	
+	
 
-	public DBHelperVT(Context context) {
-		// Une application conserve toutes ses données privées
-		// dans /data/data/<package>/.
-		// La base de donnée est donc dans
-		// /data/data/iro.ift2905.bddmeteo/databases (Voir DDMS)
-		super(context, "videotracker.db", null, VERSION);
-		this.context=context;
+	
+	public DBHelperVT(Context context, String name, CursorFactory factory, int version) {
+		super(context, name, factory, version);
 	}
-
-	/*
-	 * onCreate est appelée lorsqu'on crée la base de données.
-	 * Tous les appels d'initialisation, par exemple la création
-	 * de tables, doivent être effectués ici.
-	 * 
-	 */
+ 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		Toast.makeText(context, "Création BDD", Toast.LENGTH_LONG).show();
-		Log.d("DBHelper", "Création BDD");
-		Log.i("ANTHO", "testBDD");
 		
-		// Appel standard pour créer une table dans la base de données.
-		String sql = "create table " + TABLE_VIDEO + " ("
-				+ V_ID +" integer primary key, "
-				+ V_TITLE + " text,"
-				+ V_DESC + " text,"
-				+ V_LINK + " text,"
-				+ V_THUMBMAIL + " text,"
-				+ V_DATEPUB + " date );";
-		
-		sql += "create table " + TABLE_PLAYLIST + " ("
-				+ P_ID +" integer primary key, "
-				+ P_NOM + " text,"
-				+ P_DATECREA + " date );";
-		
-		sql += "create table " + TABLE_ASSOCIATION + " ("
-				+ A_IDVIDEO +" integer, "
-				+ A_IDPLAYLIST + " integer);";
-		
-		sql += "create table " + TABLE_HISTORIQUE + " ("
-				+ H_KEYWORDS + " text);";
-		
-		// ExecSQL prend en entrée une commande SQL et l'exécute
-		// directement sur la base de données.
-		db.execSQL(sql);
+		db.execSQL(CREATE_VIDEO);
+		db.execSQL(CREATE_PLAYLIST);
+		db.execSQL(CREATE_HISTORIQUE);
+		db.execSQL(CREATE_ASSOCIATION);
 	}
-
-	/*
-	 * onUpgrade est appelée lorsque l'application détecte une
-	 * base de données avec une version plus ancienne que celle
-	 * actuellement utilisée. Ceci peut arriver si, par exemple,
-	 * on crée une mise à jour pour l'application qui change la
-	 * structure de la base de données et donc la version; tous
-	 * les usagers ayant déjà utilisé l'application avant cette
-	 * mise à jour auront l'ancienne version de la structure et
-	 * devront être mis à jour.
-	 * 
-	 * Notez qu'en général, on souhaitera conserver les données
-	 * dans la base de données en effectuant cette mise à jour.
-	 * L'exemple ici se contente de tout effacer, mais ce comportement
-	 * n'est désirable que si la base de données ne sert que de cache
-	 * et donc ne contient que des valeurs temporaires.
-	 * 
-	 */
+ 
+ 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int ancienneVersion, int nouvelleVersion) {
 		Toast.makeText(context, "Mise à jour BDD", Toast.LENGTH_LONG).show();
@@ -172,67 +125,6 @@ public class DBHelperVT extends SQLiteOpenHelper {
 		
 		// Appelle onCreate, qui recrée la base de données
 		onCreate(db);
-	}
-
-	/*
-	 * Cette méthode a été créée spécifiquement pour la base de donnée
-	 * présente et permet d'ajouter un élément à celle-ci.
-	 * 
-	 */
-	public boolean isFav(VideoAdapter.VideoData data) {
-		SQLiteDatabase db = this.getWritableDatabase();
-		
-		Cursor cur = db.rawQuery("SELECT * FROM Video V, Playlist P WHERE V.lien='"+ data.url_video+"' AND P.nom='Favoris'", new String [] {});
-		int id =0;
-		if(!cur.moveToFirst()){
-			db.close();	
-			addToVideo(data, db);
-			return false;
-		}else{
-			db.close();	
-			id = cur.getInt(1);
-			return true;
-		}
-	}
-	
-	public void addPlaylist(String name) {
-		SQLiteDatabase db = this.getWritableDatabase();
-		
-		ContentValues values = new ContentValues();
-	    values.put(P_NOM, name);
-	 
-	    // insert row
-	    db.insert(TABLE_PLAYLIST, null, values);
-	 
-		// N'oubliez pas ceci!
-		db.close();		
-	}
-	
-	public void deletePlaylist(String name) {
-		SQLiteDatabase db = this.getWritableDatabase();
-		
-		String sql =
-	            "DELETE FROM Playlist WHERE nom='"+name +"')" ;       
-	                db.execSQL(sql);
-		
-		// N'oubliez pas ceci!
-		db.close();		
-	}
-	
-	public void addToHistoric(String keywords) {
-		SQLiteDatabase db = this.getWritableDatabase();
-		
-		String sql =
-	            "INSERT or replace INTO Historique (keywords) VALUES('"+keywords+"')" ;       
-	                db.execSQL(sql);
-		
-		// N'oubliez pas ceci!
-		db.close();		
-	}
-	
-	public void addToVideo(VideoAdapter.VideoData data, SQLiteDatabase db){
-		String sql = "INSERT or replace INTO Video ( titre, description, lien,date_publication, thumbmail) VALUES('"+data.title+"','"+data.description+"','"+ data.url_video+"','2012-04-08','lol/src')" ;       
-		db.execSQL(sql);
 	}
 
 	

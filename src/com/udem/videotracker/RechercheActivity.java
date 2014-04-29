@@ -52,8 +52,10 @@ public class RechercheActivity extends Activity implements OnClickListener {
 		// 3. Get the AlertDialog from create()
 		AlertDialog dialog = builder.create();
 		
-		DBHelperVT db = new DBHelperVT(this);
-	    db.addPlaylist("Test");
+		VTBDD db = new VTBDD(this);
+	    db.open();
+	    db.addPlaylist("playlist", "2014-12-12");
+		
 	}
 	
 	public void speakToMe() {

@@ -63,7 +63,7 @@ public class VideoActivity extends Activity{
 		source = (Source)getIntent().getSerializableExtra("source");
 		new LoadVideo(this).execute();
 
-		db = new DBHelperVT(this);
+		db = new DBHelperVT(this, "VTDatabase", null, 1);
 
 		video_titre = (TextView)findViewById(R.id.video_titre);
 
