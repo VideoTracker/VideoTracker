@@ -45,7 +45,7 @@ public class PlaylistActivity extends Activity {
 				int position, long id) {
 			Intent intent = new Intent(PlaylistActivity.this,
 					PlaylistVideoActivity.class);
-			intent.putExtra("videos", PlaylistData.get(position).id);
+			intent.putExtra("PLAYLIST_ID", PlaylistData.get(position).id);
 			startActivity(intent);		}
 		@Override
 		public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
@@ -82,7 +82,7 @@ public class PlaylistActivity extends Activity {
 		PlaylistData = new ArrayList<PlaylistAdapter.PlaylistData>();
 		VTBDD bdd = new VTBDD(this);
 		bdd.open();
-		//PlaylistData = bdd.getPlaylists();
+		PlaylistData = bdd.getPlaylists();
 		bdd.close();
 		mainAdapter = new PlaylistAdapter(getApplicationContext(), PlaylistData);
 
