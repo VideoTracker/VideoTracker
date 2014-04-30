@@ -1,8 +1,8 @@
-package com.udem.videotracker;
+package com.udem.videotracker.api;
+
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 
 public class DailymotionPlayerActivity extends Activity {

@@ -1,15 +1,13 @@
-package com.udem.videotracker;
+package com.udem.videotracker.database;
 
 import java.util.ArrayList;
 import java.util.Date;
 
-import com.udem.videotracker.VideoAdapter.VideoData;
-
+import com.udem.videotracker.recherche.VideoAdapter;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 
 
@@ -30,6 +28,7 @@ public class VTBDD {
 	private static final String V_THUMBMAIL = "thumbmail";
 	
 	private static final String TABLE_PLAYLIST = "table_playlist";
+	@SuppressWarnings("unused")
 	private static final String COL_ID = "id_playlist";
 	private static final String COL_PNAME = "name";
 	private static final String COL_DATE = "date";
@@ -47,6 +46,7 @@ public class VTBDD {
 	/*
 	 * Énumération des noms de colonne de la table historique
 	 */
+	@SuppressWarnings("unused")
 	private static final String H_ID = "id_historique";
 	private static final String H_KEYWORDS = "keywords";
 	
@@ -180,7 +180,7 @@ public class VTBDD {
 	public ArrayList<String> getHistoric(){
 		int count = 0;
 		ArrayList<String> ret = new ArrayList<String>();
-		String query = "Select * FROM" + TABLE_HISTORIQUE;
+		String query = "Select * FROM " + TABLE_HISTORIQUE;
 		Cursor curs = bdd.rawQuery(query, null);
 		
 		if(curs.moveToFirst()){

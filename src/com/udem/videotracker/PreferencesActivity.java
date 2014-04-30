@@ -13,6 +13,7 @@ import android.view.MenuItem;
  */
 public class PreferencesActivity extends PreferenceActivity {
 
+	@SuppressWarnings("deprecation")
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		ActionBar actionBar = getActionBar();

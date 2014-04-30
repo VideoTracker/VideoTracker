@@ -1,11 +1,11 @@
-package com.udem.videotracker;
+package com.udem.videotracker.api;
 
+import com.udem.videotracker.R;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,7 +32,8 @@ public class HTML5WebView extends WebView {
 
     static final String LOGTAG = "HTML5WebView";
 
-    private void init(Context context) {
+    @SuppressLint("SetJavaScriptEnabled")
+	private void init(Context context) {
         mContext = context;     
         Activity a = (Activity) mContext;
 
@@ -109,7 +110,8 @@ setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
     }
 
     private class MyWebChromeClient extends WebChromeClient {
-        private Bitmap      mDefaultVideoPoster;
+        @SuppressWarnings("unused")
+		private Bitmap      mDefaultVideoPoster;
         private View        mVideoProgressView;
 
         @Override

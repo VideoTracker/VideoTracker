@@ -1,10 +1,11 @@
 package com.udem.videotracker;
 
+import com.udem.videotracker.recherche.RechercheActivity;
+
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -35,6 +36,7 @@ public class InternetCheckActivity extends Activity implements OnClickListener {
 	private class InternetCheck extends AsyncTask<String, Integer, Object> {
 
 		public InternetCheckActivity activity;
+		@SuppressWarnings("unused")
 		public Object resultat = null;
 
 		public InternetCheck(InternetCheckActivity a) {

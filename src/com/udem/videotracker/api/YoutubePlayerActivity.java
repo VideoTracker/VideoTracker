@@ -1,13 +1,12 @@
-package com.udem.videotracker;
+package com.udem.videotracker.api;
 
 import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerView;
 import com.google.android.youtube.player.YouTubePlayer.Provider;
-
+import com.udem.videotracker.R;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
 public class YoutubePlayerActivity extends YouTubeBaseActivity implements

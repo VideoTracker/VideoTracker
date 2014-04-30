@@ -1,23 +1,33 @@
-package com.udem.videotracker;
+package com.udem.videotracker.recherche;
 
 import java.util.ArrayList;
 
+import com.udem.videotracker.InternetCheckActivity;
+import com.udem.videotracker.PreferencesActivity;
+import com.udem.videotracker.ProposActivity;
+import com.udem.videotracker.R;
+import com.udem.videotracker.database.VTBDD;
+import com.udem.videotracker.playlist.PlaylistActivity;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.speech.RecognizerIntent;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.Toast;
+import android.widget.AdapterView.OnItemClickListener;
 
 /**
  * Activité principale de l'application, elle est lancée
@@ -31,6 +41,17 @@ public class RechercheActivity extends Activity implements OnClickListener {
 	private ImageButton button_search;
 	private ImageButton button_voice;
 	private static final int VOICE_RECOGNITION_REQUEST = 0x10101;
+	private ListView historique;
+	private ArrayList<String> historiqueList;
+	private VTBDD db;
+	
+	private class HistoriqueOnItemClick implements OnItemClickListener {
+		@Override
+		public void onItemClick(AdapterView<?> adapter, View view,
+				int position, long id) {
+			text_search.setText(historiqueList.get(position));
+		}
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -41,21 +62,14 @@ public class RechercheActivity extends Activity implements OnClickListener {
 		button_search.setOnClickListener(this);
 		button_voice = (ImageButton) findViewById(R.id.button_voice);
 		button_voice.setOnClickListener(this);
+		db = new VTBDD(this);
 		
-		// 1. Instantiate an AlertDialog.Builder with its constructor
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
-		// 2. Chain together various setter methods to set the dialog characteristics
-		builder.setMessage("coucou")
-		       .setTitle("titre");
-
-		// 3. Get the AlertDialog from create()
-		AlertDialog dialog = builder.create();
+		historiqueList = new ArrayList<String>();
+		fillHistorique();
 		
-		VTBDD db = new VTBDD(this);
-	    db.open();
-	    db.addPlaylist("playlist", "2014-12-12");
-		
+		historique = (ListView) findViewById(R.id.historiqueList);
+		historique.setAdapter(new ArrayAdapter<String>(RechercheActivity.this, R.layout.item_historique, historiqueList));
+		historique.setOnItemClickListener(new HistoriqueOnItemClick());
 	}
 	
 	public void speakToMe() {
@@ -132,6 +146,11 @@ public class RechercheActivity extends Activity implements OnClickListener {
 						Toast.LENGTH_SHORT).show();
 			}
 			search += text_search.getText().toString();
+			
+		    db.open();
+		    db.addToHistoric(search);
+		    db.close();
+			
 			Intent intent = new Intent(RechercheActivity.this,
 					ResultActivity.class);
 			intent.putExtra("SEARCH", search);
@@ -153,5 +172,13 @@ public class RechercheActivity extends Activity implements OnClickListener {
 		}
 		return false;
 	}
-
+	
+	public void fillHistorique(){
+		db.open();
+	    ArrayList<String> result = db.getHistoric();
+	    db.close();
+	    
+	    for(String research : result)
+	    	historiqueList.add(research);
+	}
 }

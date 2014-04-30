@@ -1,8 +1,9 @@
-package com.udem.videotracker;
+package com.udem.videotracker.playlist;
 
 import java.sql.Date;
 import java.util.List;
 
+import com.udem.videotracker.R;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
