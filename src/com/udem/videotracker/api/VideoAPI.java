@@ -22,7 +22,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.ParseException;
-import android.util.Log;
 import android.view.View;
 
 public class VideoAPI extends BasicAPI {
@@ -65,7 +64,6 @@ public class VideoAPI extends BasicAPI {
 						+ video.nbVues);
 				activity.video_like_count.setText("	Nombre de likes :"
 						+ video.like_count);
-				//activity.url = video.url_video;
 				activity.favori.setChecked(video.favori);
 				activity.image.setImageDrawable(video.picture);
 				activity.button_play
@@ -93,6 +91,7 @@ public class VideoAPI extends BasicAPI {
 								}
 							}
 						});
+				activity.video=video;
 				notificationDone = true;
 			}
 		};
@@ -112,16 +111,10 @@ public class VideoAPI extends BasicAPI {
 					e1.printStackTrace();
 				}
 
-				// Charge le fichier JSON à l'URL donné depuis le web
 				page = getHttp(url);
-
-				// Interprète la page retournée comme un fichier JSON encodé en
-				// UTF-8
 				js = new JSONObject(EntityUtils.toString(page, HTTP.UTF_8));
 
 				JSONArray items = js.getJSONArray("items");
-				Log.i("toto", js.toString());
-
 				JSONObject row_item = items.getJSONObject(0);
 				JSONObject snippet = row_item.getJSONObject("snippet");
 				JSONObject stat = row_item.getJSONObject("statistics");
@@ -174,7 +167,7 @@ public class VideoAPI extends BasicAPI {
 					activity.runOnUiThread(threadNotification);
 
 					while (!notificationDone)
-						Thread.sleep(100); // unlocks myRunable while waiting
+						Thread.sleep(100);
 					notificationDone = false;
 				}
 

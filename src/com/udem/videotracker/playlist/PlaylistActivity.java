@@ -1,6 +1,7 @@
 package com.udem.videotracker.playlist;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import com.udem.videotracker.AideActivity;
 import com.udem.videotracker.PreferencesActivity;
@@ -15,6 +16,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -37,9 +39,10 @@ public class PlaylistActivity extends Activity {
 	private PlaylistAdapter mainAdapter;
 	private ArrayList<PlaylistAdapter.PlaylistData> PlaylistData;
 	private final Context context = this;
+	private VTBDD bdd;
 
 
-	private class PlaylistListOnItemClick implements OnItemClickListener,OnItemLongClickListener {
+	private class PlaylistListOnItemClick implements OnItemClickListener, OnItemLongClickListener {
 		@Override
 		public void onItemClick(AdapterView<?> adapter, View view,
 				int position, long id) {
@@ -58,7 +61,9 @@ public class PlaylistActivity extends Activity {
 			.setCancelable(false)
 			.setPositiveButton("Oui",new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog,int id) {
-					//TODO suppression video de la playlist
+					bdd.open();
+					bdd.deletePlaylist(PlaylistData.get(id).title);
+					bdd.close();
 				}
 			})
 			.setNegativeButton("Non",new DialogInterface.OnClickListener() {
@@ -79,8 +84,7 @@ public class PlaylistActivity extends Activity {
 		actionBar.setDisplayHomeAsUpEnabled(true);
 		setContentView(R.layout.activity_playlist);
 
-		PlaylistData = new ArrayList<PlaylistAdapter.PlaylistData>();
-		VTBDD bdd = new VTBDD(this);
+		bdd = new VTBDD(this);
 		bdd.open();
 		PlaylistData = bdd.getPlaylists();
 		bdd.close();
@@ -89,6 +93,7 @@ public class PlaylistActivity extends Activity {
 		mainList = (ListView) findViewById(R.id.playlistList);
 		mainList.setAdapter(mainAdapter);
 		mainList.setOnItemClickListener(new PlaylistListOnItemClick());
+		mainList.setOnItemLongClickListener(new PlaylistListOnItemClick());
 	}
 
 
@@ -110,7 +115,6 @@ public class PlaylistActivity extends Activity {
 				}
 				mainAdapter.notifyDataSetChanged();
 				return true;
-				//TODO
 			}
 
 			@Override
@@ -143,9 +147,6 @@ public class PlaylistActivity extends Activity {
 		case R.id.tri_date:
 			//PlaylistData = getDate();
 			mainAdapter.notifyDataSetChanged();
-			return true;
-		case R.id.button_suppression_playlist:
-
 			return true;
 		case R.id.menu_a_propos:
 			intent = new Intent(PlaylistActivity.this,

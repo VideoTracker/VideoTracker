@@ -1,6 +1,8 @@
 package com.udem.videotracker.recherche;
 
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Date;
 
 import com.udem.videotracker.AideActivity;
 import com.udem.videotracker.PreferencesActivity;
@@ -8,6 +10,8 @@ import com.udem.videotracker.ProposActivity;
 import com.udem.videotracker.R;
 import com.udem.videotracker.api.VideoAPI;
 import com.udem.videotracker.database.DBHelperVT;
+import com.udem.videotracker.database.VTBDD;
+import com.udem.videotracker.playlist.PlaylistAdapter;
 import com.udem.videotracker.recherche.VideoAdapter.Source;
 
 import android.os.AsyncTask;
@@ -17,12 +21,14 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.app.AlertDialog;
+import android.text.Editable;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ShareActionProvider;
@@ -46,13 +52,14 @@ public class VideoActivity extends Activity{
 	public TextView video_nbVues;
 	public TextView video_like_count;
 	public CheckBox favori;
+	public VideoAdapter.VideoData video;
 	public ImageView image;
 	public ImageButton button_play;
-	public DBHelperVT db;
+	public VTBDD bdd;
+	public ArrayList<PlaylistAdapter.PlaylistData> playlists;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		Log.i("DEBUG", "Lancement de VideoActivity");
 		super.onCreate(savedInstanceState);
 
 		ActionBar actionBar = getActionBar();
@@ -67,7 +74,7 @@ public class VideoActivity extends Activity{
 		source = (Source)getIntent().getSerializableExtra("source");
 		new LoadVideo(this).execute();
 
-		db = new DBHelperVT(this, "VTDatabase", null, 1);
+		bdd = new VTBDD(this);
 
 		video_titre = (TextView)findViewById(R.id.video_titre);
 
@@ -89,10 +96,7 @@ public class VideoActivity extends Activity{
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.menu_video, menu);
-
-		// ShareActionProvider
 		MenuItem itemProvider = menu.findItem(R.id.menu_share);
 		ShareActionProvider mShareActionProvider = (ShareActionProvider) itemProvider.getActionProvider();
 
@@ -112,24 +116,6 @@ public class VideoActivity extends Activity{
 		return true;
 	}
 
-	public void onCheckboxClicked(View view) {
-		boolean checked = ((CheckBox) view).isChecked();
-
-		switch(view.getId()) {
-		case R.id.checkbox_fav:
-			if (checked){
-				//	video.favori=true;
-				//TODO:AJOUTER AUX FAVORIS
-			}
-			else{
-				//	video.favori=false;
-				//TODO:RETIRER DES FAVORIS
-			}break;
-
-		}
-	}
-
-
 	@Override
 	public boolean onOptionsItemSelected (MenuItem item)
 	{
@@ -145,9 +131,15 @@ public class VideoActivity extends Activity{
 			AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
 			builderSingle.setTitle("Dans quelle playlist ? -");
 			final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,
-					android.R.layout.select_dialog_singlechoice/*TODO recuperer liste de playlis*/);
-			arrayAdapter.add("Playlist 1");
-			arrayAdapter.add("Playlist 2");
+					android.R.layout.select_dialog_singlechoice);
+			playlists = new ArrayList<PlaylistAdapter.PlaylistData>();
+			bdd.open();
+			playlists=bdd.getPlaylists();
+			bdd.close();
+			for (PlaylistAdapter.PlaylistData pl : playlists){
+				arrayAdapter.add(pl.title);
+			}
+			arrayAdapter.add("Ajouter une nouvelle playlist");
 			builderSingle.setNegativeButton("cancel",
 					new DialogInterface.OnClickListener() {
 
@@ -162,23 +154,31 @@ public class VideoActivity extends Activity{
 
 				@Override
 				public void onClick(DialogInterface dialog, int id) {
-					//					//TODO add la video a la playlist
-					//					if(id == last)
-					//					  final EditText input = new EditText(VideoActivity.this);
-					//					 new AlertDialog.Builder(VideoActivity.this)
-					//					 	.setTitle("Nom de la nouvelle playlist")
-					//					    .setView(input)
-					//					    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-					//					        public void onClick(DialogInterface dialog, int whichButton) {
-					//					        	Editable value = input.getText();
-					//					            //TODO créer la playlist et ajouter la video 
-					//					            db.addPlaylist(value.toString());
-					//					        }
-					//					 }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-					//        public void onClick(DialogInterface dialog, int whichButton) {
-					//            // Do nothing.
-					//        }
-					//    }).show();
+					if(id == playlists.size()){
+						final EditText input = new EditText(VideoActivity.this);
+						new AlertDialog.Builder(VideoActivity.this)
+						.setTitle("Nom de la nouvelle playlist")
+						.setView(input)
+						.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int whichButton) {
+								Editable value = input.getText();
+								bdd.open();
+								bdd.addPlaylist(value.toString(), new Date().toString());
+								playlists=bdd.getPlaylists();
+								bdd.addVideoToPlaylist(video, playlists.get(playlists.size()).id);
+								bdd.close();
+							}
+						}).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int whichButton) {
+							}
+						}).show();
+					}
+					else{
+						bdd.open();
+						Log.i("toto", ""+playlists.get(id).id);
+						bdd.addVideoToPlaylist(video, playlists.get(id).id);
+						bdd.close();
+					}
 				}
 			});
 			builderSingle.show();

@@ -67,7 +67,7 @@ public class PlaylistVideoActivity extends Activity {
 			.setPositiveButton("Oui",new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog,int id) {
 					bdd.open();
-					//bdd.deleteVideoFromPlaylist(videoData.get(position).url_video, id_playlist)
+					//bdd.deleteVideoFromPlaylist(videoData.get(id)., id_playlist)
 					bdd.close();
 				}
 			})
@@ -87,20 +87,19 @@ public class PlaylistVideoActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		ActionBar actionBar = getActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
-		setContentView(R.layout.activity_resultat_video);
+		setContentView(R.layout.list_video);
 		
 		bdd = new VTBDD(this);
 
-		id_playlist = Integer.valueOf(getIntent().getStringExtra("ID_PLAYLIST"));
+		id_playlist = getIntent().getExtras().getInt("ID_PLAYLIST");
 
 		videoData = new ArrayList<VideoAdapter.VideoData>();
-		//videoData.add(new VideoAdapter.VideoData("titre", "description \n\n\n\n\n\n", "auteur", "url", true,false,25000,getResources().getDrawable(R.drawable.ic_content_remove)));
 		bdd.open();
 		videoData = bdd.getPlaylistContent(id_playlist);
 		bdd.close();
 		mainAdapter = new VideoAdapter(getApplicationContext(), videoData);
 
-		mainList = (ListView) findViewById(R.id.videoList);
+		mainList = (ListView) findViewById(R.id.videosList);
 		mainList.setAdapter(mainAdapter);
 		mainList.setOnItemClickListener(new VideoListOnItemClick());
 	}
@@ -110,23 +109,6 @@ public class PlaylistVideoActivity extends Activity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.menu_videos, menu);
-
-		MenuItem itemSearch = menu.findItem(R.id.menu_search);
-		SearchView mSearchView = (SearchView) itemSearch.getActionView();
-		mSearchView.setOnQueryTextListener(new OnQueryTextListener() {
-
-			@Override
-			public boolean onQueryTextSubmit(String query) {
-				//TODO recherche de mots clés dans les vidéos d'une playlist par rapport au titre
-				return true;
-			}
-
-			@Override
-			public boolean onQueryTextChange(String newText) {
-				return false;
-			}
-		});
-
 		return true;
 	}
 

@@ -67,7 +67,7 @@ public class YoutubeAPI extends BasicAPI {
 
 		super(keywords);
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
-		res_youtube=Integer.parseInt(prefs.getString("yt_display", ""));
+		res_youtube=Integer.parseInt(prefs.getString("yt_display", "10"));
 
 		different_apis = 0;
 		if (searchDailymotion)
@@ -93,6 +93,7 @@ public class YoutubeAPI extends BasicAPI {
 							+ "&maxResults="
 							+ res_youtube
 							+ "&order=relevance"
+							+ "&type=video"
 							+ "&q="
 							+ keywords
 							+ "&key="

@@ -121,12 +121,15 @@ public class VTBDD {
 	 
 	    // 3. if we got results get the first one
 	    if (cursor != null){
+	    	Log.i("toto", "JE passe là");
+    		ret.add(getVideo(cursor.getInt(0)));
 	    	while(cursor.moveToNext()){
+		    	Log.i("toto", "Mais jamais là");
 	    		ret.add(getVideo(cursor.getInt(0)));
 	    	}
 	    }
 	 
-	 
+	    Log.i("toto","Size de 0 du coup      "+ret.size());
 	    // 5. return book
 	    return ret;
 	}
@@ -184,7 +187,7 @@ public class VTBDD {
 	public ArrayList<String> getHistoric(){
 		int count = 0;
 		ArrayList<String> ret = new ArrayList<String>();
-		String query = "Select * FROM" + TABLE_HISTORIQUE;
+		String query = "Select * FROM " + TABLE_HISTORIQUE;
 		Cursor curs = bdd.rawQuery(query, null);
 		
 		if(curs.moveToFirst()){
@@ -201,19 +204,15 @@ public class VTBDD {
 	
 	public ArrayList<PlaylistAdapter.PlaylistData> getPlaylists(){
 		ArrayList<PlaylistAdapter.PlaylistData> ret = new ArrayList<PlaylistAdapter.PlaylistData>();
-		String query = "Select * FROM" + TABLE_PLAYLIST;
+		String query = "Select * FROM " + TABLE_PLAYLIST;
 		Cursor curs = bdd.rawQuery(query, null);
 		
 		if(curs.moveToFirst()){
 			do{
 				Date date = null;
-				try {
-					date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S").parse(curs.getString(2));
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				date = new Date();//SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S").parse(curs.getString(2));
 				PlaylistAdapter.PlaylistData playlist = new PlaylistAdapter.PlaylistData(curs.getString(1), 0,date , curs.getInt(0));
+				Log.i("totot", ""+curs.getInt(0));
 				ret.add(playlist);
 				
 			}while(curs.moveToNext());

@@ -15,16 +15,6 @@
         android:text="Titre"
         android:textColor="#AAA"
         android:textSize="15sp" />
-    
-    <ImageButton
-        android:id="@+id/button_suppression_playlist"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginRight="5dp"
-        android:src="@drawable/ic_content_remove"
-        android:background="@android:color/transparent"/>
 
     <TextView
         android:id="@+id/playlist_nbVideos"
