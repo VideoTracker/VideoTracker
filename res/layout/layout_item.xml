@@ -4,7 +4,7 @@
     android:id="@+id/item_video"
     android:layout_width="fill_parent"
     android:orientation="horizontal" 
-    android:layout_height="fill_parent" >
+    android:layout_height="100dp" >
 
     <ImageView
         android:id="@+id/videoIcon"
@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Titre"
-            android:textColor="#AAA"
+            android:textColor="#111"
             android:textStyle="bold"
             android:textSize="18sp" />
 
@@ -33,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Description"
-            android:textColor="#AAA"
+            android:textColor="#111"
             android:textSize="14sp" />
     </LinearLayout>
 

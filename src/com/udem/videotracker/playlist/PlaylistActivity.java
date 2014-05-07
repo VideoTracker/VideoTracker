@@ -1,7 +1,6 @@
 package com.udem.videotracker.playlist;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import com.udem.videotracker.AideActivity;
 import com.udem.videotracker.PreferencesActivity;
@@ -16,16 +15,13 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
-import android.widget.SearchView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.SearchView.OnQueryTextListener;
 
 /**
  * Activité qui va afficher la liste des playlists
@@ -51,7 +47,7 @@ public class PlaylistActivity extends Activity {
 			intent.putExtra("PLAYLIST_ID", PlaylistData.get(position).id);
 			startActivity(intent);		}
 		@Override
-		public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+		public boolean onItemLongClick(AdapterView<?> arg0, View arg1, final int arg2, long arg3) {
 			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
 
 			alertDialogBuilder.setTitle("Supprimer une playlist");
@@ -61,8 +57,11 @@ public class PlaylistActivity extends Activity {
 			.setCancelable(false)
 			.setPositiveButton("Oui",new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog,int id) {
+					String title = PlaylistData.get(arg2).title;
+					PlaylistData.remove(arg2);
+					mainList.setAdapter(mainAdapter);
 					bdd.open();
-					bdd.deletePlaylist(PlaylistData.get(id).title);
+					bdd.deletePlaylist(title);
 					bdd.close();
 				}
 			})
@@ -73,7 +72,7 @@ public class PlaylistActivity extends Activity {
 			});
 			AlertDialog alertDialog = alertDialogBuilder.create();
 			alertDialog.show();
-			return false;
+			return true;
 		}
 	}
 
@@ -102,27 +101,6 @@ public class PlaylistActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.menu_playlists, menu);
 
-		MenuItem itemSearch = menu.findItem(R.id.menu_search);
-		SearchView mSearchView = (SearchView) itemSearch.getActionView();
-		mSearchView.setOnQueryTextListener(new OnQueryTextListener() {
-
-			@Override
-			public boolean onQueryTextSubmit(String query) {
-				ArrayList<PlaylistAdapter.PlaylistData> tmp = new ArrayList<PlaylistAdapter.PlaylistData>(PlaylistData);
-				for (PlaylistAdapter.PlaylistData s : tmp){
-					if(s.title.indexOf(query)==-1)
-						PlaylistData.remove(s);
-				}
-				mainAdapter.notifyDataSetChanged();
-				return true;
-			}
-
-			@Override
-			public boolean onQueryTextChange(String newText) {
-				return false;
-			}
-		});
-
 		return true;
 	}
 
@@ -133,20 +111,8 @@ public class PlaylistActivity extends Activity {
 		Intent intent = null;
 		switch(item.getItemId())
 		{
-		case R.id.tri_alpha:
-			//PlaylistData = getAlpha();
-			mainAdapter.notifyDataSetChanged();
-			return true;
 		case android.R.id.home:
 			this.finish();
-			return true;
-		case R.id.tri_nombre:
-			//PlaylistData = getNombre();
-			mainAdapter.notifyDataSetChanged();
-			return true;
-		case R.id.tri_date:
-			//PlaylistData = getDate();
-			mainAdapter.notifyDataSetChanged();
 			return true;
 		case R.id.menu_a_propos:
 			intent = new Intent(PlaylistActivity.this,

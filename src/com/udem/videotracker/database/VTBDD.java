@@ -1,7 +1,5 @@
 package com.udem.videotracker.database;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -13,7 +11,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 
 
@@ -32,9 +29,10 @@ public class VTBDD {
 	private static final String V_LINK = "lien";
 	private static final String V_DATEPUB = "date_publication";
 	private static final String V_THUMBMAIL = "thumbmail";
+	private static final String V_SRC = "source";
+
 	
 	private static final String TABLE_PLAYLIST = "table_playlist";
-	private static final String COL_ID = "id_playlist";
 	private static final String COL_PNAME = "name";
 	private static final String COL_DATE = "date";
  
@@ -51,7 +49,6 @@ public class VTBDD {
 	/*
 	 * Énumération des noms de colonne de la table historique
 	 */
-	private static final String H_ID = "id_historique";
 	private static final String H_KEYWORDS = "keywords";
 	
 	/*
@@ -88,7 +85,6 @@ public class VTBDD {
 	    values.put(COL_PNAME, name);
 	    values.put(COL_DATE, date);
 	 
-	    // insert row
 	    bdd.insert(TABLE_PLAYLIST, null, values);		
 	}
 	
@@ -96,9 +92,11 @@ public class VTBDD {
 		ContentValues values = new ContentValues();
 		values.put(V_TITLE, data.title);
 		values.put(V_DESC, data.description);
-		values.put(V_LINK, data.url_video);
+		values.put(V_LINK, data.id_url);
 		values.put(V_DATEPUB, data.datePublication.toString());
 		values.put(V_THUMBMAIL, data.url_image);
+		values.put(V_SRC, data.sourceVideo.toString());
+
 		
 		return bdd.insertOrThrow(TABLE_VIDEO,null, values);
 		
@@ -108,58 +106,48 @@ public class VTBDD {
 		
 		ArrayList<VideoAdapter.VideoData> ret = new ArrayList<VideoAdapter.VideoData>();
 		
-	    // 2. build query
 	    Cursor cursor = 
-	            bdd.query(TABLE_ASSOCIATION, // a. table
-	           new String[]{ A_IDVIDEO,A_IDPLAYLIST}, // b. column names
-	            A_IDPLAYLIST+"= ?", // c. selections 
-	            new String[] { String.valueOf(id) }, // d. selections args
-	            null, // e. group by
-	            null, // f. having
-	            null, // g. order by
-	            null); // h. limit
+	            bdd.query(TABLE_ASSOCIATION, 
+	           new String[]{ A_IDVIDEO,A_IDPLAYLIST}, 
+	            A_IDPLAYLIST+"= ?", 
+	            new String[] { String.valueOf(id) }, 
+	            null,
+	            null,
+	            null,
+	            null);
 	 
-	    // 3. if we got results get the first one
 	    if (cursor != null){
-	    	Log.i("toto", "JE passe là");
-    		ret.add(getVideo(cursor.getInt(0)));
 	    	while(cursor.moveToNext()){
-		    	Log.i("toto", "Mais jamais là");
 	    		ret.add(getVideo(cursor.getInt(0)));
 	    	}
 	    }
-	 
-	    Log.i("toto","Size de 0 du coup      "+ret.size());
-	    // 5. return book
 	    return ret;
 	}
-	
-	
+		
 	public VideoAdapter.VideoData getVideo(int id){
 		
-		   // 2. build query
 	    Cursor cursor = 
-	            bdd.query(TABLE_VIDEO, // a. table
-	           new String[]{ V_ID,V_TITLE, V_DESC, V_LINK, V_DATEPUB, V_THUMBMAIL}, // b. column names
-	            V_ID+"= ?", // c. selections 
-	            new String[] { String.valueOf(id) }, // d. selections args
-	            null, // e. group by
-	            null, // f. having
-	            null, // g. order by
-	            null); // h. limit
+	            bdd.query(TABLE_VIDEO, 
+	           new String[]{ V_ID,V_TITLE, V_DESC, V_LINK, V_DATEPUB, V_THUMBMAIL,V_SRC}, 
+	            V_ID+"= ?",  
+	            new String[] { String.valueOf(id) }, 
+	            null, 
+	            null, 
+	            null, 
+	            null);
 	    
 	    if (cursor != null){
 	    	cursor.moveToNext();
 	    }
 	    
 	    @SuppressWarnings("deprecation")
-		VideoAdapter.VideoData ret = new VideoAdapter.VideoData(cursor.getString(1), cursor.getString(2), "", cursor.getString(3), cursor.getString(5), false, false, 0, 0, null, new Date(cursor.getString(4)), null);
+		VideoAdapter.VideoData ret = new VideoAdapter.VideoData(cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(5), 0, 0, null, new Date(cursor.getString(4)), cursor.getString(6),cursor.getInt(0),cursor.getString(3));
 		return ret;
 		
 	}
 	
 	public boolean deletePlaylist(String name) {
-		return bdd.delete(TABLE_PLAYLIST, COL_PNAME + "=" + name, null) > 0;
+		return bdd.delete(TABLE_PLAYLIST, COL_PNAME + "=\"" + name+"\"", null) > 0;
 			
 	}
 	
@@ -209,10 +197,7 @@ public class VTBDD {
 		
 		if(curs.moveToFirst()){
 			do{
-				Date date = null;
-				date = new Date();//SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S").parse(curs.getString(2));
-				PlaylistAdapter.PlaylistData playlist = new PlaylistAdapter.PlaylistData(curs.getString(1), 0,date , curs.getInt(0));
-				Log.i("totot", ""+curs.getInt(0));
+				PlaylistAdapter.PlaylistData playlist = new PlaylistAdapter.PlaylistData(curs.getString(1), curs.getInt(0));
 				ret.add(playlist);
 				
 			}while(curs.moveToNext());

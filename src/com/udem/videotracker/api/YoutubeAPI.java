@@ -139,7 +139,7 @@ public class YoutubeAPI extends BasicAPI {
 
 					datePublication = dateTmp.parse(video.getString("publishedAt"));
 
-					videoData.add(new VideoAdapter.VideoData(title, description, "", id_video, thumb, false, false, 0, 0, icone, datePublication, Source.YOUTUBE));
+					videoData.add(new VideoAdapter.VideoData(title, description, "", thumb, 0, 0, icone, datePublication, Source.YOUTUBE,id_video));
 
 					synchronized( threadNotification ) {
 						activity.runOnUiThread(threadNotification) ;
@@ -188,7 +188,7 @@ public class YoutubeAPI extends BasicAPI {
 					datePublication = new Date(row.getInt("created_time"));
 					nbVues = row.getInt("views_total");
 
-					videoData.add(new VideoAdapter.VideoData(title, description, "", id_video, thumb, false, false, nbVues, 0, icone, datePublication, Source.DAILYMOTION));
+					videoData.add(new VideoAdapter.VideoData(title, description, "", thumb, nbVues, 0, icone, datePublication, Source.DAILYMOTION,id_video));
 
 
 					synchronized( threadNotification ) {

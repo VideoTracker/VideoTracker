@@ -59,11 +59,6 @@
         <activity
             android:configChanges="orientation"
     		android:screenOrientation="portrait"
-            android:name="com.udem.videotracker.recherche.ResultatVideosActivity"
-            android:label="Vidéos" />
-        <activity
-            android:configChanges="orientation"
-    		android:screenOrientation="portrait"
             android:name="com.udem.videotracker.PreferencesActivity"
             android:label="Préférences" />
         <activity

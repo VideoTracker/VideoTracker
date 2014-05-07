@@ -1,6 +1,5 @@
 package com.udem.videotracker.playlist;
 
-import java.util.Date;
 import java.util.List;
 
 import com.udem.videotracker.R;
@@ -26,15 +25,10 @@ public class PlaylistAdapter extends BaseAdapter {
 	 */
 	public static class PlaylistData {
 		public final String title;
-		public int nbVideos;
-		public Date dateCreation;
-
 		public int id;
 
-		public PlaylistData(String _title, int _nbVideos, Date _dateCreation, int _id){
+		public PlaylistData(String _title, int _id){
 			title = _title;
-			nbVideos = _nbVideos;
-			dateCreation = _dateCreation;
 			id = _id;
 		}
 	}
@@ -75,15 +69,13 @@ public class PlaylistAdapter extends BaseAdapter {
 		}
 
 		TextView title_text = (TextView) view.findViewById(R.id.playlist_titre);
-		TextView nbVideos = (TextView) view.findViewById(R.id.playlist_nbVideos);
 		title_text.setText(data.title);
-		nbVideos.setText("Nombre de vidéos :"+data.nbVideos);
 
 
 		if (position % 2 == 0)
-			view.setBackgroundColor(Color.argb(255, 20, 20, 20));
+			view.setBackgroundColor(Color.LTGRAY);
 		else
-			view.setBackgroundColor(Color.BLACK);
+			view.setBackgroundColor(Color.WHITE);
 
 		return view;
 	}

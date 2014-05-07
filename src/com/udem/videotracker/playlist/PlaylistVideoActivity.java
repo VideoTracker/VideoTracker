@@ -16,16 +16,13 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
-import android.widget.SearchView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.SearchView.OnQueryTextListener;
 
 /**
  * Activité qui va afficher la liste des vidéos au sein d'une playlist
@@ -50,13 +47,15 @@ public class PlaylistVideoActivity extends Activity {
 				int position, long id) {
 			Intent intent = new Intent(PlaylistVideoActivity.this,
 					VideoActivity.class);
-			intent.putExtra("video", videoData.get(position));
+			intent.putExtra("video", videoData.get(position).id_url);
+			intent.putExtra("source", videoData.get(position).sourceVideo);
+
 			startActivity(intent);
 		}
 
 		@Override
 		public boolean onItemLongClick(AdapterView<?> adapter, View view,
-				int position, long id) {
+				final int position, long id) {
 			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
 
 			alertDialogBuilder.setTitle("Supprimer une playlist");
@@ -67,8 +66,10 @@ public class PlaylistVideoActivity extends Activity {
 			.setPositiveButton("Oui",new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog,int id) {
 					bdd.open();
-					//bdd.deleteVideoFromPlaylist(videoData.get(id)., id_playlist)
+					bdd.deleteVideoFromPlaylist(videoData.get(position).id_video, id_playlist);
 					bdd.close();
+					videoData.remove(position);
+					mainList.setAdapter(mainAdapter);
 				}
 			})
 			.setNegativeButton("Non",new DialogInterface.OnClickListener() {
@@ -78,7 +79,7 @@ public class PlaylistVideoActivity extends Activity {
 			});
 			AlertDialog alertDialog = alertDialogBuilder.create();
 			alertDialog.show();
-			return false;
+			return true;
 		}
 	}
 
@@ -88,10 +89,10 @@ public class PlaylistVideoActivity extends Activity {
 		ActionBar actionBar = getActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
 		setContentView(R.layout.list_video);
-		
+
 		bdd = new VTBDD(this);
 
-		id_playlist = getIntent().getExtras().getInt("ID_PLAYLIST");
+		id_playlist = getIntent().getExtras().getInt("PLAYLIST_ID");
 
 		videoData = new ArrayList<VideoAdapter.VideoData>();
 		bdd.open();
@@ -102,6 +103,8 @@ public class PlaylistVideoActivity extends Activity {
 		mainList = (ListView) findViewById(R.id.videosList);
 		mainList.setAdapter(mainAdapter);
 		mainList.setOnItemClickListener(new VideoListOnItemClick());
+		mainList.setOnItemLongClickListener(new VideoListOnItemClick());
+
 	}
 
 
@@ -119,21 +122,9 @@ public class PlaylistVideoActivity extends Activity {
 		Intent intent = null;
 		switch(item.getItemId())
 		{
-		case R.id.tri_alpha:
-			Log.i("TEST","alpha");
-			return true;
 		case android.R.id.home:
 			this.finish();
 			return true;
-		case R.id.tri_nombre:
-			Log.i("TEST","nombre");
-
-			return true;
-		case R.id.tri_date:
-			Log.i("TEST","date");
-
-			return true;	
-
 		case R.id.menu_a_propos:
 			intent = new Intent(PlaylistVideoActivity.this,
 					ProposActivity.class);

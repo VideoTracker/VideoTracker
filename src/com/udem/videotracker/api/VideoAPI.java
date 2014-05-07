@@ -64,7 +64,6 @@ public class VideoAPI extends BasicAPI {
 						+ video.nbVues);
 				activity.video_like_count.setText("	Nombre de likes :"
 						+ video.like_count);
-				activity.favori.setChecked(video.favori);
 				activity.image.setImageDrawable(video.picture);
 				activity.button_play
 						.setOnClickListener(new View.OnClickListener() {
@@ -129,9 +128,8 @@ public class VideoAPI extends BasicAPI {
 						.getString("publishedAt"));
 				nbVues = (int) stat.getLong("viewCount");
 				like_count = (int) stat.getLong("likeCount");
-				video = new VideoAdapter.VideoData(title, description, "",
-						url_video, thumb, false, false, nbVues, like_count,
-						icone, datePublication, Source.YOUTUBE);
+				video = new VideoAdapter.VideoData(title, description,url_video, thumb, nbVues, like_count,
+						icone, datePublication, Source.YOUTUBE,ID);
 
 				synchronized (threadNotification) {
 					activity.runOnUiThread(threadNotification);
@@ -159,9 +157,9 @@ public class VideoAPI extends BasicAPI {
 				datePublication = new Date(js.getInt("created_time"));
 				nbVues = js.getInt("views_total");
 
-				video = new VideoAdapter.VideoData(title, description, "",
-						url_video, thumb, false, false, nbVues, like_count,
-						icone, datePublication, Source.DAILYMOTION);
+				video = new VideoAdapter.VideoData(title, description,
+						url_video, thumb, nbVues, like_count,
+						icone, datePublication, Source.DAILYMOTION,ID);
 
 				synchronized (threadNotification) {
 					activity.runOnUiThread(threadNotification);

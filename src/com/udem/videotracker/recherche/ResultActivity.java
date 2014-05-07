@@ -25,8 +25,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.SearchView;
-import android.widget.SearchView.OnQueryTextListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,7 +44,7 @@ public class ResultActivity extends Activity {
 		public void onItemClick(AdapterView<?> adapter, View view,
 				int position, long id) {
 			Intent intent = new Intent(ResultActivity.this, VideoActivity.class);
-			intent.putExtra("video", videoData.get(position).url_video);
+			intent.putExtra("video", videoData.get(position).id_url);
 			intent.putExtra("source", videoData.get(position).sourceVideo);
 			startActivity(intent);
 		}
@@ -168,23 +166,6 @@ public class ResultActivity extends Activity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.menu_videos, menu);
-
-		MenuItem itemSearch = menu.findItem(R.id.menu_search);
-		SearchView mSearchView = (SearchView) itemSearch.getActionView();
-		mSearchView.setOnQueryTextListener(new OnQueryTextListener() {
-
-			@Override
-			public boolean onQueryTextSubmit(String query) {
-				maj(query);
-				return true;
-			}
-
-			@Override
-			public boolean onQueryTextChange(String newText) {
-				return false;
-			}
-		});
-
 		return true;
 	}
 

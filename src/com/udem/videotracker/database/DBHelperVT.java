@@ -54,11 +54,13 @@ public class DBHelperVT extends SQLiteOpenHelper {
 	private static final String V_LINK = "lien";
 	private static final String V_DATEPUB = "date_publication";
 	private static final String V_THUMBMAIL = "thumbmail";
+	private static final String V_SRC = "source";
+
 	
 	private static final String CREATE_VIDEO = "CREATE TABLE " + TABLE_VIDEO + " ("
 			+ V_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + V_TITLE + " TEXT NOT NULL, "
 			+ V_DESC + " TEXT NOT NULL, " + V_LINK + " TEXT NOT NULL, " + V_DATEPUB + " TEXT NOT NULL, "
-			+ V_THUMBMAIL + " TEXT NOT NULL);";
+			+ V_THUMBMAIL + " TEXT NOT NULL,"+ V_SRC + " TEXT NOT NULL);";
 	
 	
 	static final String TABLE_PLAYLIST = "table_playlist";
@@ -131,15 +133,9 @@ public class DBHelperVT extends SQLiteOpenHelper {
 	 * 
 	 */
 	public int querySize() {
-		// Notez l'usage de getReadableDatabase; lorsqu'on ne
-		// cherche pas à modifier la base de données, il
-		// est recommandé d'utiliser une connexion lecture seule.
+
 		SQLiteDatabase db = this.getReadableDatabase();
 
-		// Cursor est un objet très utilisé qui permet de stocker
-		// le résultat d'une requête SQL. Ce résultat peut être,
-		// dans le cas présent, la colonne ID de toutes les lignes
-		// de la base de donnée, ce qui nous permet de les compter.
 		Cursor c = db.query(TABLE_VIDEO, new String[] {V_ID}, null, null, null, null, null);
 		int size = c.getCount();
 		db.close();

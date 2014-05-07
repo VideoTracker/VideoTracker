@@ -9,8 +9,8 @@ import com.udem.videotracker.PreferencesActivity;
 import com.udem.videotracker.ProposActivity;
 import com.udem.videotracker.R;
 import com.udem.videotracker.api.VideoAPI;
-import com.udem.videotracker.database.DBHelperVT;
 import com.udem.videotracker.database.VTBDD;
+import com.udem.videotracker.playlist.PlaylistActivity;
 import com.udem.videotracker.playlist.PlaylistAdapter;
 import com.udem.videotracker.recherche.VideoAdapter.Source;
 
@@ -25,9 +25,7 @@ import android.text.Editable;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -51,7 +49,6 @@ public class VideoActivity extends Activity{
 	public TextView video_description;
 	public TextView video_nbVues;
 	public TextView video_like_count;
-	public CheckBox favori;
 	public VideoAdapter.VideoData video;
 	public ImageView image;
 	public ImageButton button_play;
@@ -87,8 +84,6 @@ public class VideoActivity extends Activity{
 		video_like_count = (TextView)findViewById(R.id.video_like_count);
 
 		image = (ImageView)findViewById(R.id.video_image);
-
-		favori = (CheckBox) findViewById(R.id.checkbox_fav);
 
 		button_play = (ImageButton) findViewById(R.id.button_play);
 
@@ -165,7 +160,7 @@ public class VideoActivity extends Activity{
 								bdd.open();
 								bdd.addPlaylist(value.toString(), new Date().toString());
 								playlists=bdd.getPlaylists();
-								bdd.addVideoToPlaylist(video, playlists.get(playlists.size()).id);
+								bdd.addVideoToPlaylist(video, playlists.get(playlists.size()-1).id);
 								bdd.close();
 							}
 						}).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -196,6 +191,10 @@ public class VideoActivity extends Activity{
 			return true;
 		case android.R.id.home:
 			this.finish();
+			return true;
+		case R.id.menu_playlist:
+			intent = new Intent(VideoActivity.this, PlaylistActivity.class);
+			startActivity(intent);
 			return true;
 
 		}
